@@ -1,0 +1,28 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="content" />
+<html>
+<head>
+</head>
+<body>
+  <div class="col-sm-3 col-md-2 sidebar" style="position: fixed">
+    <ul class="nav nav-sidebar">
+        <li><a href="${pageContext.request.contextPath}/controller?command=main"><fmt:message key="sidebar.home"/></a></li>
+        <li><a href="#"><fmt:message key="sidebar.genres"/></a></li>
+        <li><a href="#"><fmt:message key="sidebar.sales"/> </a></li>
+        <li><a href="#"><fmt:message key="sidebar.about"/> </a></li>
+        <li><a href="#"><fmt:message key="sidebar.contact"/></a></li>
+        <li>
+            <ctg:isAdmin>
+                <a href="${pageContext.request.contextPath}/jsp/add_track.jsp">
+                    <fmt:message key="sidebar.add"/>
+                </a>
+            </ctg:isAdmin>
+        </li>
+    </ul>
+  </div>
+</body>
+</html>
