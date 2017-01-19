@@ -1,41 +1,40 @@
 package com.lavrente.soundtrack.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by 123 on 02.01.2017.
  */
 public class Comment {
-    private LocalDateTime dateTime;
+    private String dateTime;
     private int userId;
-    private int trackId;
+    private String userLogin;
     private String text;
 
-    public Comment( int userId, int trackId, String text) {
-        this.dateTime = LocalDateTime.now();
+    public Comment( int userId, String text) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now=LocalDateTime.now();
+        this.dateTime = now.format(formatter);
         this.userId = userId;
-        this.trackId = trackId;
         this.text = text;
     }
 
-    public LocalDateTime getDateTime() {
+    public Comment( String userLogin,String dateTime, String text) {
+        this.dateTime = dateTime;
+        this.userLogin = userLogin;
+        this.text = text;
+    }
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 
     public int getUserId() {
         return userId;
-    }
-
-    public int getTrackId() {
-        return trackId;
-    }
-
-    public void setTrackId(int trackId) {
-        this.trackId = trackId;
     }
 
     public String getText() {

@@ -1,12 +1,14 @@
 package com.lavrente.soundtrack.logic;
 
 import com.lavrente.soundtrack.dao.TrackDAO;
+import com.lavrente.soundtrack.entity.Comment;
 import com.lavrente.soundtrack.entity.Track;
 import com.lavrente.soundtrack.exception.DAOException;
 import com.lavrente.soundtrack.exception.LogicException;
 import com.lavrente.soundtrack.pool.ConnectionPool;
 import com.lavrente.soundtrack.pool.ProxyConnection;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +22,18 @@ public class TrackLogic {
             return trackDAO.findLastOrderedTracks();
         } catch (DAOException e) {
             throw new LogicException("Can't find last ordered tracks", e);
+        } finally {
+            trackDAO.closeConnection(connection);
+        }
+    }
+
+    public ArrayList<Comment> findTrackComments(int trackId) throws LogicException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        TrackDAO trackDAO = new TrackDAO(connection);
+        try {
+            return (ArrayList<Comment>) trackDAO.findTrackComments(trackId);
+        } catch (DAOException e) {
+            throw new LogicException("Can't find all comments by track id", e);
         } finally {
             trackDAO.closeConnection(connection);
         }

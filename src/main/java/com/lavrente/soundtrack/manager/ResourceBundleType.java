@@ -1,6 +1,9 @@
 package com.lavrente.soundtrack.manager;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -18,11 +21,5 @@ public enum ResourceBundleType {
 
     public ResourceBundle getResourceBundle(){
         return resourceBundle;
-    }
-
-    public static void main(String[] args) {
-        ResourceBundle resourceBundle22= ResourceBundleType.EN_US.getResourceBundle();
-        String s=resourceBundle22.getString("menu.brand");
-        ResourceBundle resourceBundle23= ResourceBundleType.RU_RU.getResourceBundle();
     }
 }

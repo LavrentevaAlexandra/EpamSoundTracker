@@ -34,8 +34,8 @@ public class ConnectionPool {
         for (int i = 0; i < db.POOL_SIZE; i++) {
             try {
                 Connection connection = DriverManager.getConnection(db.DATABASE_URL, db.DATABASE_LOGIN, db.DATABASE_PASS);
-                ProxyConnection pc = new ProxyConnection(connection);
-                this.connectionQueue.put(pc);
+                ProxyConnection proxyConnection = new ProxyConnection(connection);
+                this.connectionQueue.put(proxyConnection);
             } catch (SQLException | InterruptedException e) {
                 LOG.error("Exception during connection ¹ "+i+" addition",e);
             }

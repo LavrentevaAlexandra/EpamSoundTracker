@@ -59,7 +59,8 @@
                 <button type="submit" name="command" value="add_track" class="btn btn-primary">
                     <fmt:message key="add.track"/>
                 </button>
-                <button type="button" class="btn btn-primary " onClick='location.href="${pageContext.request.contextPath}/jsp/main.jsp"'>
+                <button type="button" class="btn btn-primary "
+                        onClick='location.href="${pageContext.request.contextPath}/jsp/main.jsp"'>
                     <fmt:message key="form.back"/>
                 </button>
             </div>

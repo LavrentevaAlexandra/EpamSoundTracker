@@ -16,10 +16,7 @@ public class ConfigurationManager {
     public static final String PROFILE_PATH = "path.page.profile";
     public static final String MONEY_PATH = "path.page.add.funds";
     public static final String ADD_TRACK_PATH = "path.page.add.track";
-
-
-
-
+    public static final String TRACK_INFO_PATH = "path.page.track_info";
 
     private final static ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
 

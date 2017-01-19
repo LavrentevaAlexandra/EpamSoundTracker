@@ -41,7 +41,7 @@ public class UserDAO extends AbstractDAO<User>{
                 password = set.getString(1);
             }
         }catch (SQLException e){
-            throw new DAOException("jgkjgkjgjgkjgkjgkjgkghghghjgkhghkgk", e);
+            throw new DAOException("Error during user password by login search", e);
         }finally {
             closeStatement(statement);
         }
@@ -56,7 +56,7 @@ public class UserDAO extends AbstractDAO<User>{
             statement.setString(1,login);
             user = createUser(statement);
         }catch (SQLException e){
-            throw new DAOException(e);
+            throw new DAOException("Error during user by login search",e);
         }finally {
             closeStatement(statement);
         }
@@ -71,7 +71,7 @@ public class UserDAO extends AbstractDAO<User>{
             statement.setInt(1, id);
             user = createUser(statement);
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Error during user by id search",e);
         } finally {
             closeStatement(statement);
         }
@@ -86,7 +86,7 @@ public class UserDAO extends AbstractDAO<User>{
             statement.setString(1,email);
             user = createUser(statement);
         }catch (SQLException e){
-            throw new DAOException(e);
+            throw new DAOException("Error during user by email search",e);
         }finally {
             closeStatement(statement);
         }

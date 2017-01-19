@@ -33,7 +33,7 @@ public class GenreDAO extends AbstractDAO {
                 id = -1;
             }
         }catch (SQLException e){
-            throw new DAOException("Error during looking for genre id",e);
+            throw new DAOException("Error during genre id search",e);
         }finally {
             closeStatement(statement);
         }

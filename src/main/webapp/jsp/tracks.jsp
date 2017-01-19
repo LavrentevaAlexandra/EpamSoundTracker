@@ -3,11 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="ctg" uri="customtags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="content"/>
 <html>
 <head>
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.simplePagination.js"></script>
-    <link href="${pageContext.request.contextPath}/css/simplePagination.css" rel="stylesheet">
 </head>
 <body>
 <%--begin="${num_page * 10}" end="${num_page * 10 + 9}"--%>
@@ -30,7 +30,8 @@
                 <td>—</td>
                 <td>${track.name}</td>
                 <td>
-                    <button class="btn btn-link">
+                    <button class="btn btn-link"
+                            onClick='location.href="${pageContext.request.contextPath}/controller?command=track_info&track_id=${track.id}"'>
                         <fmt:message key="track.more"/>
                     </button>
                 </td>
@@ -51,28 +52,17 @@
                     </ctg:isAdmin>
                 </td>
                 <td>
-                    <button class="btn btn-primary">
-                        <i class="glyphicon glyphicon-credit-card"></i>
-                        <fmt:message key="track.buy"/>
-                    </button>
+                    <ctg:isLoggedIn>
+                        <button class="btn btn-primary">
+                            <i class="glyphicon glyphicon-credit-card"></i>
+                            <fmt:message key="track.buy"/>
+                        </button>
+                    </ctg:isLoggedIn>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-</div>
-<div id="light-pagination" class="pagination">
-    <script type='text/javascript'>
-        $(window).load(function(){
-            $('#light-pagination').pagination({
-                items: 2,
-                itemsOnPage: 1,
-                prevText: 'Начало',
-                nextText: 'Конец',
-                cssStyle: 'light-theme'
-            });
-        });
-    </script>
 </div>
 
 </body>
