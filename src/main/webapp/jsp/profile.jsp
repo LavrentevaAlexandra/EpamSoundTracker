@@ -43,11 +43,10 @@
               <h3><fmt:message key="profile.email"/> ${user.email}</h3>
           </div>
           <div>
-              <c:set var="pass" value="" scope="request"/>
               <button class="btn-lg btn-primary" onClick='location.href="${pageContext.request.contextPath}/jsp/password.jsp"'>
                 <fmt:message key="profile.title.pass"/><span class="glyphicon glyphicon-edit"></span>
               </button>
-              <button class="btn-lg btn-primary" onClick='location.href="add_funds.jsp"'>
+              <button class="btn-lg btn-primary" onClick='location.href="${pageContext.request.contextPath}/jsp/add_funds.jsp"'>
                 <fmt:message key="profile.title.cash"/><span class="glyphicon glyphicon-edit"></span>
               </button>
               <button class="btn btn-lg btn-primary" type="button"

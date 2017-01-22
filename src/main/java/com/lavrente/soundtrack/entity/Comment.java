@@ -6,18 +6,21 @@ import java.time.format.DateTimeFormatter;
 /**
  * Created by 123 on 02.01.2017.
  */
-public class Comment {
+public class Comment extends Entity{
     private String dateTime;
     private int userId;
+    private int audioTrackId;
     private String userLogin;
     private String text;
 
-    public Comment( int userId, String text) {
+
+    public Comment( int userId,int audioTrackId, String text) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now=LocalDateTime.now();
         this.dateTime = now.format(formatter);
         this.userId = userId;
         this.text = text;
+        this.audioTrackId=audioTrackId;
     }
 
     public Comment( String userLogin,String dateTime, String text) {
@@ -33,8 +36,20 @@ public class Comment {
         this.dateTime = dateTime;
     }
 
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     public int getUserId() {
         return userId;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
 
     public String getText() {
@@ -43,5 +58,13 @@ public class Comment {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public int getAudioTrackId() {
+        return audioTrackId;
+    }
+
+    public void setAudioTrackId(int audioTrackId) {
+        this.audioTrackId = audioTrackId;
     }
 }

@@ -8,6 +8,7 @@ import com.lavrente.soundtrack.manager.ConfigurationManager;
 import com.lavrente.soundtrack.servlet.SessionRequestContent;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 123 on 19.01.2017.
@@ -23,9 +24,9 @@ public class TrackInfoCommand extends AbstractCommand {
         int trackId = Integer.valueOf(sessionRequestContent.getRequestParameter(TRACK_ID));
         TrackLogic trackLogic = new TrackLogic();
         try {
-            ArrayList<Comment> comments = trackLogic.findTrackComments(trackId);
-            //Track track = trackLogic.findTrackById(trackId);
-            //sessionRequestContent.setRequestAttribute(TRACK_ATTRIBUTE, track);
+            List<Comment> comments = trackLogic.findTrackComments(trackId);
+            Track track = trackLogic.findTrackById(trackId);
+            sessionRequestContent.setRequestAttribute(TRACK_ATTRIBUTE, track);
             sessionRequestContent.setRequestAttribute(COMMENTS_ATTRIBUTE, comments);
             page = ConfigurationManager.getProperty(ConfigurationManager.TRACK_INFO_PATH);
         }catch (LogicException e){

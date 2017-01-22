@@ -2,6 +2,7 @@ package com.lavrente.soundtrack.dao;
 
 import com.lavrente.soundtrack.entity.Comment;
 import com.lavrente.soundtrack.entity.Track;
+import com.lavrente.soundtrack.entity.User;
 import com.lavrente.soundtrack.exception.DAOException;
 import com.lavrente.soundtrack.pool.ProxyConnection;
 
@@ -23,17 +24,38 @@ public class TrackDAO extends AbstractDAO {
             "LEFT JOIN genre ON audio_track.genre_id=genre.id\n" +
             "WHERE audio_track.deleted = 0\n" +
             "GROUP BY audio_track.name ORDER BY `order`.date DESC LIMIT 5 ";
+    private static final String SQL_SELECT_TRACK_BY_ID = "SELECT audio_track.id, audio_track.name, genre.genre, audio_track.artist_name, audio_track.price\n" +
+            "FROM audio_track\n" +
+            "LEFT JOIN genre ON audio_track.genre_id=genre.id\n" +
+            "WHERE audio_track.id=?";
     private static final String SQL_SELECT_TRACK_COMMENTS="SELECT user.login, comment.date, comment.text\n"+
-            "FROM comment JOIN user ON user.id = comment.user_id WHERE comment.audio_track_id=?;";
+            "FROM comment JOIN user ON user.id = comment.user_id WHERE comment.audio_track_id=? ORDER BY comment.date;";
     private static final String SQL_ADD_TRACK="INSERT INTO audio_track (`name`, `artist_name`, `genre_id`, `price`) VALUES ( ?,?,?,?)";
+
 
     public TrackDAO(ProxyConnection connection) {
         super(connection);
     }
 
+    public Track findTrackById(int id) throws DAOException {
+        Track track = null;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_SELECT_TRACK_BY_ID);
+            statement.setInt(1, id);
+            ResultSet set=statement.executeQuery();
+            track = formTrackList(set).get(0);
+        } catch (SQLException e) {
+            throw new DAOException("Error during track by id search",e);
+        } finally {
+            closeStatement(statement);
+        }
+        return track;
+    }
+
 
     public List<Track> findLastOrderedTracks() throws DAOException {
-        List<Track> trackList = new ArrayList<>();
+        List<Track> trackList;
         Statement statement = null;
         try {
             statement = connection.createStatement();
@@ -76,7 +98,7 @@ public class TrackDAO extends AbstractDAO {
                 String name = set.getString("name");
                 String genre = set.getString("genre");
                 String artist = set.getString("artist_name");
-                float price = set.getFloat("price");
+                double price = set.getDouble("price");
                 trackList.add(new Track(id, name, artist, price, genre));
             }
         }catch (SQLException e){
@@ -85,14 +107,14 @@ public class TrackDAO extends AbstractDAO {
         return trackList;
     }
 
-     public void addTrack(String name, String artist, float price, int genreId) throws DAOException{
+     public void addTrack(String name, String artist, double price, int genreId) throws DAOException{
          PreparedStatement statement = null;
          try {
              statement = connection.prepareStatement(SQL_ADD_TRACK);
              statement.setString(1,name);
              statement.setString(2,artist);
              statement.setInt(3,genreId);
-             statement.setFloat(4,price);
+             statement.setDouble(4,price);
              statement.executeUpdate();
          }catch (SQLException e){
              throw new DAOException("Error during track addition",e);

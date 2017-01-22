@@ -21,7 +21,7 @@
     <div class="container-fluid">
       <div class="row col-md-offset-2  col-sm-offset-3">
           <%@include file="sidebar.jsp"%>
-          <h2 class="sub-header">Last ordered tracks</h2>
+          <h2 class="sub-header"><fmt:message key="track.last"/></h2>
           <%@include file="tracks.jsp"%>
       </div>
     </div>

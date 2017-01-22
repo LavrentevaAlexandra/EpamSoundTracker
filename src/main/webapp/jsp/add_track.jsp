@@ -75,7 +75,7 @@
 <script src="${pageContext.request.contextPath}/js/i18n/enn.js"></script>
 <script>
     $(document).ready(function () {
-        $('#change').parsley();
+        $('#addTrack').parsley();
         window.Parsley.setLocale($("#locale").val());
     });
 </script>

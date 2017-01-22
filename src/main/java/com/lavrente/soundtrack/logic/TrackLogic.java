@@ -27,11 +27,11 @@ public class TrackLogic {
         }
     }
 
-    public ArrayList<Comment> findTrackComments(int trackId) throws LogicException {
+    public List<Comment> findTrackComments(int trackId) throws LogicException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         TrackDAO trackDAO = new TrackDAO(connection);
         try {
-            return (ArrayList<Comment>) trackDAO.findTrackComments(trackId);
+            return trackDAO.findTrackComments(trackId);
         } catch (DAOException e) {
             throw new LogicException("Can't find all comments by track id", e);
         } finally {
@@ -39,7 +39,7 @@ public class TrackLogic {
         }
     }
 
-    public void addTrack(String name, String artist, float price, String genre)throws LogicException{
+    public void addTrack(String name, String artist, double price, String genre)throws LogicException{
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         TrackDAO trackDAO = new TrackDAO(connection);
         GenreLogic genreLogic=new GenreLogic();
@@ -51,5 +51,17 @@ public class TrackLogic {
         } finally {
             trackDAO.closeConnection(connection);
         }
+    }
+
+    public Track findTrackById(int id) throws LogicException {
+        Track track;
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        TrackDAO trackDAO = new TrackDAO(connection);
+        try {
+            track = trackDAO.findTrackById(id);
+        } catch (DAOException e) {
+            throw new LogicException("Error during track by id search", e);
+        }
+        return track;
     }
 }

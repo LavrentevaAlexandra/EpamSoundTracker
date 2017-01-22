@@ -7,10 +7,10 @@ public class Track extends Entity {
     private int id;
     private String name;
     private String artist;
-    private float price;
+    private double price;
     private String genre;
 
-    public Track(int id, String name, String artist, float price, String genre) {
+    public Track(int id, String name, String artist, double price, String genre) {
         this.id = id;
         this.name = name;
         this.artist = artist;
@@ -42,11 +42,11 @@ public class Track extends Entity {
         this.artist = artist;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

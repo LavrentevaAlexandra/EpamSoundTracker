@@ -24,6 +24,9 @@ public class MessageManager {
     public final static String CHANGE_PASS_NEW_ERROR="message.change.pass.new";
     public final static String CHANGE_SUCCESS="message.change.success";
     public final static String CHANGE_CASH_CARD_ERROR="message.change.cash.card";
+    public final static String CHANGE_CASH_ERROR="message.change.cash";
+    public final static String ADD_COMMENT_ERROR="message.add.comment";
+    public final static String ADD_COMMENT_EMPTY="message.add.comment.empty";
     public final static String ADD_TRACK_SUCCESS="message.add.track.success";
     public final static String ADD_TRACK_ERROR="message.add.track.error";
 

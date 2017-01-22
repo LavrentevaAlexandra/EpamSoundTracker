@@ -17,7 +17,6 @@ public class SingUpCommand extends AbstractCommand {
     private static final String PARAM_CONF_PASS = "password2";
     private static final String PARAM_EMAIL = "email";
     private static final String PARAM_CARD_NUMBER = "card";
-    private static final String USER_ATTRIBUTE = "user";
     private static final String ROLE_ATTRIBUTE = "role";
     private static final String LOGIN_SUCCESS = "loginSuccess";
     private static final String ERROR_SIGNUP_ATTRIBUTE="errorSingup";

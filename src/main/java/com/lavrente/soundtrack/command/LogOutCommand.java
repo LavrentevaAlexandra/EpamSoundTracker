@@ -8,8 +8,6 @@ import com.lavrente.soundtrack.servlet.SessionRequestContent;
  */
 public class LogOutCommand extends AbstractCommand {
     private static final String LOGIN_SUCCESS="loginSuccess";
-    private static final String USER_ATTRIBUTE="user";
-
 
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {

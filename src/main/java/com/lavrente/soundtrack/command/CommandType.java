@@ -46,7 +46,12 @@ public enum CommandType {
     },
     TRACK_INFO{
         {
-            this.command=new AddTrackCommand();
+            this.command=new TrackInfoCommand();
+        }
+    },
+    COMMENT{
+        {
+            this.command=new CommentCommand();
         }
     },
     MAIN{

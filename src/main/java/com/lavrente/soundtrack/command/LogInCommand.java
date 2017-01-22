@@ -15,13 +15,10 @@ public class LogInCommand extends AbstractCommand {
     private static final String PARAM_LOGIN = "login";
     private static final String PARAM_PASSWORD = "password";
     private static final String LOGIN_SUCCESS="loginSuccess";
-    private static final String USER_ATTRIBUTE="user";
-
-
 
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
-        String page = null;
+        String page;
         String login = sessionRequestContent.getRequestParameter(PARAM_LOGIN);
         String password = sessionRequestContent.getRequestParameter(PARAM_PASSWORD);
         try {

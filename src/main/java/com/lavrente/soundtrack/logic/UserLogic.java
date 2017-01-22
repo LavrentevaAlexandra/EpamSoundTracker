@@ -14,11 +14,11 @@ import org.apache.commons.codec.digest.DigestUtils;
  * Created by 123 on 04.01.2017.
  */
 @SuppressWarnings("Duplicates")
-public class UserLogic implements Messenger{
-    private final String SUCCESS = "Success";
+public class UserLogic implements Messenger {
+    private final String SUCCESS = "success";
 
     public User findUser(String login) throws LogicException {
-        User user = null;
+        User user;
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         UserDAO userDAO = new UserDAO(connection);
         try {
@@ -30,7 +30,7 @@ public class UserLogic implements Messenger{
     }
 
     public User findUserById(int id) throws LogicException {
-        User user = null;
+        User user;
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         UserDAO userDAO = new UserDAO(connection);
         try {
@@ -135,12 +135,13 @@ public class UserLogic implements Messenger{
             return SUCCESS;
         }
     }
-    public String changePass(int userId,String userPass, String password, String  newPassword, String confPassword) throws LogicException{
+
+    public String changePass(int userId, String userPass, String password, String newPassword, String confPassword) throws LogicException {
         Validator validator = new Validator();
         String md5Pass = DigestUtils.md5Hex(password);
-        if ( userPass.equals(md5Pass)) {
+        if (userPass.equals(md5Pass)) {
             if (validator.validatePassword(newPassword)) {
-                if(newPassword.equals(confPassword)) {
+                if (validator.validateConfirmPass(confPassword, newPassword)) {
                     ProxyConnection connection = ConnectionPool.getInstance().getConnection();
                     UserDAO userDAO = new UserDAO(connection);
                     String md5NewPass = DigestUtils.md5Hex(newPassword);
@@ -152,7 +153,7 @@ public class UserLogic implements Messenger{
                     } finally {
                         userDAO.closeConnection(connection);
                     }
-                }else{
+                } else {
                     return messageManager.getProperty(MessageManager.CHANGE_PASS_EQUAL_NEW_ERROR);
                 }
             } else {
@@ -163,16 +164,45 @@ public class UserLogic implements Messenger{
         }
     }
 
-    public void addFunds(int userId, double userCash, double newCash)throws LogicException{
-        Double finalCash=userCash+newCash;
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        UserDAO userDAO = new UserDAO(connection);
-        try {
-            userDAO.addFunds(userId, finalCash);
-        } catch (DAOException e) {
-            throw new LogicException("Error during adding money", e);
-        } finally {
-            userDAO.closeConnection(connection);
+    public String addFunds(User user, String newCash) throws LogicException {
+        Validator validator = new Validator();
+        if (validator.isCashValid(newCash)) {
+            ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+            UserDAO userDAO = new UserDAO(connection);
+            try {
+                Double cash = Double.valueOf(newCash);
+                Double finalCash = user.getCash() + cash;
+                userDAO.addFunds(user.getId(), finalCash);
+                double newUserCash=userDAO.findCash(user.getId());
+                if(newUserCash>0){
+                    user.setCash(newUserCash);
+                }
+                return SUCCESS;
+            } catch (DAOException e) {
+                throw new LogicException("Error during adding money", e);
+            } finally {
+                userDAO.closeConnection(connection);
+            }
+        }else{
+            return messageManager.getProperty(MessageManager.CHANGE_CASH_ERROR);
+        }
+    }
+
+    public String addComment(User user, String text, int trackId) throws LogicException {
+        Validator validator = new Validator();
+        if (validator.isCommentValid(text)) {
+            ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+            UserDAO userDAO = new UserDAO(connection);
+            try {
+                userDAO.addComment(user.getId(), text, trackId);
+                return SUCCESS;
+            } catch (DAOException e) {
+                throw new LogicException("Error during comment addition", e);
+            } finally {
+                userDAO.closeConnection(connection);
+            }
+        }else{
+            return messageManager.getProperty(MessageManager.ADD_COMMENT_ERROR);
         }
     }
 }
