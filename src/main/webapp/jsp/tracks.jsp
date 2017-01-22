@@ -12,6 +12,9 @@
 <body>
 <%--begin="${num_page * 10}" end="${num_page * 10 + 9}"--%>
 <div class="table-responsive">
+    <c:if test="${not empty success}">
+        <div class="alert alert-success">${success}</div>
+    </c:if>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -47,7 +50,9 @@
                     <ctg:isAdmin>
                         <button class="btn btn-info">
                             <i class="glyphicon glyphicon-trash"></i>
-                            <fmt:message key="track.delete"/>
+                            <a href="${pageContext.request.contextPath}/jsp/delete_track.jsp?track_name=${track.name}&track_id=${track.id}">
+                                <fmt:message key="track.delete"/>
+                            </a>
                         </button>
                     </ctg:isAdmin>
                 </td>

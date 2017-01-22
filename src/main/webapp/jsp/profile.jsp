@@ -34,7 +34,7 @@
               <h3><fmt:message key="profile.cash"/> ${user.cash}</h3>
           </div>
           <div>
-              <h3><fmt:message key="profile.discount"/> ${user.discount}</h3>
+              <h3 title=<fmt:message key="profile.title.discount"/>><fmt:message key="profile.discount"/> ${user.discount}</h3>
           </div>
           <div>
               <h3><fmt:message key="profile.card"/> ${user.cardNumber}</h3>

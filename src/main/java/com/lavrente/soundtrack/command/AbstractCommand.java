@@ -1,5 +1,6 @@
 package com.lavrente.soundtrack.command;
 
+import com.lavrente.soundtrack.manager.ConfigurationManager;
 import com.lavrente.soundtrack.manager.Messenger;
 import com.lavrente.soundtrack.servlet.SessionRequestContent;
 import org.apache.logging.log4j.LogManager;
@@ -17,4 +18,10 @@ public abstract class AbstractCommand implements Messenger{
     static final String USER_ATTRIBUTE="user";
 
     public abstract String execute(SessionRequestContent sessionRequestContent);
+
+    public String redirectToErrorPage(SessionRequestContent sessionRequestContent, Exception e) {
+        sessionRequestContent.setRequestAttribute(ERROR, e);
+        return ConfigurationManager.getProperty(ConfigurationManager.ERROR_PATH);
+    }
+
 }

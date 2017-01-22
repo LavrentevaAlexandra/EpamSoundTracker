@@ -29,7 +29,8 @@ public class MessageManager {
     public final static String ADD_COMMENT_EMPTY="message.add.comment.empty";
     public final static String ADD_TRACK_SUCCESS="message.add.track.success";
     public final static String ADD_TRACK_ERROR="message.add.track.error";
-
+    public final static String ADD_TRACK_DATA_ERROR="message.add.track.data.error";
+    public final static String DELETE_TRACK_SUCCESS="message.delete.track.success";
 
     public String getProperty(String key) {
         return resourceBundle.getString(key);

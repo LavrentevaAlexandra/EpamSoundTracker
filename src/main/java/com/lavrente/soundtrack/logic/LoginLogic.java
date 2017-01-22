@@ -18,7 +18,7 @@ public class LoginLogic {
 
     public boolean checkLogin(String login, String password) throws LogicException {
         Validator validator = new Validator();
-        if (!validator.validateLogin(login) || !validator.validatePassword(password)) {
+        if (!validator.validateLogin(login) || !validator.isPasswordValid(password)) {
             return false;
         }
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();

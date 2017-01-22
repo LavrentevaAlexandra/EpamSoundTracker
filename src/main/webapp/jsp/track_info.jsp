@@ -47,7 +47,7 @@
                 <div class="form-group">
                     <label for="comment_area"><fmt:message key="comment.your"/></label>
                     <textarea id="comment_area" name="comment_area" class="form-control" rows="3"
-                              data-parsley-required data-parsley-maxlength="65535"></textarea>
+                              data-parsley-required data-parsley-length="[1,65535]"></textarea>
                 </div>
                 <button type="submit" name="command" value="comment" class="btn btn-default"><fmt:message key="comment.send"/></button>
             </form>

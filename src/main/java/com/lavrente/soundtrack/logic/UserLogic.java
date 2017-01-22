@@ -64,7 +64,7 @@ public class UserLogic implements Messenger {
     public String changeLogin(int userId, String prevLogin, String newLogin) throws LogicException {
         Validator validator = new Validator();
         if (!newLogin.equals(prevLogin)) {
-            if (validator.validateLogin(newLogin)) {
+            if (validator.isLoginValid(newLogin)) {
                 if (validator.isLoginUnique(newLogin)) {
                     ProxyConnection connection = ConnectionPool.getInstance().getConnection();
                     UserDAO userDAO = new UserDAO(connection);
@@ -90,7 +90,7 @@ public class UserLogic implements Messenger {
     public String changeEmail(int userId, String prevEmail, String newEmail) throws LogicException {
         Validator validator = new Validator();
         if (!newEmail.equals(prevEmail)) {
-            if (validator.validateEmail(newEmail)) {
+            if (validator.isEmailValid(newEmail)) {
                 if (validator.isEmailUnique(newEmail)) {
                     ProxyConnection connection = ConnectionPool.getInstance().getConnection();
                     UserDAO userDAO = new UserDAO(connection);
@@ -116,7 +116,7 @@ public class UserLogic implements Messenger {
     public String changeCardNumber(int userId, String prevCardNumber, String newCardNumber) throws LogicException {
         Validator validator = new Validator();
         if (!newCardNumber.equals(prevCardNumber)) {
-            if (validator.validateCard(newCardNumber)) {
+            if (validator.isBankCardValid(newCardNumber)) {
                 ProxyConnection connection = ConnectionPool.getInstance().getConnection();
                 UserDAO userDAO = new UserDAO(connection);
                 try {
@@ -140,7 +140,7 @@ public class UserLogic implements Messenger {
         Validator validator = new Validator();
         String md5Pass = DigestUtils.md5Hex(password);
         if (userPass.equals(md5Pass)) {
-            if (validator.validatePassword(newPassword)) {
+            if (validator.isPasswordValid(newPassword)) {
                 if (validator.validateConfirmPass(confPassword, newPassword)) {
                     ProxyConnection connection = ConnectionPool.getInstance().getConnection();
                     UserDAO userDAO = new UserDAO(connection);

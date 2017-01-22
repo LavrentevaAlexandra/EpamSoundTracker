@@ -30,8 +30,8 @@ public class TrackDAO extends AbstractDAO {
             "WHERE audio_track.id=?";
     private static final String SQL_SELECT_TRACK_COMMENTS="SELECT user.login, comment.date, comment.text\n"+
             "FROM comment JOIN user ON user.id = comment.user_id WHERE comment.audio_track_id=? ORDER BY comment.date;";
-    private static final String SQL_ADD_TRACK="INSERT INTO audio_track (`name`, `artist_name`, `genre_id`, `price`) VALUES ( ?,?,?,?)";
-
+    private static final String SQL_ADD_TRACK="INSERT INTO audio_track (`name`, `artist_name`, `genre_id`, `price`, `path`) VALUES ( ?,?,?,?,?)";
+    private static final String SQL_DELETE_TRACK = "UPDATE audio_track SET audio_track.deleted=1 WHERE id=?";
 
     public TrackDAO(ProxyConnection connection) {
         super(connection);
@@ -53,6 +53,18 @@ public class TrackDAO extends AbstractDAO {
         return track;
     }
 
+    public void deleteTrackById(int id) throws DAOException {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_DELETE_TRACK);
+            statement.setString(1, Integer.toString(id));
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error during track removal",e);
+        } finally {
+            closeStatement(statement);
+        }
+    }
 
     public List<Track> findLastOrderedTracks() throws DAOException {
         List<Track> trackList;
@@ -107,7 +119,7 @@ public class TrackDAO extends AbstractDAO {
         return trackList;
     }
 
-     public void addTrack(String name, String artist, double price, int genreId) throws DAOException{
+     public void addTrack(String name, String artist, double price, int genreId, String path) throws DAOException{
          PreparedStatement statement = null;
          try {
              statement = connection.prepareStatement(SQL_ADD_TRACK);
@@ -115,6 +127,7 @@ public class TrackDAO extends AbstractDAO {
              statement.setString(2,artist);
              statement.setInt(3,genreId);
              statement.setDouble(4,price);
+             statement.setString(5,path);
              statement.executeUpdate();
          }catch (SQLException e){
              throw new DAOException("Error during track addition",e);

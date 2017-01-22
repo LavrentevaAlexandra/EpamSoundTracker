@@ -27,14 +27,16 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="name"><fmt:message key="add.track.name"/></label>
             <div class="col-md-6">
-                <input id="name" name="name" type="text" class="form-control input-md" data-parsley-required >
+                <input id="name" name="name" type="text" class="form-control input-md"
+                       data-parsley-required data-parsley-length="[1,100]" >
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-4 control-label" for="artist"><fmt:message key="add.track.artist"/></label>
             <div class="col-md-6">
-                <input id="artist" name="artist" type="text"  class="form-control input-md" data-parsley-required>
+                <input id="artist" name="artist" type="text"  class="form-control input-md"
+                       data-parsley-required data-parsley-length="[1,255]" >
             </div>
         </div>
 
@@ -42,7 +44,7 @@
             <label class="col-md-4 control-label" for="price"><fmt:message key="add.track.price"/></label>
             <div class="col-md-2">
                 <input id="price" name="price" type="number"  class="form-control input-md"
-                       data-parsley-required data-parsley-type="number" step="0.10" data-parsley-min="0.50">
+                       data-parsley-required data-parsley-type="number" step="0.10" data-parsley-min="0.50" data-parsley-max="9.90" >
             </div>
         </div>
 
@@ -53,6 +55,8 @@
                        data-parsley-required>
          </div>
         </div>
+
+        <input type="file" accept="audio/*" id="path" name="path" data-parsley-required>
 
         <div class="form-group">
             <div class="col-md-4 col-md-offset-4">

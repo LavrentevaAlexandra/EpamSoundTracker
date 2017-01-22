@@ -35,7 +35,7 @@ public class AddFundsCommand extends AbstractCommand {
             }
         }else {
             sessionRequestContent.setRequestAttribute(ERROR, messageManager.getProperty(MessageManager.CHANGE_CASH_CARD_ERROR));
-            return ConfigurationManager.getProperty(ConfigurationManager.MONEY_PATH);
+            page= ConfigurationManager.getProperty(ConfigurationManager.MONEY_PATH);
         }
         return page;
     }
