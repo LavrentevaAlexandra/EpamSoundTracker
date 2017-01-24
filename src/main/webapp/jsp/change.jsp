@@ -19,21 +19,22 @@
     <form method="post" class="form-horizontal" id="change" name="change"
             action="${pageContext.request.contextPath}/controller">
       <div class="form-group">
-        <label class="col-sm-3 control-label" for="login"><fmt:message key="form.login"/></label>
+        <label class="col-sm-3 control-label" for="login"><fmt:message key="form.login"/> *</label>
         <div class="col-sm-6">
             <input type="text" class="form-control" data-parsley-required data-parsley-pattern="[a-zA-Z0-9]{6,10}"
-                   data-parsley-trigger="keyup" id="login" name="login" value="${user.login}"/>
+                   data-parsley-trigger="keyup" id="login" name="login"
+                   value="${user.login}" title="<fmt:message key="form.login.pattern"/>"/>
         </div>
       </div>
       <div class="form-group">
-          <label class="col-sm-3 control-label"><fmt:message key="signup.email"/> </label>
+          <label class="col-sm-3 control-label"><fmt:message key="signup.email"/> *</label>
           <div class="col-sm-6">
               <input type="email" class="form-control" data-parsley-required data-parsley-type="email"
-                       data-parsley-trigger="keyup" title="Enter your e-mail" name="email" value=${user.email}>
+                       data-parsley-trigger="keyup" name="email" value="${user.email}">
           </div>
       </div>
       <div class="form-group">
-          <label class="col-sm-3 control-label"><fmt:message key="signup.card"/> </label>
+          <label class="col-sm-3 control-label"><fmt:message key="signup.card"/> *</label>
           <div class="col-sm-6">
               <input type="text" class="form-control" data-parsley-required data-parsley-type="number"
                    data-parsley-length="[13,18]" title="Enter new bankcard number" name="card"

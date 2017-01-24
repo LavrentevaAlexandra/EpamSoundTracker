@@ -1,11 +1,10 @@
-package com.lavrente.soundtrack.command;
+package com.lavrente.soundtrack.command.visitor;
 
+import com.lavrente.soundtrack.command.AbstractCommand;
 import com.lavrente.soundtrack.entity.User;
 import com.lavrente.soundtrack.exception.LogicException;
-import com.lavrente.soundtrack.logic.LoginLogic;
 import com.lavrente.soundtrack.logic.UserLogic;
 import com.lavrente.soundtrack.manager.ConfigurationManager;
-import com.lavrente.soundtrack.manager.MessageManager;
 import com.lavrente.soundtrack.servlet.SessionRequestContent;
 
 /**
@@ -18,8 +17,7 @@ public class SingUpCommand extends AbstractCommand {
     private static final String PARAM_EMAIL = "email";
     private static final String PARAM_CARD_NUMBER = "card";
     private static final String ROLE_ATTRIBUTE = "role";
-    private static final String LOGIN_SUCCESS = "loginSuccess";
-    private static final String ERROR_SIGNUP_ATTRIBUTE="errorSingup";
+    private static final String IS_LOGIN = "is_login";
 
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
@@ -34,7 +32,7 @@ public class SingUpCommand extends AbstractCommand {
             String res = userLogic.singUp(login, password, confPassword, email, cardNumber);
             if (SUCCESS.equals(res)) {
                 User user=userLogic.findUser(login);
-                sessionRequestContent.setSessionAttribute(LOGIN_SUCCESS, "true");
+                sessionRequestContent.setSessionAttribute(IS_LOGIN, "true");
                 sessionRequestContent.setSessionAttribute(USER_ATTRIBUTE, user);
                 sessionRequestContent.setSessionAttribute(ROLE_ATTRIBUTE, user.getRole());
                 page = ConfigurationManager.getProperty(ConfigurationManager.HOME_PATH);
@@ -44,13 +42,12 @@ public class SingUpCommand extends AbstractCommand {
                 sessionRequestContent.setRequestAttribute(PARAM_CONF_PASS, confPassword);
                 sessionRequestContent.setRequestAttribute(PARAM_EMAIL, email);
                 sessionRequestContent.setRequestAttribute(PARAM_CARD_NUMBER, cardNumber);
-                sessionRequestContent.setRequestAttribute(ERROR_SIGNUP_ATTRIBUTE, res);
+                sessionRequestContent.setRequestAttribute(ERROR, res);
                 page = ConfigurationManager.getProperty(ConfigurationManager.SIGNUP_PATH);
             }
         } catch (LogicException e) {
-            LOG.error("Error during sign up command", e);
-            sessionRequestContent.setRequestAttribute(ERROR, e);
-            page = ConfigurationManager.getProperty(ConfigurationManager.ERROR_PATH);
+            LOG.error("Exception during sign up command", e);
+            page = redirectToErrorPage(sessionRequestContent,e);
         }
         return page;
     }

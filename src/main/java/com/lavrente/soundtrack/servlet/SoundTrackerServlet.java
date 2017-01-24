@@ -1,8 +1,9 @@
 package com.lavrente.soundtrack.servlet;
 
 import com.lavrente.soundtrack.command.AbstractCommand;
-import com.lavrente.soundtrack.command.AddTrackCommand;
 import com.lavrente.soundtrack.command.CommandCreator;
+import com.lavrente.soundtrack.command.admin.AddTrackCommand;
+import com.lavrente.soundtrack.command.user.CommentCommand;
 import com.lavrente.soundtrack.pool.ConnectionPool;
 
 import javax.servlet.RequestDispatcher;
@@ -56,15 +57,19 @@ public class SoundTrackerServlet extends HttpServlet implements ServletContextLi
         CommandCreator client = new CommandCreator();
         AbstractCommand command = client.defineCommand(sessionRequestContent);
 
-        if(command instanceof AddTrackCommand){
-            FileUploader uploader=new FileUploader();
-            boolean res=uploader.uploadFile(request);
-            sessionRequestContent.setRequestAttribute("result",res);
+        if (command instanceof AddTrackCommand) {
+            FileUploader uploader = new FileUploader();
+            boolean res = uploader.uploadFile(request, sessionRequestContent);
+            sessionRequestContent.setRequestAttribute("result", res);
         }
 
         String page = command.execute(sessionRequestContent);
-        sessionRequestContent.insertAttributes(request);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
-        dispatcher.forward(request, response);
+        if (command instanceof CommentCommand) {
+            response.sendRedirect(page);
+        } else {
+            sessionRequestContent.insertAttributes(request);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+            dispatcher.forward(request, response);
+        }
     }
 }

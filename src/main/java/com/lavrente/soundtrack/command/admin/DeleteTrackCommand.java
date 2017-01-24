@@ -1,5 +1,6 @@
-package com.lavrente.soundtrack.command;
+package com.lavrente.soundtrack.command.admin;
 
+import com.lavrente.soundtrack.command.AbstractCommand;
 import com.lavrente.soundtrack.exception.LogicException;
 import com.lavrente.soundtrack.logic.TrackLogic;
 import com.lavrente.soundtrack.manager.ConfigurationManager;
@@ -22,7 +23,7 @@ public class DeleteTrackCommand extends AbstractCommand {
             sessionRequestContent.setRequestAttribute(SUCCESS, messageManager.getProperty(MessageManager.DELETE_TRACK_SUCCESS));
             page = ConfigurationManager.getProperty(ConfigurationManager.HOME_PATH);
         } catch (LogicException e) {
-            LOG.error("Error during track delete command", e);
+            LOG.error("Exception during track delete command", e);
             page=redirectToErrorPage(sessionRequestContent,e);
         }
         return page;

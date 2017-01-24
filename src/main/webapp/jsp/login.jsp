@@ -24,10 +24,10 @@
   </c:if>
   <div class="container">
     <form class="form-signin" id="logform" method="post" name="login" action="${pageContext.request.contextPath}/controller">
-        <label for="inputLogin"><fmt:message key="form.login"/></label>
+        <label for="inputLogin"><fmt:message key="form.login"/> *</label>
         <input type="text" id="inputLogin" name="login" class="form-control"  data-parsley-pattern="[a-zA-Z0-9]{6,10}"
-               data-parsley-required autofocus  value=${login}>
-        <label for="inputPassword"><fmt:message key="form.pass"/></label>
+               data-parsley-required autofocus  value="${login}" title="<fmt:message key="form.login.pattern"/>">
+        <label for="inputPassword"><fmt:message key="form.pass"/> *</label>
         <input type="password" id="inputPassword" name="password" class="form-control"
                data-parsley-required data-parsley-length="[6, 10]" data-parsley-trigger="keyup" value=${password}>
 

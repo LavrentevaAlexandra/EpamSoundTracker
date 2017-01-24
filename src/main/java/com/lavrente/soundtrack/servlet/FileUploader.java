@@ -15,15 +15,13 @@ import java.io.IOException;
 public class FileUploader {
     static final Logger LOG= LogManager.getLogger();
     private static final String SAVE_DIR = "uploadTracks";
+    private static final String PATH="path";
 
-    public boolean uploadFile(HttpServletRequest request) {
+    public boolean uploadFile(HttpServletRequest request, SessionRequestContent sessionRequestContent) {
         try {
-            // gets absolute path of the web application
             String appPath = request.getServletContext().getRealPath("");
-            // constructs path of the directory to save uploaded file
             String savePath = appPath + File.separator + SAVE_DIR;
 
-            // creates the save directory if it does not exists
             File fileSaveDir = new File(savePath);
             if (!fileSaveDir.exists()) {
                 fileSaveDir.mkdir();
@@ -31,15 +29,19 @@ public class FileUploader {
             }
 
             for (Part part : request.getParts()) {
-                String fileName = extractFileName(part);
-                // refines the fileName in case it is an absolute path
-                fileName = new File(fileName).getName();
-                part.write(savePath + File.separator + fileName);
+                if(PATH.equals(part.getName())) {
+                    String fileName = extractFileName(part);
+                    // refines the fileName in case it is an absolute path
+                    fileName = new File(fileName).getName();
+                    String path=savePath + File.separator + fileName;
+                    part.write(path);
+                    sessionRequestContent.setRequestAttribute(PATH,path);
+                }
             }
             LOG.info("Upload has been done successfully!");
             return true;
         } catch (ServletException |IOException e) {
-            LOG.error("Error during uploading file to server", e);
+            LOG.error("Exception during uploading file to server", e);
             return false;
         }
     }

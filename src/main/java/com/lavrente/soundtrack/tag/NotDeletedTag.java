@@ -4,16 +4,15 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 /**
- * Created by 123 on 05.01.2017.
+ * Created by 123 on 25.01.2017.
  */
-public class NotLoginTag extends TagSupport{
-    private final String IS_LOGIN = "is_login";
-
+public class NotDeletedTag extends TagSupport {
+    private final String IS_DELETED = "is_deleted";
 
     @Override
     public int doStartTag() throws JspException {
-        String isLogin = pageContext.getSession().getAttribute(IS_LOGIN).toString();
-        if (isLogin==null || !Boolean.valueOf(isLogin)) {
+        String isDeleted =pageContext.getSession().getAttribute(IS_DELETED).toString();
+        if (isDeleted==null || !Boolean.valueOf(isDeleted)) {
             return EVAL_BODY_INCLUDE;
         } else {
             return SKIP_BODY;

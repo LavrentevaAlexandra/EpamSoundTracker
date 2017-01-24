@@ -21,18 +21,18 @@
 <%@ include file="menu.jsp" %>
 <form method="post" class="form-horizontal" style="margin-top: 10%" id="regform" name="signup"
       action="${pageContext.request.contextPath}/controller">
-    <c:if test="${not empty errorSingup}">
-        <div class="alert alert-danger ">${errorSingup}</div>
+    <c:if test="${not empty error}">
+        <div class="alert alert-danger ">${error}</div>
     </c:if>
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="login"><fmt:message key="form.login"/></label>
+        <label class="col-sm-3 control-label" for="login"><fmt:message key="form.login"/> *</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" data-parsley-required
-                   data-parsley-pattern="[a-zA-Z0-9]{6,10}" id="login" name="login" value="${login}"/>
+            <input type="text" class="form-control" id="login" name="login" data-parsley-required
+                   data-parsley-pattern="[a-zA-Z0-9]{6,10}"  value="${login}" title="<fmt:message key="form.login.pattern"/>"/>
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="pass"><fmt:message key="form.pass"/> </label>
+        <label class="col-sm-3 control-label" for="pass"><fmt:message key="form.pass"/> *</label>
         <div class="col-sm-3">
             <input type="password" id="pass" name="password" class="form-control" data-parsley-required
                    data-parsley-length="[6, 10]" data-parsley-trigger="keyup" value="${password}">
@@ -44,17 +44,17 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label"><fmt:message key="signup.email"/> </label>
+        <label class="col-sm-3 control-label" for="email"><fmt:message key="signup.email"/> *</label>
         <div class="col-sm-6">
             <input type="email" class="form-control" data-parsley-required data-parsley-type="email"
-                   data-parsley-trigger="keyup" title="Enter your e-mail" name="email" value=${email}>
+                   data-parsley-trigger="keyup" name="email" id="email" value=${email}>
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label"><fmt:message key="signup.card"/> </label>
+        <label class="col-sm-3 control-label" for="card"><fmt:message key="signup.card"/> *</label>
         <div class="col-sm-6">
             <input type="text" class="form-control" data-parsley-required data-parsley-type="number"
-                   data-parsley-length="[13,18]" title="Enter your bankcard number" name="card" value="${card}"/>
+                   data-parsley-length="[13,18]" name="card" id="card" value="${card}"/>
         </div>
     </div>
     <div class="form-group">

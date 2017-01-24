@@ -17,6 +17,16 @@
         <body-content>scriptless</body-content>
     </tag>
     <tag>
+        <name>isDeleted</name>
+        <tag-class>com.lavrente.soundtrack.tag.DeletedTag</tag-class>
+        <body-content>scriptless</body-content>
+    </tag>
+    <tag>
+        <name>notDeleted</name>
+        <tag-class>com.lavrente.soundtrack.tag.NotDeletedTag</tag-class>
+        <body-content>scriptless</body-content>
+    </tag>
+    <tag>
         <name>notLoggedIn</name>
         <tag-class>com.lavrente.soundtrack.tag.NotLoginTag</tag-class>
         <body-content>scriptless</body-content>

@@ -1,5 +1,6 @@
-package com.lavrente.soundtrack.command;
+package com.lavrente.soundtrack.command.admin;
 
+import com.lavrente.soundtrack.command.AbstractCommand;
 import com.lavrente.soundtrack.exception.LogicException;
 import com.lavrente.soundtrack.logic.TrackLogic;
 import com.lavrente.soundtrack.manager.ConfigurationManager;
@@ -22,7 +23,7 @@ public class AddTrackCommand extends AbstractCommand {
 
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
-        String page=null;
+        String page;
         boolean result= Boolean.valueOf(sessionRequestContent.getRequestAttribute(RESULT_ATTR).toString());
         if(result){
             TrackLogic trackLogic=new TrackLogic();
@@ -30,7 +31,7 @@ public class AddTrackCommand extends AbstractCommand {
             String artist = sessionRequestContent.getRequestParameter(ARTIST_PARAM);
             String genre = sessionRequestContent.getRequestParameter(GENRE_PARAM);
             String price = sessionRequestContent.getRequestParameter(PRICE_PARAM);
-            String path =sessionRequestContent.getRequestParameter(PATH_ATTRIBUTE);
+            String path =sessionRequestContent.getRequestAttribute(PATH_ATTRIBUTE).toString();
             int nameStartIndex=path.lastIndexOf(File.separator);
             String serverPath=DATA_PATH+path.substring(nameStartIndex);
             try{
@@ -43,7 +44,7 @@ public class AddTrackCommand extends AbstractCommand {
                     page= ConfigurationManager.getProperty(ConfigurationManager.ADD_TRACK_PATH);
                 }
             }catch (LogicException e){
-                LOG.error("Error during track addition command",e);
+                LOG.error("Exception during track addition command",e);
                 sessionRequestContent.setRequestAttribute(ERROR, messageManager.getProperty(MessageManager.ADD_TRACK_ERROR));
                 page= ConfigurationManager.getProperty(ConfigurationManager.ADD_TRACK_PATH);
             }

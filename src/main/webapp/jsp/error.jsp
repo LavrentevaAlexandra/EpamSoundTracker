@@ -32,10 +32,10 @@
             <fmt:message key="error.fail"/></label>
     </div>
     <div class="row alert alert-danger">
-        <label class="control-label"><fmt:message key="error.status"/>: ${pageContext.errorData.statusCode}</label>
+        <label class="control-label"><fmt:message key="error.status"/>${pageContext.errorData.statusCode}</label>
     </div>
     <div class="row">
-        <label class="control-label"><fmt:message key="error.exception"/>: ${pageContext.errorData.throwable}</label>
+        <label class="control-label"><fmt:message key="error.exception"/> ${pageContext.errorData.throwable}</label>
     </div>
     <button class="btn btn-lg btn-primary "
             onClick='location.href="${pageContext.request.contextPath}/controller?command=main"'>

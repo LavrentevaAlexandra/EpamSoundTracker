@@ -18,14 +18,14 @@
     <form method="post" class="form-horizontal" style="margin-top: 100px" id="change_pass" name="change_pass"
           action="${pageContext.request.contextPath}/controller">
         <div class="form-group">
-            <label class="col-sm-3 control-label"><fmt:message key="form.pass"/></label>
+            <label class="col-sm-3 control-label" for="password"><fmt:message key="form.pass"/> *</label>
             <div class="col-sm-6">
-                <input type="password" class="form-control" name="password" data-parsley-required
+                <input type="password" class="form-control" name="password" id="password" data-parsley-required
                        data-parsley-length="[6, 10]" data-parsley-trigger="keyup" value="${password}">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label" for="new_pass"><fmt:message key="profile.newpass"/> </label>
+            <label class="col-sm-3 control-label" for="new_pass"><fmt:message key="profile.newpass"/> *</label>
             <div class="col-sm-3">
                 <input type="password" id="new_pass" name="new_pass" class="form-control" data-parsley-required
                        data-parsley-length="[6, 10]" data-parsley-trigger="keyup" value="${newPass}">

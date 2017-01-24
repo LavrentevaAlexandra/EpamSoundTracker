@@ -10,12 +10,12 @@ import org.apache.logging.log4j.Logger;
  * Created by 123 on 29.11.2016.
  */
 public abstract class AbstractCommand implements Messenger{
-    static final Logger LOG= LogManager.getLogger();
+    protected static final Logger LOG= LogManager.getLogger();
     static final String LOCALE_ATTRIBUTE = "locale";
     static final String CUR_PAGE_ATTR = "page";
-    static final String ERROR = "error";
-    static final String SUCCESS= "success";
-    static final String USER_ATTRIBUTE="user";
+    protected static final String ERROR = "error";
+    protected static final String SUCCESS= "success";
+    protected static final String USER_ATTRIBUTE="user";
 
     public abstract String execute(SessionRequestContent sessionRequestContent);
 

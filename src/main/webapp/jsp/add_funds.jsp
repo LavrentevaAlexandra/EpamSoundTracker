@@ -16,17 +16,17 @@
       <div class="alert alert-danger"style="margin-top: 90px">${error}</div>
     </c:if>
     <div class="form-group">
-      <label for="card" class="col-sm-3 control-label"><fmt:message key="signup.card"/> </label>
+      <label for="card" class="col-sm-3 control-label"><fmt:message key="signup.card"/> *</label>
       <div class="col-sm-6">
           <input type="text" class="form-control" data-parsley-required data-parsley-type="number"
                  data-parsley-length="[13,18]" name="card" id="card" value="${user.cardNumber}" />
       </div>
     </div>
     <div class="form-group">
-      <label for="cash" class="col-sm-3 control-label"><fmt:message key="profile.money"/> </label>
+      <label for="cash" class="col-sm-3 control-label"><fmt:message key="profile.money"/> *</label>
       <div class="col-sm-6">
-        <input type="number" class="form-control" data-parsley-required data-parsley-type="number"
-               step="0.01" name="cash" id="cash" />
+        <input type="number" class="form-control" name="cash" id="cash" data-parsley-required data-parsley-type="number"
+               step="0.01" data-parsley-min="0.10" data-parsley-max="99.99"/>
       </div>
     </div>
     <div class="form-group">

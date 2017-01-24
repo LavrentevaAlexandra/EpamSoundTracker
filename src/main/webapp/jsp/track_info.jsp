@@ -43,25 +43,29 @@
     <hr>
     <div class="col-sm-8" style="padding-bottom: 20px">
         <ctg:isLoggedIn>
-            <form method="post" id="comment_form" action="${pageContext.request.contextPath}/controller?track_id=${track.id}">
+            <form method="post" id="comment_form"
+                  action="${pageContext.request.contextPath}/controller?track_id=${track.id}">
                 <div class="form-group">
                     <label for="comment_area"><fmt:message key="comment.your"/></label>
                     <textarea id="comment_area" name="comment_area" class="form-control" rows="3"
                               data-parsley-required data-parsley-length="[1,65535]"></textarea>
                 </div>
-                <button type="submit" name="command" value="comment" class="btn btn-default"><fmt:message key="comment.send"/></button>
+                <button type="submit" name="command" value="comment" class="btn btn-default"><fmt:message
+                        key="comment.send"/></button>
             </form>
         </ctg:isLoggedIn>
-        <div class="panel panel-default">
-            <c:forEach var="comment" items="${comments}">
+
+        <c:forEach var="comment" items="${comments}">
+            <div class="panel panel-default">
                 <div class="panel-heading" style="padding-top: 3px">
                     <strong>${comment.userLogin}</strong> <span class="text-muted">${comment.dateTime}</span>
                 </div>
                 <div class="panel-body">
                         ${comment.text}
                 </div>
-            </c:forEach>
-        </div>
+            </div>
+        </c:forEach>
+
     </div>
 </div>
 <%@include file="footer.jsp" %>

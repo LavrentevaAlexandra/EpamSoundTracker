@@ -40,7 +40,6 @@ public class SessionRequestContent {
         }
     }
 
-
     public String getRequestParameter( String key) {
         if(!requestParameters.isEmpty()){
             String[] parameters=requestParameters.get(key);
@@ -55,13 +54,12 @@ public class SessionRequestContent {
     }
 
     public Object getRequestAttribute(String key) {
-        return requestAttributes.get(key);
+         return requestAttributes.get(key);
     }
 
     public void setRequestAttribute(String key, Object value) {
         requestAttributes.put(key, value);
     }
-
 
     public Object getSessionAttribute(String key) {
         return sessionAttributes.get(key);

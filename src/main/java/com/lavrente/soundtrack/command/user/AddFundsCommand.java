@@ -1,5 +1,6 @@
-package com.lavrente.soundtrack.command;
+package com.lavrente.soundtrack.command.user;
 
+import com.lavrente.soundtrack.command.AbstractCommand;
 import com.lavrente.soundtrack.entity.User;
 import com.lavrente.soundtrack.exception.LogicException;
 import com.lavrente.soundtrack.logic.UserLogic;
@@ -29,9 +30,8 @@ public class AddFundsCommand extends AbstractCommand {
                 sessionRequestContent.setSessionAttribute(USER_ATTRIBUTE, user);
                 page = ConfigurationManager.getProperty(ConfigurationManager.PROFILE_PATH);
             }catch (LogicException e){
-                LOG.error("Error funds addition command", e);
-                sessionRequestContent.setRequestAttribute(ERROR, e);
-                page = ConfigurationManager.getProperty(ConfigurationManager.ERROR_PATH);
+                LOG.error("Exception funds addition command", e);
+                page = redirectToErrorPage(sessionRequestContent, e);
             }
         }else {
             sessionRequestContent.setRequestAttribute(ERROR, messageManager.getProperty(MessageManager.CHANGE_CASH_CARD_ERROR));

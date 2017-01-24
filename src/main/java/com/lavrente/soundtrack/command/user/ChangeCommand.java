@@ -1,5 +1,6 @@
-package com.lavrente.soundtrack.command;
+package com.lavrente.soundtrack.command.user;
 
+import com.lavrente.soundtrack.command.AbstractCommand;
 import com.lavrente.soundtrack.entity.User;
 import com.lavrente.soundtrack.exception.LogicException;
 import com.lavrente.soundtrack.logic.UserLogic;
@@ -10,7 +11,7 @@ import com.lavrente.soundtrack.servlet.SessionRequestContent;
 /**
  * Created by 123 on 06.01.2017.
  */
-public class ChangeCommand extends AbstractCommand  {
+public class ChangeCommand extends AbstractCommand {
     private static final String USER_ATTR = "user";
     private static final String PARAM_LOGIN = "login";
     private static final String PARAM_EMAIL = "email";
@@ -59,9 +60,8 @@ public class ChangeCommand extends AbstractCommand  {
             sessionRequestContent.setRequestAttribute(SUCCESS, messageManager.getProperty(MessageManager.CHANGE_SUCCESS));
             page = ConfigurationManager.getProperty(ConfigurationManager.PROFILE_PATH);
         } catch (LogicException e) {
-            LOG.error("Error during change command", e);
-            sessionRequestContent.setRequestAttribute(ERROR, e);
-            page = ConfigurationManager.getProperty(ConfigurationManager.ERROR_PATH);
+            LOG.error("Exception during change command", e);
+            page = redirectToErrorPage(sessionRequestContent,e);
         }
         return page;
     }

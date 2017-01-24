@@ -10,6 +10,19 @@ import com.lavrente.soundtrack.pool.ProxyConnection;
  * Created by 123 on 12.01.2017.
  */
 public class GenreLogic {
+
+    public int addNewGenre(String genre) throws LogicException{
+        int id;
+        ProxyConnection connection= ConnectionPool.getInstance().getConnection();
+        GenreDAO genreDAO=new GenreDAO(connection);
+        try{
+            id=genreDAO.addGenre(genre);
+        }catch (DAOException e){
+            throw new LogicException("Exception during genre addition", e);
+        }
+        return id;
+    }
+
     public int findGenreId(String genre) throws LogicException{
         int id;
         ProxyConnection connection= ConnectionPool.getInstance().getConnection();
@@ -20,18 +33,7 @@ public class GenreLogic {
                 id=addNewGenre(genre);
             }
         }catch (DAOException e){
-            throw new LogicException("Error during genre id search", e);
-        }
-        return id;
-    }
-    public int addNewGenre(String genre) throws LogicException{
-        int id;
-        ProxyConnection connection= ConnectionPool.getInstance().getConnection();
-        GenreDAO genreDAO=new GenreDAO(connection);
-        try{
-            id=genreDAO.addGenre(genre);
-        }catch (DAOException e){
-            throw new LogicException("Error during genre id search", e);
+            throw new LogicException("Exception during genre id search", e);
         }
         return id;
     }

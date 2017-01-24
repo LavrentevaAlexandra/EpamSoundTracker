@@ -14,11 +14,10 @@ import org.apache.commons.codec.digest.DigestUtils;
  * Created by 123 on 02.01.2017.
  */
 public class LoginLogic {
-    private static final Logger LOG = LogManager.getLogger();
 
     public boolean checkLogin(String login, String password) throws LogicException {
         Validator validator = new Validator();
-        if (!validator.validateLogin(login) || !validator.isPasswordValid(password)) {
+        if (!validator.isLoginValid(login) || !validator.isPasswordValid(password)) {
             return false;
         }
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
@@ -30,7 +29,7 @@ public class LoginLogic {
                 return true;
             }
         } catch (DAOException e) {
-            throw new LogicException("Error during login", e);
+            throw new LogicException("Exception during login", e);
         } finally {
             userDAO.closeConnection(connection);
         }

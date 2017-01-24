@@ -32,16 +32,32 @@ public class ConnectionPool {
             throw new RuntimeException(e);
         }
         for (int i = 0; i < db.POOL_SIZE; i++) {
-            try {
-                Connection connection = DriverManager.getConnection(db.DATABASE_URL, db.DATABASE_LOGIN, db.DATABASE_PASS);
-                ProxyConnection proxyConnection = new ProxyConnection(connection);
-                this.connectionQueue.put(proxyConnection);
-            } catch (SQLException | InterruptedException e) {
-                LOG.error("Exception during connection ¹ "+i+" addition",e);
-            }
+            createConnection();
         }
 
+        if (size() != db.POOL_SIZE) {
+            int number = db.POOL_SIZE - connectionQueue.size();
+            LOG.warn(number + " connections should be recreated");
+            for (int i = 0; i < number; i++) {
+                createConnection();
+            }
+        }
+        if (size() == 0) {
+            LOG.fatal("There's no connections in the pull");
+            throw new RuntimeException();
+        }
     }
+
+    private void createConnection(){
+        try {
+            Connection connection = DriverManager.getConnection(db.DATABASE_URL, db.DATABASE_LOGIN, db.DATABASE_PASS);
+            ProxyConnection proxyConnection = new ProxyConnection(connection);
+            this.connectionQueue.put(proxyConnection);
+        } catch (SQLException | InterruptedException e) {
+            LOG.error("Exception during connection addition to connection queue",e);
+        }
+    }
+
     public static ConnectionPool getInstance() {
         if (!instanceCreated.get()) {
             lock.lock();
@@ -67,14 +83,6 @@ public class ConnectionPool {
         return connection;
     }
 
-    void returnConnection(ProxyConnection connection) {
-        try {
-            connectionQueue.put(connection);
-        } catch (InterruptedException e) {
-            LOG.error(e);
-        }
-    }
-
     public void terminatePool() {
         try {
             for (int i = 0; i < db.POOL_SIZE; i++) {
@@ -83,5 +91,17 @@ public class ConnectionPool {
         } catch (SQLException | InterruptedException e) {
             LOG.error(e);
         }
+    }
+
+    void returnConnection(ProxyConnection connection) {
+        try {
+            connectionQueue.put(connection);
+        } catch (InterruptedException e) {
+            LOG.error(e);
+        }
+    }
+
+    private int size(){
+        return connectionQueue.size();
     }
 }

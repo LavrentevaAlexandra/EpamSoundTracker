@@ -1,5 +1,6 @@
-package com.lavrente.soundtrack.command;
+package com.lavrente.soundtrack.command.user;
 
+import com.lavrente.soundtrack.command.AbstractCommand;
 import com.lavrente.soundtrack.entity.Comment;
 import com.lavrente.soundtrack.entity.Track;
 import com.lavrente.soundtrack.entity.User;
@@ -35,18 +36,15 @@ public class CommentCommand extends AbstractCommand {
                 String res = userLogic.addComment(user, commentText, trackId);
                 if (SUCCESS.equals(res)) {
                     List<Comment> comments = trackLogic.findTrackComments(trackId);
-                    Track track = trackLogic.findTrackById(trackId);
-                    sessionRequestContent.setRequestAttribute(TRACK_ATTRIBUTE, track);
-                    sessionRequestContent.setRequestAttribute(COMMENTS_ATTRIBUTE, comments);
+                    sessionRequestContent.setSessionAttribute(COMMENTS_ATTRIBUTE, comments);
                     page = ConfigurationManager.getProperty(ConfigurationManager.TRACK_INFO_PATH);
                 }else{
                     sessionRequestContent.setRequestAttribute(ERROR, res);
                     return ConfigurationManager.getProperty(ConfigurationManager.TRACK_INFO_PATH);
                 }
             } catch (LogicException e) {
-                LOG.error("Error comment addition command", e);
-                sessionRequestContent.setRequestAttribute(ERROR, e);
-                page = ConfigurationManager.getProperty(ConfigurationManager.ERROR_PATH);
+                LOG.error("Exception during comment addition command", e);
+                page = redirectToErrorPage(sessionRequestContent, e);
             }
         } else {
             sessionRequestContent.setRequestAttribute(ERROR, messageManager.getProperty(MessageManager.ADD_COMMENT_EMPTY));

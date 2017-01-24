@@ -1,5 +1,6 @@
-package com.lavrente.soundtrack.command;
+package com.lavrente.soundtrack.command.user;
 
+import com.lavrente.soundtrack.command.AbstractCommand;
 import com.lavrente.soundtrack.entity.User;
 import com.lavrente.soundtrack.exception.LogicException;
 import com.lavrente.soundtrack.logic.UserLogic;
@@ -37,9 +38,8 @@ public class ChangePasswordCommand extends AbstractCommand {
                 return ConfigurationManager.getProperty(ConfigurationManager.CHANGE_PASS_PATH);
             }
         } catch (LogicException e) {
-            LOG.error("Error during change password command", e);
-            sessionRequestContent.setRequestAttribute(ERROR, e);
-            page = ConfigurationManager.getProperty(ConfigurationManager.ERROR_PATH);
+            LOG.error("Exception during change password command", e);
+            page = redirectToErrorPage(sessionRequestContent,e);
         }
         return page;
     }

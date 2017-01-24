@@ -32,38 +32,47 @@
                 <td>${track.artist}</td>
                 <td>—</td>
                 <td>${track.name}</td>
-                <td>
-                    <button class="btn btn-link"
-                            onClick='location.href="${pageContext.request.contextPath}/controller?command=track_info&track_id=${track.id}"'>
-                        <fmt:message key="track.more"/>
-                    </button>
-                </td>
-                <td>
-                    <ctg:isAdmin>
-                        <button class="btn btn-info">
-                            <i class="glyphicon glyphicon-edit"></i>
-                            <fmt:message key="track.edit"/>
+                <ctg:isDeleted>
+                    <td>
+                        <button class="btn btn-link"
+                                onClick='location.href="${pageContext.request.contextPath}/controller?command=recover&track_id=${track.id}"'>
+                            <fmt:message key="track.recover"/>
                         </button>
-                    </ctg:isAdmin>
-                </td>
-                <td>
-                    <ctg:isAdmin>
-                        <button class="btn btn-info">
-                            <i class="glyphicon glyphicon-trash"></i>
-                            <a href="${pageContext.request.contextPath}/jsp/delete_track.jsp?track_name=${track.name}&track_id=${track.id}">
+                    </td>
+                </ctg:isDeleted>
+                <ctg:notDeleted>
+                    <td>
+                        <button class="btn btn-link"
+                                onClick='location.href="${pageContext.request.contextPath}/controller?command=track_info&track_id=${track.id}"'>
+                            <fmt:message key="track.more"/>
+                        </button>
+                    </td>
+                    <td>
+                        <ctg:isAdmin>
+                            <button class="btn btn-info" onclick='location.href=""'>
+                                <i class="glyphicon glyphicon-edit"></i>
+                                <fmt:message key="track.edit"/>
+                            </button>
+                        </ctg:isAdmin>
+                    </td>
+                    <td>
+                        <ctg:isAdmin>
+                            <button class="btn btn-info"
+                                    onclick='location.href="${pageContext.request.contextPath}/controller?command=delete&track_id=${track.id}"'>
+                                <i class="glyphicon glyphicon-trash"></i>
                                 <fmt:message key="track.delete"/>
-                            </a>
-                        </button>
-                    </ctg:isAdmin>
-                </td>
-                <td>
-                    <ctg:isLoggedIn>
-                        <button class="btn btn-primary">
-                            <i class="glyphicon glyphicon-credit-card"></i>
-                            <fmt:message key="track.buy"/>
-                        </button>
-                    </ctg:isLoggedIn>
-                </td>
+                            </button>
+                        </ctg:isAdmin>
+                    </td>
+                    <td>
+                        <ctg:isLoggedIn>
+                            <button class="btn btn-primary">
+                                <i class="glyphicon glyphicon-credit-card"></i>
+                                <fmt:message key="track.buy"/>
+                            </button>
+                        </ctg:isLoggedIn>
+                    </td>
+                </ctg:notDeleted>
             </tr>
         </c:forEach>
         </tbody>

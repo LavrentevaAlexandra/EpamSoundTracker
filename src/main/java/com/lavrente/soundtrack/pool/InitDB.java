@@ -13,10 +13,11 @@ import java.util.Properties;
  */
 public class InitDB {
     private static final Logger LOG = LogManager.getLogger();
-    final  String DATABASE_URL;
     final String DATABASE_LOGIN;
-    final  int POOL_SIZE;
     final  String DATABASE_PASS;
+    final  String DATABASE_URL;
+    final  int POOL_SIZE;
+
 
     InitDB() {
         Properties properties=new Properties();
