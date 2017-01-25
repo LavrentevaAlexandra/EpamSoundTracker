@@ -1,5 +1,6 @@
-package com.lavrente.soundtrack.command;
+package com.lavrente.soundtrack.command.visitor;
 
+import com.lavrente.soundtrack.command.AbstractCommand;
 import com.lavrente.soundtrack.manager.ConfigurationManager;
 import com.lavrente.soundtrack.servlet.SessionRequestContent;
 
@@ -17,11 +18,11 @@ public class ChangeLanguageCommand extends AbstractCommand {
             messageManager.setCurrentLocale(str.toString());
             sessionRequestContent.setSessionAttribute(LOCALE_ATTRIBUTE, str.toString());
         }
-        String property = (String) sessionRequestContent.getSessionAttribute(CUR_PAGE_ATTR);
+        Object property = sessionRequestContent.getSessionAttribute(CUR_PAGE_ATTR);
         if (property == null) {
             page = ConfigurationManager.getProperty(ConfigurationManager.HOME_PATH);
         } else {
-            page = ConfigurationManager.getProperty(property);
+            page = ConfigurationManager.getProperty(property.toString());
         }
         return page;
     }

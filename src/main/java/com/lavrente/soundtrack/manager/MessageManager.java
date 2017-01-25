@@ -21,6 +21,10 @@ public class MessageManager {
     public final static String CHANGE_PASS_EQUAL_NEW_ERROR="message.change.pass.equal.new";
     public final static String CHANGE_PASS_NEW_ERROR="message.change.pass.new";
     public final static String CHANGE_SUCCESS="message.change.success";
+    public final static String CHANGE_TRACK_ARTIST_ERROR="message.change.track.artist.error";
+    public final static String CHANGE_TRACK_GENRE_ERROR="message.change.track.genre.error";
+    public final static String CHANGE_TRACK_NAME_ERROR="message.change.track.name.error";
+    public final static String CHANGE_TRACK_PRICE_ERROR="message.change.track.price.error";
     public final static String DELETE_TRACK_SUCCESS="message.delete.track.success";
     public final static String LOGIN_ERROR="message.login.error";
     public final static String NOT_UNIQUE_EMAIL="message.signup.unique.email";

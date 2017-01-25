@@ -20,7 +20,7 @@ public class CommandCreator {
                 CommandType currentCommand = CommandType.valueOf(command.toUpperCase());
                 current = currentCommand.getCurrentCommand();
             } catch (IllegalArgumentException e) {
-                LOG.error(e);
+                LOG.error("Exception during command creator",e);
             }
         }
         return current;

@@ -64,10 +64,10 @@ public class SoundTrackerServlet extends HttpServlet implements ServletContextLi
         }
 
         String page = command.execute(sessionRequestContent);
-        if (command instanceof CommentCommand) {
-            response.sendRedirect(page);
+        sessionRequestContent.insertAttributes(request);
+        if (command instanceof CommentCommand || command instanceof AddTrackCommand) {
+            response.sendRedirect(request.getServletContext().getContextPath()+page);
         } else {
-            sessionRequestContent.insertAttributes(request);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
             dispatcher.forward(request, response);
         }

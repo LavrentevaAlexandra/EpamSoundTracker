@@ -35,8 +35,10 @@
                         <li><a href="${pageContext.request.contextPath}/jsp/signup.jsp"><fmt:message key="menu.signup"/></a></li>
                     </ctg:notLoggedIn>
             </ul>
-            <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder=<fmt:message key="menu.search"/>>
+            <form class="navbar-form navbar-right" name="search" action="${pageContext.request.contextPath}/controller">
+                <input type="text" name="find" class="form-control" placeholder=<fmt:message key="menu.search"/>>
+                <button type="submit" class="btn btn-link" name="command"
+                        value="search"><span class="glyphicon glyphicon-search"></span></button>
             </form>
         </div>
     </div>

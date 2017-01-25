@@ -30,7 +30,7 @@ public class UserLogic implements Messenger {
             } finally {
                 userDAO.closeConnection(connection);
             }
-        }else{
+        } else {
             return messageManager.getProperty(MessageManager.ADD_COMMENT_ERROR);
         }
     }
@@ -44,8 +44,8 @@ public class UserLogic implements Messenger {
                 Double cash = Double.valueOf(newCash);
                 Double finalCash = user.getCash() + cash;
                 userDAO.addFunds(user.getId(), finalCash);
-                double newUserCash=userDAO.findCash(user.getId());
-                if(newUserCash>0){
+                double newUserCash = userDAO.findCash(user.getId());
+                if (newUserCash > 0) {
                     user.setCash(newUserCash);
                 }
                 return SUCCESS;
@@ -54,14 +54,13 @@ public class UserLogic implements Messenger {
             } finally {
                 userDAO.closeConnection(connection);
             }
-        }else{
+        } else {
             return messageManager.getProperty(MessageManager.CHANGE_CASH_ERROR);
         }
     }
 
-    public String changeCardNumber(int userId, String prevCardNumber, String newCardNumber) throws LogicException {
+    public String changeCardNumber(int userId, String newCardNumber) throws LogicException {
         Validator validator = new Validator();
-        if (!newCardNumber.equals(prevCardNumber)) {
             if (validator.isBankCardValid(newCardNumber)) {
                 ProxyConnection connection = ConnectionPool.getInstance().getConnection();
                 UserDAO userDAO = new UserDAO(connection);
@@ -77,60 +76,49 @@ public class UserLogic implements Messenger {
             } else {
                 return messageManager.getProperty(MessageManager.CHANGE_CARD_ERROR);
             }
+    }
+
+    public String changeEmail(int userId, String newEmail) throws LogicException {
+        Validator validator = new Validator();
+        if (validator.isEmailValid(newEmail)) {
+            if (validator.isEmailUnique(newEmail)) {
+                ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+                UserDAO userDAO = new UserDAO(connection);
+                try {
+                    userDAO.changeEmail(userId, newEmail);
+                    return SUCCESS;
+                } catch (DAOException e) {
+                    throw new LogicException("Error during changing email", e);
+                } finally {
+                    userDAO.closeConnection(connection);
+                }
+            } else {
+                return messageManager.getProperty(MessageManager.NOT_UNIQUE_EMAIL);
+            }
         } else {
-            return SUCCESS;
+            return messageManager.getProperty(MessageManager.CHANGE_EMAIL_ERROR);
         }
     }
 
-    public String changeEmail(int userId, String prevEmail, String newEmail) throws LogicException {
+    public String changeLogin(int userId, String newLogin) throws LogicException {
         Validator validator = new Validator();
-        if (!newEmail.equals(prevEmail)) {
-            if (validator.isEmailValid(newEmail)) {
-                if (validator.isEmailUnique(newEmail)) {
-                    ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-                    UserDAO userDAO = new UserDAO(connection);
-                    try {
-                        userDAO.changeEmail(userId, newEmail);
-                        return SUCCESS;
-                    } catch (DAOException e) {
-                        throw new LogicException("Error during changing email", e);
-                    } finally {
-                        userDAO.closeConnection(connection);
-                    }
-                } else {
-                    return messageManager.getProperty(MessageManager.NOT_UNIQUE_EMAIL);
+        if (validator.isLoginValid(newLogin)) {
+            if (validator.isLoginUnique(newLogin)) {
+                ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+                UserDAO userDAO = new UserDAO(connection);
+                try {
+                    userDAO.changeLogin(userId, newLogin);
+                    return SUCCESS;
+                } catch (DAOException e) {
+                    throw new LogicException("Error during changing login", e);
+                } finally {
+                    userDAO.closeConnection(connection);
                 }
             } else {
-                return messageManager.getProperty(MessageManager.CHANGE_EMAIL_ERROR);
+                return messageManager.getProperty(MessageManager.NOT_UNIQUE_LOGIN);
             }
         } else {
-            return SUCCESS;
-        }
-    }
-
-    public String changeLogin(int userId, String prevLogin, String newLogin) throws LogicException {
-        Validator validator = new Validator();
-        if (!newLogin.equals(prevLogin)) {
-            if (validator.isLoginValid(newLogin)) {
-                if (validator.isLoginUnique(newLogin)) {
-                    ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-                    UserDAO userDAO = new UserDAO(connection);
-                    try {
-                        userDAO.changeLogin(userId, newLogin);
-                        return SUCCESS;
-                    } catch (DAOException e) {
-                        throw new LogicException("Error during changing login", e);
-                    } finally {
-                        userDAO.closeConnection(connection);
-                    }
-                } else {
-                    return messageManager.getProperty(MessageManager.NOT_UNIQUE_LOGIN);
-                }
-            } else {
-                return messageManager.getProperty(MessageManager.CHANGE_LOGIN_ERROR);
-            }
-        } else {
-            return SUCCESS;
+            return messageManager.getProperty(MessageManager.CHANGE_LOGIN_ERROR);
         }
     }
 
@@ -205,4 +193,4 @@ public class UserLogic implements Messenger {
             return res;
         }
     }
-   }
+}

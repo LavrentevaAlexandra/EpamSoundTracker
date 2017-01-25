@@ -17,6 +17,8 @@ public class ConfigurationManager {
     public static final String PROFILE_PATH = "path.page.profile";
     public static final String SIGNUP_PATH = "path.page.signup";
     public static final String TRACK_INFO_PATH = "path.page.track_info";
+    public static final String TRACK_DELETED_PATH = "path.page.deleted";
+    public static final String TRACK_EDIT_PATH = "path.page.track_edit";
     public static final String TRACK_RECOVER_PATH = "path.page.recover";
 
     private final static ResourceBundle resourceBundle = ResourceBundle.getBundle("config");

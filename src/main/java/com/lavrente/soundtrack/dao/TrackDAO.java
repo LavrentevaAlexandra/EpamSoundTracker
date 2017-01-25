@@ -18,13 +18,25 @@ import java.util.List;
 @SuppressWarnings("Duplicates")
 public class TrackDAO extends AbstractDAO {
     private static final String SQL_ADD_TRACK = "INSERT INTO audio_track (`name`, `artist_name`, `genre_id`, `price`, `path`) VALUES ( ?,?,?,?,?)";
+    private static final String SQL_CHANGE_ARTIST = "UPDATE audio_track SET artist_name=? WHERE id=?";
+    private static final String SQL_CHANGE_GENRE = "UPDATE audio_track SET genre_id=? WHERE id=?";
+    private static final String SQL_CHANGE_NAME = "UPDATE audio_track SET name=? WHERE id=?";
+    private static final String SQL_CHANGE_PRICE = "UPDATE audio_track SET price=? WHERE id=?";
     private static final String SQL_DELETE_TRACK = "UPDATE audio_track SET audio_track.deleted=1 WHERE id=?";
-    private static final String SQL_RECOVER_TRACK = "UPDATE tracks SET visible=1 WHERE id=?";
+    private static final String SQL_RECOVER_TRACK = "UPDATE audio_track SET audio_track.deleted=0 WHERE id=?";
+    private static final String SQL_SELECT_ALL_TRACKS = "SELECT audio_track.id, audio_track.name, genre.genre,  audio_track.artist_name, audio_track.price\n" +
+            "FROM audio_track\n" +
+            "LEFT JOIN genre ON audio_track.genre_id=genre.id\n" +
+            "WHERE audio_track.deleted =0 ORDER BY audio_track.name";
     private static final String SQL_SELECT_LAST_ORDERS = "SELECT audio_track.id, audio_track.name, genre.genre,  audio_track.artist_name, audio_track.price\n" +
             "FROM `order` JOIN audio_track ON `order`.audio_track_id=audio_track.id\n" +
             "LEFT JOIN genre ON audio_track.genre_id=genre.id\n" +
             "WHERE audio_track.deleted = 0\n" +
             "GROUP BY audio_track.name ORDER BY `order`.date DESC LIMIT 5 ";
+    private static final String SQL_SELECT_TRACKS_BY_GENRE = "SELECT audio_track.id, audio_track.name, genre.genre, audio_track.artist_name, audio_track.price\n" +
+            "FROM audio_track\n" +
+            "LEFT JOIN genre ON audio_track.genre_id=genre.id\n" +
+            "WHERE genre=? AND audio_track.deleted = 0 ORDER BY audio_track.name";
     private static final String SQL_SELECT_TRACK_BY_ID = "SELECT audio_track.id, audio_track.name, genre.genre, audio_track.artist_name, audio_track.price\n" +
             "FROM audio_track\n" +
             "LEFT JOIN genre ON audio_track.genre_id=genre.id\n" +
@@ -56,6 +68,62 @@ public class TrackDAO extends AbstractDAO {
         }
     }
 
+    public void changeArtist(int trackId, String newArtist) throws DAOException {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_CHANGE_ARTIST);
+            statement.setString(1, newArtist);
+            statement.setInt(2, trackId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Exception during changing track artist", e);
+        } finally {
+            closeStatement(statement);
+        }
+    }
+
+    public void changeGenre(int trackId, int newGenreId) throws DAOException {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_CHANGE_GENRE);
+            statement.setInt(1, newGenreId);
+            statement.setInt(2, trackId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Exception during changing track genre", e);
+        } finally {
+            closeStatement(statement);
+        }
+    }
+
+    public void changeName(int trackId, String newName) throws DAOException {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_CHANGE_NAME);
+            statement.setString(1, newName);
+            statement.setInt(2, trackId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Exception during changing track name", e);
+        } finally {
+            closeStatement(statement);
+        }
+    }
+
+    public void changePrice(int trackId, double newPrice) throws DAOException {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_CHANGE_PRICE);
+            statement.setDouble(1, newPrice);
+            statement.setInt(2, trackId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Exception during changing track price", e);
+        } finally {
+            closeStatement(statement);
+        }
+    }
+
     public void deleteTrackById(int id) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -67,6 +135,37 @@ public class TrackDAO extends AbstractDAO {
         } finally {
             closeStatement(statement);
         }
+    }
+
+    public List<Track> findAll() throws DAOException {
+        List<Track> trackList;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_SELECT_ALL_TRACKS);
+            ResultSet set = statement.executeQuery();
+            trackList = formTrackList(set);
+        } catch (SQLException e) {
+            throw new DAOException("Exception during all tracks search",e);
+        } finally {
+            closeStatement(statement);
+        }
+        return trackList;
+    }
+
+    public List<Track> findTracksByGenre( String genre) throws DAOException {
+        List<Track> trackList;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_SELECT_TRACKS_BY_GENRE);
+            statement.setString(1,genre.toUpperCase());
+            ResultSet set = statement.executeQuery();
+            trackList = formTrackList(set);
+        } catch (SQLException e) {
+            throw new DAOException("Exception during tracks by genre search",e);
+        } finally {
+            closeStatement(statement);
+        }
+        return trackList;
     }
 
     public Track findTrackById(int id) throws DAOException {
@@ -95,6 +194,7 @@ public class TrackDAO extends AbstractDAO {
             while (set.next()) {
                 String login = set.getString("login");
                 String dateTime = set.getString("date");
+                dateTime=dateTime.substring(0,dateTime.length()-2);
                 String text = set.getString("text");
                 comments.add(new Comment(login, dateTime, text));
             }
@@ -117,23 +217,6 @@ public class TrackDAO extends AbstractDAO {
             throw new DAOException("Exception during last ordered tracks search", e);
         } finally {
             closeStatement(statement);
-        }
-        return trackList;
-    }
-
-    private List<Track> formTrackList(ResultSet set) throws DAOException {
-        List<Track> trackList = new ArrayList<>();
-        try {
-            while (set.next()) {
-                int id = set.getInt("id");
-                String name = set.getString("name");
-                String genre = set.getString("genre");
-                String artist = set.getString("artist_name");
-                double price = set.getDouble("price");
-                trackList.add(new Track(id, name, artist, price, genre));
-            }
-        } catch (SQLException e) {
-            throw new DAOException("Exception during track list formation ", e);
         }
         return trackList;
     }
@@ -164,5 +247,22 @@ public class TrackDAO extends AbstractDAO {
         } finally {
             closeStatement(statement);
         }
+    }
+
+    private List<Track> formTrackList(ResultSet set) throws DAOException {
+        List<Track> trackList = new ArrayList<>();
+        try {
+            while (set.next()) {
+                int id = set.getInt("id");
+                String name = set.getString("name");
+                String genre = set.getString("genre");
+                String artist = set.getString("artist_name");
+                double price = set.getDouble("price");
+                trackList.add(new Track(id, name, artist, price, genre));
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Exception during track list formation ", e);
+        }
+        return trackList;
     }
 }

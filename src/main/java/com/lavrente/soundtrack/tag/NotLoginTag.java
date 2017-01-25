@@ -12,8 +12,8 @@ public class NotLoginTag extends TagSupport{
 
     @Override
     public int doStartTag() throws JspException {
-        String isLogin = pageContext.getSession().getAttribute(IS_LOGIN).toString();
-        if (isLogin==null || !Boolean.valueOf(isLogin)) {
+        Object isLogin = pageContext.getSession().getAttribute(IS_LOGIN);
+        if (isLogin==null || !Boolean.valueOf(isLogin.toString())) {
             return EVAL_BODY_INCLUDE;
         } else {
             return SKIP_BODY;

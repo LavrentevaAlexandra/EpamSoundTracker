@@ -106,6 +106,22 @@ public class Validator implements Messenger {
         return  (isTrackNameValid(name) && isTrackArtistValid(artist) && isGenreValid(genre) && isPriceValid(price));
     }
 
+    boolean isTrackNameValid(String name) {
+        return name.length() > ZERO && name.length() < MAX_TRACK_NAME_LENGTH;
+    }
+
+    boolean isTrackArtistValid(String artist) {
+        return artist.length() > ZERO && artist.length() < MAX_ARTIST_LENGTH;
+    }
+
+    boolean isGenreValid(String genre) {
+        return genre.length() > ZERO && genre.length() < MAX_GENRE_LENGTH;
+    }
+
+    boolean isPriceValid(String price) {
+        return  !(price.length() == ZERO && price.length() > MAX_PRICE_LENGTH) && canConvertToUnsignedDouble(price);
+    }
+
     boolean validateConfirmPass(String confirmPass, String pass) {
         return pass.equals(confirmPass);
     }
@@ -118,21 +134,5 @@ public class Validator implements Messenger {
         } catch (NumberFormatException e) {
             return false;
         }
-    }
-
-    private boolean isTrackNameValid(String name) {
-        return name.length() > ZERO && name.length() < MAX_TRACK_NAME_LENGTH;
-    }
-
-    private boolean isTrackArtistValid(String artist) {
-        return artist.length() > ZERO && artist.length() < MAX_ARTIST_LENGTH;
-    }
-
-    private boolean isGenreValid(String genre) {
-        return genre.length() > ZERO && genre.length() < MAX_GENRE_LENGTH;
-    }
-
-    private boolean isPriceValid(String price) {
-        return  !(price.length() == ZERO && price.length() > MAX_PRICE_LENGTH) && canConvertToUnsignedDouble(price);
     }
 }

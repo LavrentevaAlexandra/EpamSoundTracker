@@ -10,15 +10,32 @@
 <body>
 <div class="col-sm-3 col-md-2 sidebar" style="position: fixed">
     <ul class="nav nav-sidebar">
-        <li><a href="${pageContext.request.contextPath}/controller?command=main"><fmt:message key="sidebar.home"/></a></li>
+        <li><a href="${pageContext.request.contextPath}/controller?command=main"><fmt:message key="sidebar.home"/></a>
+        </li>
         <li>
             <ctg:isLoggedIn>
                 <a href="#"><fmt:message key="sidebar.orders"/></a>
             </ctg:isLoggedIn>
         </li>
-        <li><a href="#"><fmt:message key="sidebar.genres"/></a></li>
+        <li>
+            <a href="${pageContext.request.contextPath}/controller?command=all"><fmt:message key="sidebar.all"/></a>
+        </li>
+        <li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+                <fmt:message key="sidebar.genres"/></a>
+            <ul class="dropdown-menu">
+                <c:forEach var="genre" items="${genres}">
+                    <li>
+                        <a href="${pageContext.request.contextPath}/controller?command=genre&genre=${genre}">${genre}</a>
+                    </li>
+                </c:forEach>
+            </ul>
+        </li>
         <li><a href="#"><fmt:message key="sidebar.about"/> </a></li>
-        <li><hr></li>
+        <li>
+            <hr>
+        </li>
         <li>
             <ctg:isAdmin>
                 <a href="${pageContext.request.contextPath}/jsp/add_track.jsp">
@@ -28,7 +45,7 @@
         </li>
         <li>
             <ctg:isAdmin>
-                <a href="${pageContext.request.contextPath}/jsp/recover_track.jsp">
+                <a href="${pageContext.request.contextPath}/controller?command=deleted">
                     <fmt:message key="sidebar.recover"/>
                 </a>
             </ctg:isAdmin>

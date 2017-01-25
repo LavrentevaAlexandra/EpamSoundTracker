@@ -17,6 +17,9 @@
     <c:if test="${not empty error}">
         <div class="alert alert-danger">${error}</div>
     </c:if>
+    <c:if test="${not empty success}">
+        <div class="alert alert-success">${success}</div>
+    </c:if>
     <div class="jumbotron">
         <div>
             <h3><b><fmt:message key="add.track.name"/></b> ${track.name}</h3>
@@ -35,6 +38,13 @@
                     onClick='location.href="${pageContext.request.contextPath}/controller?command=main"'>
                 <fmt:message key="track.back"/>
             </button>
+            <ctg:isAdmin>
+                <button class="btn btn-lg btn-info"
+                        onclick='location.href="${pageContext.request.contextPath}/jsp/track_edit.jsp"'>
+                    <i class="glyphicon glyphicon-edit"></i>
+                    <fmt:message key="track.edit"/>
+                </button>
+            </ctg:isAdmin>
         </div>
     </div>
     <h2 class="sub-header"><fmt:message key="comment"/>

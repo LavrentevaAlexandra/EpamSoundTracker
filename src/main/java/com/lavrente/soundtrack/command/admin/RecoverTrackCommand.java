@@ -21,7 +21,7 @@ public class RecoverTrackCommand extends AbstractCommand {
         try {
             trackLogic.recoverTrackById(trackId);
             sessionRequestContent.setRequestAttribute(SUCCESS, messageManager.getProperty(MessageManager.TRACK_RECOVER_SUCCESS));
-            page = ConfigurationManager.getProperty(ConfigurationManager.TRACK_RECOVER_PATH);
+            page = ConfigurationManager.getProperty(ConfigurationManager.TRACK_DELETED_PATH);
         } catch (LogicException e) {
             LOG.error("Exception during track recover", e);
             page = redirectToErrorPage(sessionRequestContent, e);

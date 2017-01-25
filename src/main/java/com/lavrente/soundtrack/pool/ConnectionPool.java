@@ -44,7 +44,7 @@ public class ConnectionPool {
         }
         if (size() == 0) {
             LOG.fatal("There's no connections in the pull");
-            throw new RuntimeException();
+            throw new RuntimeException("There's no connections in the pull");
         }
     }
 
@@ -89,7 +89,7 @@ public class ConnectionPool {
                 connectionQueue.take().terminateConnection();
             }
         } catch (SQLException | InterruptedException e) {
-            LOG.error(e);
+            LOG.error("Exception during pool termination",e);
         }
     }
 
@@ -97,7 +97,7 @@ public class ConnectionPool {
         try {
             connectionQueue.put(connection);
         } catch (InterruptedException e) {
-            LOG.error(e);
+            LOG.error("Exception during connection return",e);
         }
     }
 

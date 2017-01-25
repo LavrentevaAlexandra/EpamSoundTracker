@@ -11,8 +11,8 @@ public class DeletedTag extends TagSupport {
 
     @Override
     public int doStartTag() throws JspException {
-        String isDeleted =pageContext.getSession().getAttribute(IS_DELETED).toString();
-        if (Boolean.valueOf(isDeleted)) {
+        Object isDeleted =pageContext.getSession().getAttribute(IS_DELETED);
+        if (isDeleted!=null && Boolean.valueOf(isDeleted.toString())) {
             return EVAL_BODY_INCLUDE;
         } else {
             return SKIP_BODY;

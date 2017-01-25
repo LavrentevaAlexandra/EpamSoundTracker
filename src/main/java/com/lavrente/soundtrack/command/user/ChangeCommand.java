@@ -30,7 +30,7 @@ public class ChangeCommand extends AbstractCommand {
         String res;
         try {
             if (!login.equals(user.getLogin())) {
-                res = userLogic.changeLogin(user.getId(), user.getLogin(), login);
+                res = userLogic.changeLogin(user.getId(), login);
                 if (SUCCESS.equals(res)) {
                     user.setLogin(login);
                 } else {
@@ -39,7 +39,7 @@ public class ChangeCommand extends AbstractCommand {
                 }
             }
             if (!email.equals(user.getEmail())) {
-                res = userLogic.changeEmail(user.getId(), user.getEmail(), email);
+                res = userLogic.changeEmail(user.getId(), email);
                 if (SUCCESS.equals(res)) {
                     user.setEmail(email);
                 } else {
@@ -48,7 +48,7 @@ public class ChangeCommand extends AbstractCommand {
                 }
             }
             if (!cardNumber.equals(user.getCardNumber())) {
-                res = userLogic.changeCardNumber(user.getId(), user.getCardNumber(), cardNumber);
+                res = userLogic.changeCardNumber(user.getId(), cardNumber);
                 if (SUCCESS.equals(res)) {
                     user.setCardNumber(cardNumber);
                 } else {

@@ -11,8 +11,8 @@ import org.apache.logging.log4j.Logger;
  */
 public abstract class AbstractCommand implements Messenger{
     protected static final Logger LOG= LogManager.getLogger();
-    static final String LOCALE_ATTRIBUTE = "locale";
-    static final String CUR_PAGE_ATTR = "page";
+    protected static final String LOCALE_ATTRIBUTE = "locale";
+    protected static final String CUR_PAGE_ATTR = "page";
     protected static final String ERROR = "error";
     protected static final String SUCCESS= "success";
     protected static final String USER_ATTRIBUTE="user";

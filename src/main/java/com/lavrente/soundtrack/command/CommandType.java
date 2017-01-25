@@ -1,13 +1,8 @@
 package com.lavrente.soundtrack.command;
 
-import com.lavrente.soundtrack.command.admin.AddTrackCommand;
-import com.lavrente.soundtrack.command.admin.DeleteTrackCommand;
-import com.lavrente.soundtrack.command.admin.RecoverTrackCommand;
-import com.lavrente.soundtrack.command.admin.ShowDeletedCommand;
+import com.lavrente.soundtrack.command.admin.*;
 import com.lavrente.soundtrack.command.user.*;
-import com.lavrente.soundtrack.command.visitor.LogInCommand;
-import com.lavrente.soundtrack.command.visitor.SingUpCommand;
-import com.lavrente.soundtrack.command.visitor.TrackInfoCommand;
+import com.lavrente.soundtrack.command.visitor.*;
 
 /**
  * Created by 123 on 29.11.2016.
@@ -21,6 +16,11 @@ public enum CommandType {
     ADD_TRACK{
         {
             this.command = new AddTrackCommand();
+        }
+    },
+    ALL{
+        {
+            this.command = new AllTracksCommand();
         }
     },
     CHANGE{
@@ -46,6 +46,16 @@ public enum CommandType {
     DELETED{
         {
             this.command = new ShowDeletedCommand();
+        }
+    },
+    EDIT{
+        {
+          this.command = new EditTrackCommand();
+        }
+    },
+    GENRE{
+        {
+            this.command = new ShowGenreCommand();
         }
     },
     INDEX{
@@ -76,6 +86,11 @@ public enum CommandType {
     RECOVER{
         {
             this.command = new RecoverTrackCommand();
+        }
+    },
+    SEARCH{
+        {
+            this.command = new SearchCommand();
         }
     },
     SIGNUP {

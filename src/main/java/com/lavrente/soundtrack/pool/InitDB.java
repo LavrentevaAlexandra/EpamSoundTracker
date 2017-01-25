@@ -31,9 +31,8 @@ public class InitDB {
                 throw new RuntimeException("Properties was not found");
             }
         } catch (IOException e) {
-            LOG.fatal("Can't init database", e);
-            throw new RuntimeException("Can't init database", e);
-
+            LOG.fatal("Exception during database initialization", e);
+            throw new RuntimeException("Exception during database initialization", e);
         }
         DATABASE_URL = properties.getProperty(DBManager.DB_URL);
         DATABASE_LOGIN = properties.getProperty(DBManager.DB_USER);
