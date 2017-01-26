@@ -23,7 +23,7 @@ import java.io.IOException;
  * Created by 123 on 27.12.2016.
  */
 
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 , // 1MB
         maxFileSize = 1024 * 1024 * 20,      // 20MB
         maxRequestSize = 1024 * 1024 * 50)   // 50MB
 @WebServlet("/controller")

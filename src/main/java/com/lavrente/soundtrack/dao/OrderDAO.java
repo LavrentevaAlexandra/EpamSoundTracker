@@ -27,7 +27,7 @@ public class OrderDAO extends AbstractDAO {
             "FROM `order`\n" +
             "JOIN audio_track ON audio_track.id=`order`.audio_track_id\n" +
             "LEFT JOIN genre ON audio_track.genre_id=genre.id\n" +
-            "WHERE `order`.user_id=? AND audio_track.deleted=0\n" +
+            "WHERE `order`.user_id=?\n" +
             "ORDER BY audio_track.name";
 
     /** The Constant SQL_SELECT_EXISTS. */

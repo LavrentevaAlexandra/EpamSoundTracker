@@ -24,7 +24,7 @@ public class Validator implements Messenger {
     private final int MAX_BONUS=100;
 
     /** The max cash length. */
-    private final int MAX_CASH_LENGTH = 4;
+    private final int MAX_CASH_LENGTH = 5;
 
     /** The max comment length. */
     private final int MAX_COMMENT_LENGTH = 65_535;
@@ -33,7 +33,7 @@ public class Validator implements Messenger {
     private final int MAX_GENRE_LENGTH = 45;
 
     /** The max price length. */
-    private final int MAX_PRICE_LENGTH = 3;
+    private final int MAX_PRICE_LENGTH = 4;
 
     /** The max track name length. */
     private final int MAX_TRACK_NAME_LENGTH=100;
@@ -252,6 +252,7 @@ public class Validator implements Messenger {
      * @return true, if is price valid
      */
     boolean isPriceValid(String price) {
+        int len=price.length();
         return  (price.length() != ZERO && price.length() <= MAX_PRICE_LENGTH) && canConvertToUnsignedDouble(price);
     }
 

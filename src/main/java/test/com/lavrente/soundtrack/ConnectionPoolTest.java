@@ -37,15 +37,8 @@ public class ConnectionPoolTest {
 
     @Test
     public void checkGetConnection() throws SQLException {
-        int expected = 10;
-        for (int i = 0; i < expected; i++) {
-            connections.add(pool.getConnection());
-        }
-        int actual = connections.size();
-        for (ProxyConnection connection : connections) {
-            connection.close();
-        }
-        Assert.assertEquals(expected, actual);
+        ProxyConnection connection=pool.getConnection();
+        Assert.assertNotNull(connection);
     }
 
     @Test

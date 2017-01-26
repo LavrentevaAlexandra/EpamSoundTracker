@@ -13,6 +13,7 @@
     <link href="${pageContext.request.contextPath}/css/stdashboard.css" rel="stylesheet">
 </head>
 <body>
+<c:set var="page" value="path.page.about" scope="session"/>
 <%@ include file="menu.jsp"%>
 <div class="container-fluid">
     <%@include file="sidebar.jsp"%>
