@@ -14,6 +14,8 @@ public class ConfigurationManager {
     public static final String LOGIN_PATH = "path.page.login";
     public static final String MAIN_PATH = "path.page.main";
     public static final String MONEY_PATH = "path.page.add.funds";
+    public static final String MY_ORDERS_PATH = "path.page.my_orders";
+    public static final String SHOW_MY_ORDERS_PATH = "path.page.orders";
     public static final String PROFILE_PATH = "path.page.profile";
     public static final String SET_BONUS_PATH = "path.page.bonus";
     public static final String SHOW_USERS_PATH = "path.page.show_users";

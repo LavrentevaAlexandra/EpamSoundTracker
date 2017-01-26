@@ -10,7 +10,7 @@
 </head>
 <body>
   <c:set var="page" value="path.page.add.funds" scope="session"/>
-  <%@ include file="menu.jsp"%>
+  <%@ include file="../menu.jsp"%>
   <form method="post" class="form-horizontal" style="margin-top: 100px" id="add_funds" name="addFunds" action="${pageContext.request.contextPath}/controller">
     <c:if test="${not empty error}">
       <div class="alert alert-danger"style="margin-top: 90px">${error}</div>
@@ -34,14 +34,14 @@
         <button type="submit" name="command" value="add_funds" class="btn btn-primary">
           <fmt:message key="profile.title.cash"/>
         </button>
-        <button type="button" class="btn btn-primary " onClick='location.href="${pageContext.request.contextPath}/jsp/profile.jsp"'>
+        <button type="button" class="btn btn-primary " onClick='location.href="profile.jsp"'>
           <fmt:message key="form.back"/>
         </button>
       </div>
     </div>
   </form>
   <div class="form-group">
-  <%@include file="footer.jsp"%>
+  <%@include file="../footer.jsp"%>
     <script src="${pageContext.request.contextPath}/js/parsley.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/i18n/ruu.js"></script>
     <script src="${pageContext.request.contextPath}/js/i18n/enn.js"></script>

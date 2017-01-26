@@ -14,7 +14,7 @@
         </li>
         <li>
             <ctg:isLoggedIn>
-                <a href="#"><fmt:message key="sidebar.orders"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=my_orders"><fmt:message key="sidebar.orders"/></a>
             </ctg:isLoggedIn>
         </li>
         <li>
@@ -38,7 +38,7 @@
         </li>
         <li>
             <ctg:isAdmin>
-                <a href="${pageContext.request.contextPath}/jsp/add_track.jsp">
+                <a href="${pageContext.request.contextPath}/jsp/admin/add_track.jsp">
                     <fmt:message key="sidebar.add"/>
                 </a>
             </ctg:isAdmin>

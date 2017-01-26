@@ -10,7 +10,7 @@
 </head>
 <body>
 <c:set var="page" value="path.page.add.track" scope="session"/>
-<%@ include file="menu.jsp" %>
+<%@ include file="../menu.jsp" %>
 <div class="container" style="margin-top: 90px">
     <c:if test="${not empty error}">
         <div class="alert alert-danger">${error}</div>
@@ -68,14 +68,14 @@
                     </button>
                     <button type="button" class="btn btn-primary "
                             onClick='location.href="${pageContext.request.contextPath}/controller?command=main"'>
-                        <fmt:message key="form.back"/>
+                        <fmt:message key="track.back"/>
                     </button>
                 </div>
             </div>
         </fieldset>
     </form>
 </div>
-<%@include file="footer.jsp" %>
+<%@include file="../footer.jsp" %>
 
 <script src="${pageContext.request.contextPath}/js/parsley.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/i18n/ruu.js"></script>

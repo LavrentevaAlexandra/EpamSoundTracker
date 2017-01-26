@@ -1,6 +1,7 @@
 package com.lavrente.soundtrack.logic;
 
 import com.lavrente.soundtrack.dao.GenreDAO;
+import com.lavrente.soundtrack.dao.OrderDAO;
 import com.lavrente.soundtrack.dao.TrackDAO;
 import com.lavrente.soundtrack.entity.Comment;
 import com.lavrente.soundtrack.entity.Track;
@@ -208,6 +209,18 @@ public class TrackLogic implements Messenger {
         } catch (DAOException e) {
             throw new LogicException("Exception during all comments by track id search", e);
         } finally {
+            trackDAO.closeConnection(connection);
+        }
+    }
+
+    public String findTrackPath(int trackId) throws LogicException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        TrackDAO trackDAO = new TrackDAO(connection);
+        try {
+            return trackDAO.findTrackPath(trackId);
+        } catch (DAOException e) {
+            throw new LogicException("Exception during track path search", e);
+        }finally {
             trackDAO.closeConnection(connection);
         }
     }

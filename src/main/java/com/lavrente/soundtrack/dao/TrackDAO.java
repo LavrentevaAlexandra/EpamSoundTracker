@@ -41,6 +41,7 @@ public class TrackDAO extends AbstractDAO {
             "FROM audio_track\n" +
             "LEFT JOIN genre ON audio_track.genre_id=genre.id\n" +
             "WHERE audio_track.id=?";
+    private static final String SQL_SELECT_TRACK_PATH= "SELECT audio_track.path FROM audio_track WHERE id=?";
     private static final String SQL_SELECT_TRACK_COMMENTS = "SELECT user.login, comment.date, comment.text\n" +
             "FROM comment JOIN user ON user.id = comment.user_id WHERE comment.audio_track_id=? ORDER BY comment.date DESC;";
     private static final String SQL_SELECT_DELETED_TRACKS= "SELECT audio_track.id, audio_track.name, genre.genre,  audio_track.artist_name, audio_track.price\n" +
@@ -152,6 +153,36 @@ public class TrackDAO extends AbstractDAO {
         return trackList;
     }
 
+    public List<Track> findDeletedTracks() throws DAOException {
+        List<Track> trackList;
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            ResultSet set = statement.executeQuery(SQL_SELECT_DELETED_TRACKS);
+            trackList = formTrackList(set);
+        } catch (SQLException e) {
+            throw new DAOException("Exception during deleted tracks search", e);
+        } finally {
+            closeStatement(statement);
+        }
+        return trackList;
+    }
+
+    public List<Track> findLastOrderedTracks() throws DAOException {
+        List<Track> trackList;
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            ResultSet set = statement.executeQuery(SQL_SELECT_LAST_ORDERS);
+            trackList = formTrackList(set);
+        } catch (SQLException e) {
+            throw new DAOException("Exception during last ordered tracks search", e);
+        } finally {
+            closeStatement(statement);
+        }
+        return trackList;
+    }
+
     public List<Track> findTracksByGenre( String genre) throws DAOException {
         List<Track> trackList;
         PreparedStatement statement = null;
@@ -206,34 +237,22 @@ public class TrackDAO extends AbstractDAO {
         return comments;
     }
 
-    public List<Track> findLastOrderedTracks() throws DAOException {
-        List<Track> trackList;
-        Statement statement = null;
+    public String findTrackPath(int trackId) throws DAOException {
+        String path = "";
+        PreparedStatement statement = null;
         try {
-            statement = connection.createStatement();
-            ResultSet set = statement.executeQuery(SQL_SELECT_LAST_ORDERS);
-            trackList = formTrackList(set);
+            statement = connection.prepareStatement(SQL_SELECT_TRACK_PATH);
+            statement.setString(1, Integer.toString(trackId));
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                path = set.getString(1);
+            }
         } catch (SQLException e) {
-            throw new DAOException("Exception during last ordered tracks search", e);
+            throw new DAOException(e);
         } finally {
             closeStatement(statement);
         }
-        return trackList;
-    }
-
-    public List<Track> findDeletedTracks() throws DAOException {
-        List<Track> trackList;
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
-            ResultSet set = statement.executeQuery(SQL_SELECT_DELETED_TRACKS);
-            trackList = formTrackList(set);
-        } catch (SQLException e) {
-            throw new DAOException("Exception during deleted tracks search", e);
-        } finally {
-            closeStatement(statement);
-        }
-        return trackList;
+        return path;
     }
 
     public void recoverTrackById(int id) throws DAOException {
@@ -249,7 +268,7 @@ public class TrackDAO extends AbstractDAO {
         }
     }
 
-    private List<Track> formTrackList(ResultSet set) throws DAOException {
+    List<Track> formTrackList(ResultSet set) throws DAOException {
         List<Track> trackList = new ArrayList<>();
         try {
             while (set.next()) {

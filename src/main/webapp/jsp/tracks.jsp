@@ -12,6 +12,9 @@
 <body>
 <%--begin="${num_page * 10}" end="${num_page * 10 + 9}"--%>
 <div class="table-responsive">
+    <c:if test="${not empty error}">
+        <div class="alert alert-danger">${error}</div>
+    </c:if>
     <c:if test="${not empty success}">
         <div class="alert alert-success">${success}</div>
     </c:if>
@@ -26,6 +29,7 @@
                     <th><fmt:message key="add.track.artist"/></th>
                     <th></th>
                     <th><fmt:message key="add.track.name"/></th>
+                    <th><fmt:message key="add.track.price"/></th>
                 </tr>
                 </thead>
                 <tbody id="myTable">
@@ -34,6 +38,7 @@
                         <td>${track.artist}</td>
                         <td>—</td>
                         <td>${track.name}</td>
+                        <td>${track.price}</td>
                         <ctg:isDeleted>
                             <td>
                                 <button class="btn btn-info"
@@ -60,10 +65,22 @@
                             </td>
                             <td>
                                 <ctg:isLoggedIn>
-                                    <button class="btn btn-primary">
-                                        <i class="glyphicon glyphicon-credit-card"></i>
-                                        <fmt:message key="track.buy"/>
-                                    </button>
+                                    <c:choose>
+                                        <c:when test="${not empty is_my_orders}">
+                                            <button class="btn btn-primary"
+                                                    onclick='location.href="${pageContext.request.contextPath}/controller?command=download&track_id=${track.id}"'>
+                                                <i class="glyphicon glyphicon-credit-card"></i>
+                                                <fmt:message key="track.download"/>
+                                            </button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button class="btn btn-primary"
+                                                    onclick='location.href="${pageContext.request.contextPath}/controller?command=buy&track_id=${track.id}&price=${track.price}"'>
+                                                <i class="glyphicon glyphicon-credit-card"></i>
+                                                <fmt:message key="track.buy"/>
+                                            </button>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </ctg:isLoggedIn>
                             </td>
                         </ctg:notDeleted>

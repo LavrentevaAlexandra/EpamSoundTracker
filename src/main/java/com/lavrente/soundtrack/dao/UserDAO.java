@@ -56,20 +56,6 @@ public class UserDAO extends AbstractDAO<User> {
         }
     }
 
-    public void addFunds(int userId, Double cash) throws DAOException {
-        PreparedStatement statement = null;
-        try {
-            statement = connection.prepareStatement(SQL_CHANGE_CASH);
-            statement.setDouble(1, cash);
-            statement.setInt(2, userId);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException("Exception during funds addition", e);
-        } finally {
-            closeStatement(statement);
-        }
-    }
-
     public void addUser(String login, String password, String cardNumber, String email) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -95,6 +81,20 @@ public class UserDAO extends AbstractDAO<User> {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Exception during changing card number", e);
+        } finally {
+            closeStatement(statement);
+        }
+    }
+
+    public void changeCash(int userId, Double cash) throws DAOException {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_CHANGE_CASH);
+            statement.setDouble(1, cash);
+            statement.setInt(2, userId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Exception during cash change", e);
         } finally {
             closeStatement(statement);
         }

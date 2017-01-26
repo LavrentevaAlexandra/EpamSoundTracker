@@ -26,6 +26,7 @@ public class MessageManager {
     public final static String CHANGE_TRACK_NAME_ERROR="message.change.track.name.error";
     public final static String CHANGE_TRACK_PRICE_ERROR="message.change.track.price.error";
     public final static String DELETE_TRACK_SUCCESS="message.delete.track.success";
+    public final static String DOWNLOAD_ERROR="message.download.error";
     public final static String LOGIN_ERROR="message.login.error";
     public final static String NOT_UNIQUE_EMAIL="message.signup.unique.email";
     public final static String NOT_UNIQUE_LOGIN="message.signup.unique.login";

@@ -5,26 +5,21 @@
 <fmt:setBundle basename="content" />
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Load soundtracks site">
-    <meta name="author" content="Epam">
     <link rel="icon" href="${pageContext.request.contextPath}/images/vinyl.ico">
+    <title><fmt:message key="sidebar.orders"/></title>
 
-    <title><fmt:message key="track.recover"/></title>
-
-    <!-- Custom styles for this template -->
     <link href="${pageContext.request.contextPath}/css/stdashboard.css" rel="stylesheet">
 </head>
 <body>
-<%@ include file="menu.jsp"%>
+<%@ include file="../menu.jsp"%>
 <div class="container-fluid">
+    <%@include file="../sidebar.jsp"%>
     <div class="row col-md-offset-2  col-sm-offset-3">
-        <%@include file="sidebar.jsp"%>
-        <c:set var="page" value="path.page.recover" scope="session"/>
-        <h2 class="sub-header"><fmt:message key="track.deleted"/></h2>
-        <%@include file="tracks.jsp"%>
+        <c:set var="page" value="path.page.orders" scope="session"/>
+        <h2 class="sub-header"><fmt:message key="sidebar.orders"/></h2>
+        <%@include file="../tracks.jsp"%>
     </div>
 </div>
-<%@include file="footer.jsp"%>
+<%@include file="../footer.jsp"%>
 </body>
 </html>

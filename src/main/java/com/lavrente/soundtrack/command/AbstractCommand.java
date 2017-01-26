@@ -16,6 +16,7 @@ public abstract class AbstractCommand implements Messenger{
     protected static final String ERROR = "error";
     protected static final String SUCCESS= "success";
     protected static final String USER_ATTRIBUTE="user";
+    protected static final String IS_LOGIN = "is_login";
 
     public abstract String execute(SessionRequestContent sessionRequestContent);
 

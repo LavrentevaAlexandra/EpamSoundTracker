@@ -18,14 +18,14 @@
 </head>
 <body>
   <c:set var="page" value="path.page.profile" scope="session"/>
-  <%@ include file="menu.jsp"%>
+  <%@ include file="../menu.jsp"%>
   <div class="container" style="margin-top: 90px">
       <c:if test="${not empty success}">
           <div class="alert alert-success">${success}</div>
       </c:if>
       <div class="jumbotron">
           <div>
-              <button class="btn-lg btn-primary pull-right" onClick='location.href="${pageContext.request.contextPath}/jsp/change.jsp"'>
+              <button class="btn-lg btn-primary pull-right" onClick='location.href="change.jsp"'>
                   <fmt:message key="profile.change"/><span class="glyphicon glyphicon-edit"></span>
               </button>
               <h3><fmt:message key="profile.login"/> ${user.login}</h3>
@@ -43,10 +43,10 @@
               <h3><fmt:message key="profile.email"/> ${user.email}</h3>
           </div>
           <div>
-              <button class="btn-lg btn-primary" onClick='location.href="${pageContext.request.contextPath}/jsp/password.jsp"'>
+              <button class="btn-lg btn-primary" onClick='location.href="password.jsp"'>
                 <fmt:message key="profile.title.pass"/><span class="glyphicon glyphicon-edit"></span>
               </button>
-              <button class="btn-lg btn-primary" onClick='location.href="${pageContext.request.contextPath}/jsp/add_funds.jsp"'>
+              <button class="btn-lg btn-primary" onClick='location.href="add_funds.jsp"'>
                 <fmt:message key="profile.title.cash"/><span class="glyphicon glyphicon-edit"></span>
               </button>
               <button class="btn btn-lg btn-primary" type="button"
@@ -57,6 +57,6 @@
           </div>
       </div>
   </div>
-  <%@ include file="footer.jsp"%>
+  <%@ include file="../footer.jsp"%>
 </body>
 </html>

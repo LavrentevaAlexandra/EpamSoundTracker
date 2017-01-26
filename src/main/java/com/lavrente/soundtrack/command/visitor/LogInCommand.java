@@ -15,7 +15,7 @@ import com.lavrente.soundtrack.servlet.SessionRequestContent;
 public class LogInCommand extends AbstractCommand {
     private static final String PARAM_LOGIN = "login";
     private static final String PARAM_PASSWORD = "password";
-    private static final String IS_LOGIN = "is_login";
+    private static final String TRUE="true";
 
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
@@ -24,7 +24,7 @@ public class LogInCommand extends AbstractCommand {
         String password = sessionRequestContent.getRequestParameter(PARAM_PASSWORD);
         try {
             if (new LoginLogic().checkLogin(login, password)) {
-                sessionRequestContent.setSessionAttribute(IS_LOGIN, "true");
+                sessionRequestContent.setSessionAttribute(IS_LOGIN, TRUE);
                 UserLogic userLogic = new UserLogic();
                 User user = userLogic.findUser(login);
                 sessionRequestContent.setSessionAttribute(USER_ATTRIBUTE, user);

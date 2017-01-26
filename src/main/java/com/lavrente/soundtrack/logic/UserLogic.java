@@ -46,7 +46,7 @@ public class UserLogic implements Messenger {
             try {
                 Double cash = Double.valueOf(newCash);
                 Double finalCash = user.getCash() + cash;
-                userDAO.addFunds(user.getId(), finalCash);
+                userDAO.changeCash(user.getId(), finalCash);
                 double newUserCash = userDAO.findCash(user.getId());
                 if (newUserCash > 0) {
                     user.setCash(newUserCash);
@@ -196,18 +196,6 @@ public class UserLogic implements Messenger {
         return user;
     }
 
-    public User findUserById(int id) throws LogicException {
-        User user;
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        UserDAO userDAO = new UserDAO(connection);
-        try {
-            user = userDAO.findUserById(id);
-        } catch (DAOException e) {
-            throw new LogicException("Exception during user search", e);
-        }
-        return user;
-    }
-
     public String setBonus(int userId, String bonus) throws LogicException {
         Validator validator = new Validator();
         if (validator.isBonusValid(bonus)) {
@@ -251,4 +239,17 @@ public class UserLogic implements Messenger {
             return res;
         }
     }
+
+    private User findUserById(int id) throws LogicException {
+        User user;
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        UserDAO userDAO = new UserDAO(connection);
+        try {
+            user = userDAO.findUserById(id);
+        } catch (DAOException e) {
+            throw new LogicException("Exception during user search", e);
+        }
+        return user;
+    }
+
 }

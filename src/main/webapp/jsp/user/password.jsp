@@ -10,7 +10,7 @@
 </head>
 <body>
 <c:set var="page" value="path.page.pass" scope="session"/>
-<%@ include file="menu.jsp" %>
+<%@ include file="../menu.jsp" %>
 <div class="container">
     <c:if test="${not empty error}">
         <div class="alert alert-danger" style="margin-top: 90px">${error}</div>
@@ -42,14 +42,14 @@
                         key="profile.title.pass"/></button>
                 <button type="reset" class="btn btn-default m-l-5"><fmt:message key="form.cancel"/></button>
                 <button type="button" class="btn btn-primary "
-                        onClick='location.href="${pageContext.request.contextPath}/jsp/profile.jsp"'>
+                        onClick='location.href="profile.jsp"'>
                     <fmt:message key="form.back"/>
                 </button>
             </div>
         </div>
     </form>
 </div>
-<%@include file="footer.jsp" %>
+<%@include file="../footer.jsp" %>
 <script src="${pageContext.request.contextPath}/js/parsley.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/i18n/ruu.js"></script>
 <script src="${pageContext.request.contextPath}/js/i18n/enn.js"></script>

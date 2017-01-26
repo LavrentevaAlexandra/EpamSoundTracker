@@ -18,7 +18,8 @@
 <body>
     <%@ include file="menu.jsp"%>
     <div class="container-fluid">
-      <div class="row col-md-offset-2  col-sm-offset-3">
+        <%@include file="sidebar.jsp"%>
+        <div class="row col-md-offset-2  col-sm-offset-3">
           <c:choose>
               <c:when test="${not empty search}">
                   <c:set var="page" value="path.page.main" scope="session"/>
@@ -39,7 +40,6 @@
           </c:choose>
           <%@include file="tracks.jsp"%>
       </div>
-        <%@include file="sidebar.jsp"%>
     </div>
     <%@include file="footer.jsp"%>
 </body>

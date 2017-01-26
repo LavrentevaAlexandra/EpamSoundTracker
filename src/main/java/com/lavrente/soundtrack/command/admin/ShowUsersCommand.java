@@ -13,19 +13,24 @@ import java.util.List;
  * Created by 123 on 26.01.2017.
  */
 public class ShowUsersCommand extends AbstractCommand {
-    private final String USER_LIST_ATTR="users";
+    private final String USER_LIST_ATTR = "users";
 
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;
-        UserLogic userLogic = new UserLogic();
-        try {
-            List<User> userList = userLogic.findClients();
-            sessionRequestContent.setSessionAttribute(USER_LIST_ATTR, userList);
-            page = ConfigurationManager.getProperty(ConfigurationManager.SET_BONUS_PATH);
-        } catch (LogicException e) {
-            LOG.error("Exception during clients search", e);
-            page = redirectToErrorPage(sessionRequestContent, e);
+        User user = (User) sessionRequestContent.getSessionAttribute(USER_ATTRIBUTE);
+        if (user != null && user.getRole() == 1) {
+            UserLogic userLogic = new UserLogic();
+            try {
+                List<User> userList = userLogic.findClients();
+                sessionRequestContent.setSessionAttribute(USER_LIST_ATTR, userList);
+                page = ConfigurationManager.getProperty(ConfigurationManager.SET_BONUS_PATH);
+            } catch (LogicException e) {
+                LOG.error("Exception during clients search", e);
+                page = redirectToErrorPage(sessionRequestContent, e);
+            }
+        } else {
+            page = ConfigurationManager.getProperty(ConfigurationManager.HOME_PATH);
         }
         return page;
     }

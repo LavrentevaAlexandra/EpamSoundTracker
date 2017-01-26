@@ -20,26 +20,31 @@ public class ChangePasswordCommand extends AbstractCommand {
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;
-        User user = (User) sessionRequestContent.getSessionAttribute(USER_ATTRIBUTE);
-        String password = sessionRequestContent.getRequestParameter(PARAM_PASSWORD);
-        String newPassword = sessionRequestContent.getRequestParameter(PARAM_NEW_PASS);
-        String confPassword = sessionRequestContent.getRequestParameter(PARAM_CONF_PASS);
-        UserLogic userLogic = new UserLogic();
-        String res;
-        try {
-            res = userLogic.changePass(user.getId(),user.getPassword(), password, newPassword, confPassword);
-            if (SUCCESS.equals(res)) {
-                user.setPassword(newPassword);
-                sessionRequestContent.setRequestAttribute(SUCCESS, messageManager.getProperty(MessageManager.CHANGE_SUCCESS));
-                sessionRequestContent.setSessionAttribute(USER_ATTRIBUTE, user);
-                page = ConfigurationManager.getProperty(ConfigurationManager.PROFILE_PATH);
-            } else {
-                sessionRequestContent.setRequestAttribute(ERROR, res);
-                return ConfigurationManager.getProperty(ConfigurationManager.CHANGE_PASS_PATH);
+        String logined = (String) sessionRequestContent.getSessionAttribute(IS_LOGIN);
+        if (logined != null && Boolean.valueOf(logined)) {
+            User user = (User) sessionRequestContent.getSessionAttribute(USER_ATTRIBUTE);
+            String password = sessionRequestContent.getRequestParameter(PARAM_PASSWORD);
+            String newPassword = sessionRequestContent.getRequestParameter(PARAM_NEW_PASS);
+            String confPassword = sessionRequestContent.getRequestParameter(PARAM_CONF_PASS);
+            UserLogic userLogic = new UserLogic();
+            String res;
+            try {
+                res = userLogic.changePass(user.getId(), user.getPassword(), password, newPassword, confPassword);
+                if (SUCCESS.equals(res)) {
+                    user.setPassword(newPassword);
+                    sessionRequestContent.setRequestAttribute(SUCCESS, messageManager.getProperty(MessageManager.CHANGE_SUCCESS));
+                    sessionRequestContent.setSessionAttribute(USER_ATTRIBUTE, user);
+                    page = ConfigurationManager.getProperty(ConfigurationManager.PROFILE_PATH);
+                } else {
+                    sessionRequestContent.setRequestAttribute(ERROR, res);
+                    return ConfigurationManager.getProperty(ConfigurationManager.CHANGE_PASS_PATH);
+                }
+            } catch (LogicException e) {
+                LOG.error("Exception during change password command", e);
+                page = redirectToErrorPage(sessionRequestContent, e);
             }
-        } catch (LogicException e) {
-            LOG.error("Exception during change password command", e);
-            page = redirectToErrorPage(sessionRequestContent,e);
+        } else {
+            page = ConfigurationManager.getProperty(ConfigurationManager.HOME_PATH);
         }
         return page;
     }

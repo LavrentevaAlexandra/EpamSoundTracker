@@ -23,6 +23,11 @@ public enum CommandType {
             this.command = new AllTracksCommand();
         }
     },
+    BUY{
+        {
+            this.command= new BuyTrackCommand();
+        }
+    },
     CHANGE{
         {
             this.command = new ChangeCommand();
@@ -46,6 +51,11 @@ public enum CommandType {
     DELETED{
         {
             this.command = new ShowDeletedCommand();
+        }
+    },
+    DOWNLOAD{
+        {
+            this.command= new DownloadCommand();
         }
     },
     EDIT{
@@ -81,6 +91,11 @@ public enum CommandType {
     MAIN{
         {
             this.command = new MainCommand();
+        }
+    },
+    MY_ORDERS{
+        {
+            this.command= new MyOrdersCommand();
         }
     },
     RECOVER{

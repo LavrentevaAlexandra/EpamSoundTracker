@@ -1,6 +1,7 @@
 package com.lavrente.soundtrack.command.admin;
 
 import com.lavrente.soundtrack.command.AbstractCommand;
+import com.lavrente.soundtrack.entity.User;
 import com.lavrente.soundtrack.exception.LogicException;
 import com.lavrente.soundtrack.logic.TrackLogic;
 import com.lavrente.soundtrack.manager.ConfigurationManager;
@@ -16,15 +17,20 @@ public class DeleteTrackCommand extends AbstractCommand {
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;
-        int trackId = Integer.valueOf(sessionRequestContent.getRequestParameter(TRACK_ID_PARAMETER));
-        TrackLogic trackLogic = new TrackLogic();
-        try {
-            trackLogic.deleteTrackById(trackId);
-            sessionRequestContent.setRequestAttribute(SUCCESS, messageManager.getProperty(MessageManager.DELETE_TRACK_SUCCESS));
+        User user = (User) sessionRequestContent.getSessionAttribute(USER_ATTRIBUTE);
+        if (user != null && user.getRole() == 1) {
+            int trackId = Integer.valueOf(sessionRequestContent.getRequestParameter(TRACK_ID_PARAMETER));
+            TrackLogic trackLogic = new TrackLogic();
+            try {
+                trackLogic.deleteTrackById(trackId);
+                sessionRequestContent.setRequestAttribute(SUCCESS, messageManager.getProperty(MessageManager.DELETE_TRACK_SUCCESS));
+                page = ConfigurationManager.getProperty(ConfigurationManager.HOME_PATH);
+            } catch (LogicException e) {
+                LOG.error("Exception during track delete command", e);
+                page = redirectToErrorPage(sessionRequestContent, e);
+            }
+        } else {
             page = ConfigurationManager.getProperty(ConfigurationManager.HOME_PATH);
-        } catch (LogicException e) {
-            LOG.error("Exception during track delete command", e);
-            page=redirectToErrorPage(sessionRequestContent,e);
         }
         return page;
     }

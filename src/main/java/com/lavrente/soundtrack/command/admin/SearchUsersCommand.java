@@ -14,21 +14,26 @@ import java.util.List;
  */
 public class SearchUsersCommand extends AbstractCommand {
     private final String FIND_PARAMETER = "find";
-    private final String USER_LIST_ATTR="users";
+    private final String USER_LIST_ATTR = "users";
 
 
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;
-        UserLogic userLogic = new UserLogic();
-        try {
-            String str = sessionRequestContent.getRequestParameter(FIND_PARAMETER);
-            List<User> userList = userLogic.findSuitableUsers(str);
-            sessionRequestContent.setSessionAttribute(USER_LIST_ATTR, userList);
-            page = ConfigurationManager.getProperty(ConfigurationManager.SET_BONUS_PATH);
-        } catch (LogicException e) {
-            LOG.error("Exception during users search", e);
-            page = redirectToErrorPage(sessionRequestContent, e);
+        User user = (User) sessionRequestContent.getSessionAttribute(USER_ATTRIBUTE);
+        if (user != null && user.getRole() == 1) {
+            UserLogic userLogic = new UserLogic();
+            try {
+                String str = sessionRequestContent.getRequestParameter(FIND_PARAMETER);
+                List<User> userList = userLogic.findSuitableUsers(str);
+                sessionRequestContent.setSessionAttribute(USER_LIST_ATTR, userList);
+                page = ConfigurationManager.getProperty(ConfigurationManager.SET_BONUS_PATH);
+            } catch (LogicException e) {
+                LOG.error("Exception during users search", e);
+                page = redirectToErrorPage(sessionRequestContent, e);
+            }
+        } else {
+            page = ConfigurationManager.getProperty(ConfigurationManager.HOME_PATH);
         }
         return page;
     }

@@ -27,7 +27,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                     <ctg:isLoggedIn>
-                        <li><a href="${pageContext.request.contextPath}/jsp/profile.jsp"><span class="glyphicon glyphicon-user" style="color: gainsboro"></span> ${user.login}</a></li>
+                        <li><a href="${pageContext.request.contextPath}/jsp/user/profile.jsp"><span class="glyphicon glyphicon-user" style="color: gainsboro"></span> ${user.login}</a></li>
                         <li><a href="${pageContext.request.contextPath}/controller?command=logout"><span class="glyphicon glyphicon-log-out" style="color: gainsboro"></span> <fmt:message key="menu.logout"/></a></li>
                     </ctg:isLoggedIn>
                     <ctg:notLoggedIn>

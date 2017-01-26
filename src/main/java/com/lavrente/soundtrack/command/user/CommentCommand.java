@@ -26,29 +26,34 @@ public class CommentCommand extends AbstractCommand {
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;
-        User user = (User) sessionRequestContent.getSessionAttribute(USER_ATTRIBUTE);
-        int trackId = Integer.valueOf(sessionRequestContent.getRequestParameter(TRACK_ID_PARAM));
-        String commentText = sessionRequestContent.getRequestParameter(COMMENT_PARAM);
-        UserLogic userLogic = new UserLogic();
-        TrackLogic trackLogic = new TrackLogic();
-        if (!commentText.isEmpty()) {
-            try {
-                String res = userLogic.addComment(user, commentText, trackId);
-                if (SUCCESS.equals(res)) {
-                    List<Comment> comments = trackLogic.findTrackComments(trackId);
-                    sessionRequestContent.setSessionAttribute(COMMENTS_ATTRIBUTE, comments);
-                    page = ConfigurationManager.getProperty(ConfigurationManager.TRACK_INFO_PATH);
-                }else{
-                    sessionRequestContent.setRequestAttribute(ERROR, res);
-                    return ConfigurationManager.getProperty(ConfigurationManager.TRACK_INFO_PATH);
+        String logined = (String) sessionRequestContent.getSessionAttribute(IS_LOGIN);
+        if (logined != null && Boolean.valueOf(logined)) {
+            User user = (User) sessionRequestContent.getSessionAttribute(USER_ATTRIBUTE);
+            int trackId = Integer.valueOf(sessionRequestContent.getRequestParameter(TRACK_ID_PARAM));
+            String commentText = sessionRequestContent.getRequestParameter(COMMENT_PARAM);
+            UserLogic userLogic = new UserLogic();
+            TrackLogic trackLogic = new TrackLogic();
+            if (!commentText.isEmpty()) {
+                try {
+                    String res = userLogic.addComment(user, commentText, trackId);
+                    if (SUCCESS.equals(res)) {
+                        List<Comment> comments = trackLogic.findTrackComments(trackId);
+                        sessionRequestContent.setSessionAttribute(COMMENTS_ATTRIBUTE, comments);
+                        page = ConfigurationManager.getProperty(ConfigurationManager.TRACK_INFO_PATH);
+                    } else {
+                        sessionRequestContent.setRequestAttribute(ERROR, res);
+                        return ConfigurationManager.getProperty(ConfigurationManager.TRACK_INFO_PATH);
+                    }
+                } catch (LogicException e) {
+                    LOG.error("Exception during comment addition command", e);
+                    page = redirectToErrorPage(sessionRequestContent, e);
                 }
-            } catch (LogicException e) {
-                LOG.error("Exception during comment addition command", e);
-                page = redirectToErrorPage(sessionRequestContent, e);
+            } else {
+                sessionRequestContent.setRequestAttribute(ERROR, messageManager.getProperty(MessageManager.ADD_COMMENT_EMPTY));
+                return ConfigurationManager.getProperty(ConfigurationManager.TRACK_INFO_PATH);
             }
         } else {
-            sessionRequestContent.setRequestAttribute(ERROR, messageManager.getProperty(MessageManager.ADD_COMMENT_EMPTY));
-            return ConfigurationManager.getProperty(ConfigurationManager.TRACK_INFO_PATH);
+            page = ConfigurationManager.getProperty(ConfigurationManager.HOME_PATH);
         }
         return page;
     }

@@ -10,7 +10,7 @@
 </head>
 <body>
 <c:set var="page" value="path.page.show_users" scope="session"/>
-<%@ include file="menu.jsp" %>
+<%@ include file="../menu.jsp" %>
 <div class="container" style="margin-top: 90px">
     <c:if test="${not empty error}">
         <div class="alert alert-danger">${error}</div>
@@ -68,6 +68,6 @@
 
 
 </div>
-<%@include file="footer.jsp" %>
+<%@include file="../footer.jsp" %>
 </body>
 </html>
