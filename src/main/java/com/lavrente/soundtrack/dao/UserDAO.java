@@ -8,6 +8,8 @@ import com.lavrente.soundtrack.pool.ProxyConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 123 on 03.01.2017.
@@ -23,11 +25,15 @@ public class UserDAO extends AbstractDAO<User> {
     private static final String SQL_CHANGE_EMAIL = "UPDATE user SET email=? WHERE id=?";
     private static final String SQL_CHANGE_LOGIN = "UPDATE user SET login=? WHERE id=?";
     private static final String SQL_CHANGE_PASS = "UPDATE user SET password=? WHERE id=?";
+    private static final String SQL_SELECT_ALL_CLIENTS = "SELECT user.id, user.login, user.discount, COUNT(user.login) as count\n"+
+            " FROM audio_track_order.`order` Left join `user` ON `order`.user_id=`user`.id\n"+
+            " GROUP BY user.login ORDER BY user.login";
     private static final String SQL_SELECT_CASH = "SELECT cash_account FROM user WHERE id=?";
     private static final String SQL_SELECT_PASSWORD_BY_LOGIN = "SELECT password FROM user WHERE login=?";
     private static final String SQL_SELECT_USER_BY_ID = "SELECT * FROM user WHERE id=?";
     private static final String SQL_SELECT_USER_BY_LOGIN = "SELECT * FROM user WHERE login=?";
     private static final String SQL_SELECT_USER_BY_EMAIL = "SELECT * FROM user WHERE email=?";
+    private static final String SQL_SET_BONUS = "UPDATE user SET discount=? WHERE id=?";
 
     public UserDAO(ProxyConnection connection) {
         super(connection);
@@ -136,6 +142,22 @@ public class UserDAO extends AbstractDAO<User> {
         }
     }
 
+    private List<User> createClientList(ResultSet set) throws DAOException {
+        List<User> clientList=new ArrayList<>();
+        try {
+            while (set.next()) {
+                int userId = set.getInt("id");
+                String login = set.getString("login");
+                int discount = set.getInt("discount");
+                int orderCount = set.getInt("count");
+                clientList.add(new User(userId, login, discount, orderCount));
+            }
+            return clientList;
+        } catch (SQLException e) {
+            throw new DAOException("Exception during client list creation", e);
+        }
+    }
+
     private User createUser(ResultSet set) throws DAOException {
         try {
             if (set.next()) {
@@ -154,6 +176,21 @@ public class UserDAO extends AbstractDAO<User> {
         } catch (SQLException e) {
             throw new DAOException("Exception during user creation", e);
         }
+    }
+
+    public List<User> findClients()throws DAOException{
+        List<User> userList;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_SELECT_ALL_CLIENTS);
+            ResultSet set = statement.executeQuery();
+            userList = createClientList(set);
+        } catch (SQLException e) {
+            throw new DAOException("Exception during clients search",e);
+        } finally {
+            closeStatement(statement);
+        }
+        return userList;
     }
 
     public double findCash(int userId) throws DAOException {
@@ -238,6 +275,20 @@ public class UserDAO extends AbstractDAO<User> {
             closeStatement(statement);
         }
         return user;
+    }
+
+    public void setBonus(int userId, int bonus) throws DAOException {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_SET_BONUS);
+            statement.setInt(1, bonus);
+            statement.setInt(2, userId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Exception during bonus setting", e);
+        } finally {
+            closeStatement(statement);
+        }
     }
 }
 

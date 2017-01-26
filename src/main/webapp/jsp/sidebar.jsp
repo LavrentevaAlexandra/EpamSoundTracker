@@ -52,7 +52,7 @@
         </li>
         <li>
             <ctg:isAdmin>
-                <a href="${pageContext.request.contextPath}/jsp/set_bonus.jsp">
+                <a href="${pageContext.request.contextPath}/controller?command=show_users">
                     <fmt:message key="sidebar.bonus"/>
                 </a>
             </ctg:isAdmin>

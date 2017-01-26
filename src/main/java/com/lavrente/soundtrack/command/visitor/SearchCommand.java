@@ -24,10 +24,10 @@ public class SearchCommand extends AbstractCommand {
         TrackLogic trackLogic = new TrackLogic();
         try {
             String str = sessionRequestContent.getRequestParameter(FIND_PARAMETER);
-            List<Track> tracks = trackLogic.findSuitableTracks(str);
+            List<Track> trackList = trackLogic.findSuitableTracks(str);
             sessionRequestContent.setSessionAttribute(IS_DELETED, false);
             sessionRequestContent.setRequestAttribute(SEARCH_ATTR, true);
-            sessionRequestContent.setSessionAttribute(TRACK_LIST_ATTR, tracks);
+            sessionRequestContent.setSessionAttribute(TRACK_LIST_ATTR, trackList);
             page = ConfigurationManager.getProperty(ConfigurationManager.MAIN_PATH);
         } catch (LogicException e) {
             LOG.error("Exception during tracks search", e);

@@ -29,6 +29,11 @@ public class MessageManager {
     public final static String LOGIN_ERROR="message.login.error";
     public final static String NOT_UNIQUE_EMAIL="message.signup.unique.email";
     public final static String NOT_UNIQUE_LOGIN="message.signup.unique.login";
+    public final static String ODER_DOWNLOAD="message.order.download";
+    public final static String ORDER_ERROR="message.order.money";
+    public final static String ORDER_SUCCESS="message.order.success";
+    public final static String SET_BONUS_ERROR="message.bonus.error";
+    public final static String SET_BONUS_SUCCESS="message.bonus.success";
     public final static String SIGNUP_ERROR="message.signup.error";
     public final static String TRACK_RECOVER_SUCCESS="message.track.recover.success";
 

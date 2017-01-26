@@ -21,7 +21,6 @@
     <form class="form-horizontal" method="post" id="addTrack" name="addTrack" enctype="multipart/form-data"
           action="${pageContext.request.contextPath}/controller">
         <fieldset>
-            <!-- Form Name -->
             <legend><fmt:message key="add.track.title"/></legend>
 
             <div class="form-group">

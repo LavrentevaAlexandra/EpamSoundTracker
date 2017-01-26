@@ -37,6 +37,10 @@ public class Validator implements Messenger {
         return matcher.matches();
     }
 
+    boolean isBonusValid(String bonus){
+        return  (bonus.length() != ZERO && bonus.length() <= MAX_PRICE_LENGTH) && canConvertToUnsignedInt(bonus);
+    }
+
     boolean isCashValid(String cash) {
         return  !(cash.length()== ZERO && cash.length() > MAX_CASH_LENGTH) && canConvertToUnsignedDouble(cash);
     }
@@ -119,18 +123,26 @@ public class Validator implements Messenger {
     }
 
     boolean isPriceValid(String price) {
-        return  !(price.length() == ZERO && price.length() > MAX_PRICE_LENGTH) && canConvertToUnsignedDouble(price);
+        return  (price.length() != ZERO && price.length() <= MAX_PRICE_LENGTH) && canConvertToUnsignedDouble(price);
     }
 
     boolean validateConfirmPass(String confirmPass, String pass) {
         return pass.equals(confirmPass);
     }
 
-
     private boolean canConvertToUnsignedDouble(String value){
         try {
-            Double doublePrice = Double.valueOf(value);
-            return (doublePrice > ZERO);
+            Double doubleValue = Double.valueOf(value);
+            return (doubleValue > ZERO);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean canConvertToUnsignedInt(String value){
+        try {
+            Integer intValue = Integer.valueOf(value);
+            return (intValue >= ZERO);
         } catch (NumberFormatException e) {
             return false;
         }

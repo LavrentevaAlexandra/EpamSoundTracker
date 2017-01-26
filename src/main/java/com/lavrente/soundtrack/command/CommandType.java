@@ -93,6 +93,21 @@ public enum CommandType {
             this.command = new SearchCommand();
         }
     },
+    SEARCH_USERS{
+        {
+            this.command = new SearchUsersCommand();
+        }
+    },
+    SET_BONUS{
+        {
+            this.command = new SetBonusCommand();
+        }
+    },
+    SHOW_USERS{
+        {
+            this.command = new ShowUsersCommand();
+        }
+    },
     SIGNUP {
         {
             this.command = new SingUpCommand();

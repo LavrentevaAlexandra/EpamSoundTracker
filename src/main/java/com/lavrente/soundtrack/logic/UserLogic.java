@@ -10,6 +10,9 @@ import com.lavrente.soundtrack.pool.ConnectionPool;
 import com.lavrente.soundtrack.pool.ProxyConnection;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by 123 on 04.01.2017.
  */
@@ -61,21 +64,21 @@ public class UserLogic implements Messenger {
 
     public String changeCardNumber(int userId, String newCardNumber) throws LogicException {
         Validator validator = new Validator();
-            if (validator.isBankCardValid(newCardNumber)) {
-                ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-                UserDAO userDAO = new UserDAO(connection);
-                try {
-                    userDAO.changeCardNumber(userId, newCardNumber);
-                    return SUCCESS;
-                } catch (DAOException e) {
-                    throw new LogicException("Error during changing card number", e);
-                } finally {
-                    userDAO.closeConnection(connection);
-                }
-
-            } else {
-                return messageManager.getProperty(MessageManager.CHANGE_CARD_ERROR);
+        if (validator.isBankCardValid(newCardNumber)) {
+            ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+            UserDAO userDAO = new UserDAO(connection);
+            try {
+                userDAO.changeCardNumber(userId, newCardNumber);
+                return SUCCESS;
+            } catch (DAOException e) {
+                throw new LogicException("Error during changing card number", e);
+            } finally {
+                userDAO.closeConnection(connection);
             }
+
+        } else {
+            return messageManager.getProperty(MessageManager.CHANGE_CARD_ERROR);
+        }
     }
 
     public String changeEmail(int userId, String newEmail) throws LogicException {
@@ -150,6 +153,37 @@ public class UserLogic implements Messenger {
         }
     }
 
+    public List<User> findClients() throws LogicException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        UserDAO userDAO = new UserDAO(connection);
+        try {
+            return userDAO.findClients();
+        } catch (DAOException e) {
+            throw new LogicException("Exception during clients search", e);
+        } finally {
+            userDAO.closeConnection(connection);
+        }
+    }
+
+    public List<User> findSuitableUsers(String str) throws LogicException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        UserDAO trackDAO = new UserDAO(connection);
+        try {
+            List<User> allClients = trackDAO.findClients();
+            List<User> res = new ArrayList<>();
+            for (User temp : allClients) {
+                if (temp.getLogin().toLowerCase().contains(str.toLowerCase())) {
+                    res.add(temp);
+                }
+            }
+            return res;
+        } catch (DAOException e) {
+            throw new LogicException("Exception during users search", e);
+        } finally {
+            trackDAO.closeConnection(connection);
+        }
+    }
+
     public User findUser(String login) throws LogicException {
         User user;
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
@@ -169,9 +203,33 @@ public class UserLogic implements Messenger {
         try {
             user = userDAO.findUserById(id);
         } catch (DAOException e) {
-            throw new LogicException("Error during user search", e);
+            throw new LogicException("Exception during user search", e);
         }
         return user;
+    }
+
+    public String setBonus(int userId, String bonus) throws LogicException {
+        Validator validator = new Validator();
+        if (validator.isBonusValid(bonus)) {
+            int discount = Integer.valueOf(bonus);
+            User client = findUserById(userId);
+            if (discount != client.getDiscount()) {
+                ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+                UserDAO userDAO = new UserDAO(connection);
+                try {
+                    userDAO.setBonus(userId, discount);
+                    return SUCCESS;
+                } catch (DAOException e) {
+                    throw new LogicException("Exception during bonus setting", e);
+                } finally {
+                    userDAO.closeConnection(connection);
+                }
+            }else{
+                return SUCCESS;
+            }
+        } else {
+            return messageManager.getProperty(MessageManager.SET_BONUS_ERROR);
+        }
     }
 
     public String singUp(String login, String password, String confirmPassword, String email, String cardNumber) throws LogicException {

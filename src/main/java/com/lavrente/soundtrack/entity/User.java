@@ -12,8 +12,9 @@ public class User extends Entity{
     private int discount;
     private String cardNumber;
     private String email;
+    private int orderCount;
 
-    public User(int id, String login, String password, double cash, int role,int discount, String cardNumber, String email) {
+    public User(int id, String login, String password, double cash, int role, int discount, String cardNumber, String email) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -22,6 +23,13 @@ public class User extends Entity{
         this.discount = discount;
         this.cardNumber = cardNumber;
         this.email = email;
+    }
+
+    public User(int id, String login, int discount, int orderCount) {
+        this.id = id;
+        this.login = login;
+        this.discount = discount;
+        this.orderCount= orderCount;
     }
 
     public int getId() {
@@ -82,5 +90,13 @@ public class User extends Entity{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getOrderCount() {
+        return orderCount;
+    }
+
+    public void setOrderCount(int orderCount) {
+        this.orderCount = orderCount;
     }
 }
