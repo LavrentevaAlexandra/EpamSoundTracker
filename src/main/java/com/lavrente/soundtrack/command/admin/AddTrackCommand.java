@@ -3,12 +3,15 @@ package com.lavrente.soundtrack.command.admin;
 import com.lavrente.soundtrack.command.AbstractCommand;
 import com.lavrente.soundtrack.entity.User;
 import com.lavrente.soundtrack.exception.LogicException;
+import com.lavrente.soundtrack.logic.GenreLogic;
 import com.lavrente.soundtrack.logic.TrackLogic;
 import com.lavrente.soundtrack.manager.ConfigurationManager;
 import com.lavrente.soundtrack.manager.MessageManager;
 import com.lavrente.soundtrack.servlet.SessionRequestContent;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 123 on 11.01.2017.
@@ -29,6 +32,10 @@ public class AddTrackCommand extends AbstractCommand {
 
     /** The genre param. */
     private final String GENRE_PARAM = "genre";
+
+    /** The genre attribute. */
+    private final String GENRES_ATTR = "genres";
+
 
     /** The price param. */
     private final String PRICE_PARAM = "price";
@@ -55,6 +62,10 @@ public class AddTrackCommand extends AbstractCommand {
                 try {
                     String res = trackLogic.addTrack(name, artist, price, genre, realPath);
                     if (SUCCESS.equals(res)) {
+                        GenreLogic genreLogic=new GenreLogic();
+                        List<String> genreList=new ArrayList<>();
+                        genreList= genreLogic.findGenres();
+                        sessionRequestContent.setSessionAttribute(GENRES_ATTR, genreList);
                         sessionRequestContent.setRequestAttribute(SUCCESS, messageManager.getProperty(MessageManager.ADD_TRACK_SUCCESS));
                         page = ConfigurationManager.getProperty(ConfigurationManager.HOME_PATH);
                     } else {

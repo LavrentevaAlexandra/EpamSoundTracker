@@ -14,8 +14,8 @@ import java.util.List;
 public class IndexCommand extends AbstractCommand {
 
     /** The Constant DEFAULT_LOCALE. */
-    private static final String DEFAULT_LOCALE = "ru_RU";
-    private static final String GENRES_ATTR = "genres";
+    private final String DEFAULT_LOCALE = "ru_RU";
+    private final String GENRES_ATTR = "genres";
 
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
