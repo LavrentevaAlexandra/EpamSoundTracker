@@ -14,14 +14,36 @@ import java.io.OutputStream;
  * Created by 123 on 26.01.2017.
  */
 public class FileDownloader {
+
+    /** The Constant LOG. */
     private static final Logger LOG = LogManager.getLogger();
+
+    /** The mime type. */
     private final String MIME_TYPE = "application/octet-stream";
+
+    /** The header key. */
     private final String HEADER_KEY = "Content-Disposition";
+
+    /** The attachment. */
     private final String ATTACHMENT = "attachment; filename=\"%s\"";
+
+    /** The end. */
     private final int END = -1;
+
+    /** The buffer length. */
     private final int BUFFER_LENGTH = 4096;
+
+    /** The start offset. */
     private final int START_OFFSET = 0;
 
+    /**
+     * Download track.
+     *
+     * @param filePath the file path
+     * @param response the response
+     * @param context the context
+     * @return true, if successful
+     */
     boolean downloadTrack(String filePath, HttpServletResponse response, ServletContext context) {
         try {
             File downloadFile = new File(filePath);

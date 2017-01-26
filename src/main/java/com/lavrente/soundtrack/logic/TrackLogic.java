@@ -19,8 +19,21 @@ import java.util.List;
  * Created by 123 on 11.01.2017.
  */
 public class TrackLogic implements Messenger {
+
+    /** The success. */
     private final String SUCCESS = "success";
 
+    /**
+     * Adds the track.
+     *
+     * @param name the name
+     * @param artist the artist
+     * @param price the price
+     * @param genre the genre
+     * @param path the path
+     * @return the string
+     * @throws LogicException the logic exception
+     */
     public String addTrack(String name, String artist, String price, String genre, String path) throws LogicException {
         Validator validator = new Validator();
         if (validator.isTrackValid(name, artist, price, genre)) {
@@ -42,6 +55,14 @@ public class TrackLogic implements Messenger {
         }
     }
 
+    /**
+     * Change artist.
+     *
+     * @param trackId the track id
+     * @param newArtist the new artist
+     * @return the string
+     * @throws LogicException the logic exception
+     */
     public String changeArtist(int trackId, String newArtist) throws LogicException {
         Validator validator = new Validator();
         if (validator.isTrackArtistValid(newArtist)) {
@@ -60,6 +81,14 @@ public class TrackLogic implements Messenger {
         }
     }
 
+    /**
+     * Change genre.
+     *
+     * @param trackId the track id
+     * @param newGenre the new genre
+     * @return the string
+     * @throws LogicException the logic exception
+     */
     public String changeGenre(int trackId, String newGenre) throws LogicException {
         Validator validator = new Validator();
         if (validator.isGenreValid(newGenre)) {
@@ -80,6 +109,14 @@ public class TrackLogic implements Messenger {
         }
     }
 
+    /**
+     * Change name.
+     *
+     * @param trackId the track id
+     * @param newName the new name
+     * @return the string
+     * @throws LogicException the logic exception
+     */
     public String changeName(int trackId, String newName) throws LogicException {
         Validator validator = new Validator();
         if (validator.isTrackNameValid(newName)) {
@@ -98,6 +135,15 @@ public class TrackLogic implements Messenger {
         }
     }
 
+    /**
+     * Change price.
+     *
+     * @param trackId the track id
+     * @param prevPrice the prev price
+     * @param newPrice the new price
+     * @return the string
+     * @throws LogicException the logic exception
+     */
     public String changePrice(int trackId, double prevPrice, String newPrice) throws LogicException {
         Validator validator = new Validator();
         if (validator.isPriceValid(newPrice)) {
@@ -120,6 +166,12 @@ public class TrackLogic implements Messenger {
         }
     }
 
+    /**
+     * Delete track by id.
+     *
+     * @param id the id
+     * @throws LogicException the logic exception
+     */
     public void deleteTrackById(int id) throws LogicException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         TrackDAO trackDAO = new TrackDAO(connection);
@@ -132,6 +184,12 @@ public class TrackLogic implements Messenger {
         }
     }
 
+    /**
+     * Find all tracks.
+     *
+     * @return the list
+     * @throws LogicException the logic exception
+     */
     public List<Track> findAllTracks() throws LogicException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         TrackDAO trackDAO = new TrackDAO(connection);
@@ -144,6 +202,13 @@ public class TrackLogic implements Messenger {
         }
     }
 
+    /**
+     * Find suitable tracks.
+     *
+     * @param str the str
+     * @return the list
+     * @throws LogicException the logic exception
+     */
     public List<Track> findSuitableTracks(String str) throws LogicException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         TrackDAO trackDAO = new TrackDAO(connection);
@@ -165,6 +230,12 @@ public class TrackLogic implements Messenger {
         }
     }
 
+    /**
+     * Find deleted tracks.
+     *
+     * @return the list
+     * @throws LogicException the logic exception
+     */
     public List<Track> findDeletedTracks() throws LogicException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         TrackDAO trackDAO = new TrackDAO(connection);
@@ -177,6 +248,13 @@ public class TrackLogic implements Messenger {
         }
     }
 
+    /**
+     * Find track by id.
+     *
+     * @param id the id
+     * @return the track
+     * @throws LogicException the logic exception
+     */
     public Track findTrackById(int id) throws LogicException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         TrackDAO trackDAO = new TrackDAO(connection);
@@ -189,6 +267,13 @@ public class TrackLogic implements Messenger {
         }
     }
 
+    /**
+     * Find tracks by genre.
+     *
+     * @param genre the genre
+     * @return the list
+     * @throws LogicException the logic exception
+     */
     public List<Track> findTracksByGenre(String genre) throws LogicException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         TrackDAO trackDAO = new TrackDAO(connection);
@@ -201,6 +286,13 @@ public class TrackLogic implements Messenger {
         }
     }
 
+    /**
+     * Find track comments.
+     *
+     * @param trackId the track id
+     * @return the list
+     * @throws LogicException the logic exception
+     */
     public List<Comment> findTrackComments(int trackId) throws LogicException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         TrackDAO trackDAO = new TrackDAO(connection);
@@ -213,6 +305,13 @@ public class TrackLogic implements Messenger {
         }
     }
 
+    /**
+     * Find track path.
+     *
+     * @param trackId the track id
+     * @return the string
+     * @throws LogicException the logic exception
+     */
     public String findTrackPath(int trackId) throws LogicException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         TrackDAO trackDAO = new TrackDAO(connection);
@@ -225,6 +324,12 @@ public class TrackLogic implements Messenger {
         }
     }
 
+    /**
+     * Last tracks.
+     *
+     * @return the list
+     * @throws LogicException the logic exception
+     */
     public List<Track> lastTracks() throws LogicException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         TrackDAO trackDAO = new TrackDAO(connection);
@@ -237,6 +342,12 @@ public class TrackLogic implements Messenger {
         }
     }
 
+    /**
+     * Recover track by id.
+     *
+     * @param id the id
+     * @throws LogicException the logic exception
+     */
     public void recoverTrackById(int id) throws LogicException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         TrackDAO trackDAO = new TrackDAO(connection);

@@ -12,12 +12,26 @@ import com.lavrente.soundtrack.servlet.SessionRequestContent;
  * Created by 123 on 06.01.2017.
  */
 public class ChangeCommand extends AbstractCommand {
+
+    /** The Constant USER_ATTR. */
     private static final String USER_ATTR = "user";
+
+    /** The Constant PARAM_LOGIN. */
     private static final String PARAM_LOGIN = "login";
+
+    /** The Constant PARAM_EMAIL. */
     private static final String PARAM_EMAIL = "email";
+
+    /** The Constant PARAM_CARD_NUMBER. */
     private static final String PARAM_CARD_NUMBER = "card";
 
 
+    /**
+     * Execute.
+     *
+     * @param sessionRequestContent the session request content
+     * @return the string
+     */
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;

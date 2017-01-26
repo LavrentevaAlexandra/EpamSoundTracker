@@ -28,28 +28,63 @@ import java.io.IOException;
         maxRequestSize = 1024 * 1024 * 50)   // 50MB
 @WebServlet("/controller")
 public class SoundTrackerServlet extends HttpServlet implements ServletContextListener {
+
+    /**
+     * Context initialized.
+     *
+     * @param servletContextEvent the servlet context event
+     */
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
     }
 
+    /**
+     * Context destroyed.
+     *
+     * @param servletContextEvent the servlet context event
+     */
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
         ConnectionPool.getInstance().terminatePool();
     }
 
 
+    /**
+     * Do get.
+     *
+     * @param request the request
+     * @param response the response
+     * @throws ServletException the servlet exception
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
+    /**
+     * Do post.
+     *
+     * @param request the request
+     * @param response the response
+     * @throws ServletException the servlet exception
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
+    /**
+     * Process request.
+     *
+     * @param request the request
+     * @param response the response
+     * @throws ServletException the servlet exception
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 

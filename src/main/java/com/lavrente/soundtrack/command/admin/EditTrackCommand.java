@@ -16,13 +16,31 @@ import java.util.List;
  * Created by 123 on 25.01.2017.
  */
 public class EditTrackCommand extends AbstractCommand {
+
+    /** The track attr. */
     private final String TRACK_ATTR = "track";
+
+    /** The comments attribute. */
     private final String COMMENTS_ATTRIBUTE = "comments";
+
+    /** The name param. */
     private final String NAME_PARAM = "name";
+
+    /** The artist param. */
     private final String ARTIST_PARAM = "artist";
+
+    /** The genre param. */
     private final String GENRE_PARAM = "genre";
+
+    /** The price param. */
     private final String PRICE_PARAM = "price";
 
+    /**
+     * Execute.
+     *
+     * @param sessionRequestContent the session request content
+     * @return the string
+     */
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;

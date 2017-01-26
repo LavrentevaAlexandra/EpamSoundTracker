@@ -17,41 +17,84 @@ import java.util.List;
  */
 @SuppressWarnings("Duplicates")
 public class TrackDAO extends AbstractDAO {
+
+    /** The Constant SQL_ADD_TRACK. */
     private static final String SQL_ADD_TRACK = "INSERT INTO audio_track (`name`, `artist_name`, `genre_id`, `price`, `path`) VALUES ( ?,?,?,?,?)";
+
+    /** The Constant SQL_CHANGE_ARTIST. */
     private static final String SQL_CHANGE_ARTIST = "UPDATE audio_track SET artist_name=? WHERE id=?";
+
+    /** The Constant SQL_CHANGE_GENRE. */
     private static final String SQL_CHANGE_GENRE = "UPDATE audio_track SET genre_id=? WHERE id=?";
+
+    /** The Constant SQL_CHANGE_NAME. */
     private static final String SQL_CHANGE_NAME = "UPDATE audio_track SET name=? WHERE id=?";
+
+    /** The Constant SQL_CHANGE_PRICE. */
     private static final String SQL_CHANGE_PRICE = "UPDATE audio_track SET price=? WHERE id=?";
+
+    /** The Constant SQL_DELETE_TRACK. */
     private static final String SQL_DELETE_TRACK = "UPDATE audio_track SET audio_track.deleted=1 WHERE id=?";
+
+    /** The Constant SQL_RECOVER_TRACK. */
     private static final String SQL_RECOVER_TRACK = "UPDATE audio_track SET audio_track.deleted=0 WHERE id=?";
+
+    /** The Constant SQL_SELECT_ALL_TRACKS. */
     private static final String SQL_SELECT_ALL_TRACKS = "SELECT audio_track.id, audio_track.name, genre.genre,  audio_track.artist_name, audio_track.price\n" +
             "FROM audio_track\n" +
             "LEFT JOIN genre ON audio_track.genre_id=genre.id\n" +
             "WHERE audio_track.deleted =0 ORDER BY audio_track.name";
+
+    /** The Constant SQL_SELECT_LAST_ORDERS. */
     private static final String SQL_SELECT_LAST_ORDERS = "SELECT audio_track.id, audio_track.name, genre.genre,  audio_track.artist_name, audio_track.price\n" +
             "FROM `order` JOIN audio_track ON `order`.audio_track_id=audio_track.id\n" +
             "LEFT JOIN genre ON audio_track.genre_id=genre.id\n" +
             "WHERE audio_track.deleted = 0\n" +
             "GROUP BY audio_track.name ORDER BY `order`.date DESC LIMIT 5 ";
+
+    /** The Constant SQL_SELECT_TRACKS_BY_GENRE. */
     private static final String SQL_SELECT_TRACKS_BY_GENRE = "SELECT audio_track.id, audio_track.name, genre.genre, audio_track.artist_name, audio_track.price\n" +
             "FROM audio_track\n" +
             "LEFT JOIN genre ON audio_track.genre_id=genre.id\n" +
             "WHERE genre=? AND audio_track.deleted = 0 ORDER BY audio_track.name";
+
+    /** The Constant SQL_SELECT_TRACK_BY_ID. */
     private static final String SQL_SELECT_TRACK_BY_ID = "SELECT audio_track.id, audio_track.name, genre.genre, audio_track.artist_name, audio_track.price\n" +
             "FROM audio_track\n" +
             "LEFT JOIN genre ON audio_track.genre_id=genre.id\n" +
             "WHERE audio_track.id=?";
+
+    /** The Constant SQL_SELECT_TRACK_PATH. */
     private static final String SQL_SELECT_TRACK_PATH= "SELECT audio_track.path FROM audio_track WHERE id=?";
+
+    /** The Constant SQL_SELECT_TRACK_COMMENTS. */
     private static final String SQL_SELECT_TRACK_COMMENTS = "SELECT user.login, comment.date, comment.text\n" +
             "FROM comment JOIN user ON user.id = comment.user_id WHERE comment.audio_track_id=? ORDER BY comment.date DESC;";
+
+    /** The Constant SQL_SELECT_DELETED_TRACKS. */
     private static final String SQL_SELECT_DELETED_TRACKS= "SELECT audio_track.id, audio_track.name, genre.genre,  audio_track.artist_name, audio_track.price\n" +
             "FROM `audio_track` JOIN genre ON audio_track.genre_id=genre.id\n" +
             "WHERE audio_track.deleted = 1 ORDER BY audio_track.name";
 
+    /**
+     * Instantiates a new track DAO.
+     *
+     * @param connection the connection
+     */
     public TrackDAO(ProxyConnection connection) {
         super(connection);
     }
 
+    /**
+     * Adds the track.
+     *
+     * @param name the name
+     * @param artist the artist
+     * @param price the price
+     * @param genreId the genre id
+     * @param path the path
+     * @throws DAOException the DAO exception
+     */
     public void addTrack(String name, String artist, double price, int genreId, String path) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -69,6 +112,13 @@ public class TrackDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Change artist.
+     *
+     * @param trackId the track id
+     * @param newArtist the new artist
+     * @throws DAOException the DAO exception
+     */
     public void changeArtist(int trackId, String newArtist) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -83,6 +133,13 @@ public class TrackDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Change genre.
+     *
+     * @param trackId the track id
+     * @param newGenreId the new genre id
+     * @throws DAOException the DAO exception
+     */
     public void changeGenre(int trackId, int newGenreId) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -97,6 +154,13 @@ public class TrackDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Change name.
+     *
+     * @param trackId the track id
+     * @param newName the new name
+     * @throws DAOException the DAO exception
+     */
     public void changeName(int trackId, String newName) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -111,6 +175,13 @@ public class TrackDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Change price.
+     *
+     * @param trackId the track id
+     * @param newPrice the new price
+     * @throws DAOException the DAO exception
+     */
     public void changePrice(int trackId, double newPrice) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -125,6 +196,12 @@ public class TrackDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Delete track by id.
+     *
+     * @param id the id
+     * @throws DAOException the DAO exception
+     */
     public void deleteTrackById(int id) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -138,6 +215,12 @@ public class TrackDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Find all.
+     *
+     * @return the list
+     * @throws DAOException the DAO exception
+     */
     public List<Track> findAll() throws DAOException {
         List<Track> trackList;
         PreparedStatement statement = null;
@@ -153,6 +236,12 @@ public class TrackDAO extends AbstractDAO {
         return trackList;
     }
 
+    /**
+     * Find deleted tracks.
+     *
+     * @return the list
+     * @throws DAOException the DAO exception
+     */
     public List<Track> findDeletedTracks() throws DAOException {
         List<Track> trackList;
         Statement statement = null;
@@ -168,6 +257,12 @@ public class TrackDAO extends AbstractDAO {
         return trackList;
     }
 
+    /**
+     * Find last ordered tracks.
+     *
+     * @return the list
+     * @throws DAOException the DAO exception
+     */
     public List<Track> findLastOrderedTracks() throws DAOException {
         List<Track> trackList;
         Statement statement = null;
@@ -183,6 +278,13 @@ public class TrackDAO extends AbstractDAO {
         return trackList;
     }
 
+    /**
+     * Find tracks by genre.
+     *
+     * @param genre the genre
+     * @return the list
+     * @throws DAOException the DAO exception
+     */
     public List<Track> findTracksByGenre( String genre) throws DAOException {
         List<Track> trackList;
         PreparedStatement statement = null;
@@ -199,6 +301,13 @@ public class TrackDAO extends AbstractDAO {
         return trackList;
     }
 
+    /**
+     * Find track by id.
+     *
+     * @param id the id
+     * @return the track
+     * @throws DAOException the DAO exception
+     */
     public Track findTrackById(int id) throws DAOException {
         Track track;
         PreparedStatement statement = null;
@@ -215,6 +324,13 @@ public class TrackDAO extends AbstractDAO {
         return track;
     }
 
+    /**
+     * Find track comments.
+     *
+     * @param trackId the track id
+     * @return the list
+     * @throws DAOException the DAO exception
+     */
     public List<Comment> findTrackComments(int trackId) throws DAOException {
         List<Comment> comments = new ArrayList<>();
         PreparedStatement statement = null;
@@ -237,6 +353,13 @@ public class TrackDAO extends AbstractDAO {
         return comments;
     }
 
+    /**
+     * Find track path.
+     *
+     * @param trackId the track id
+     * @return the string
+     * @throws DAOException the DAO exception
+     */
     public String findTrackPath(int trackId) throws DAOException {
         String path = "";
         PreparedStatement statement = null;
@@ -255,6 +378,12 @@ public class TrackDAO extends AbstractDAO {
         return path;
     }
 
+    /**
+     * Recover track by id.
+     *
+     * @param id the id
+     * @throws DAOException the DAO exception
+     */
     public void recoverTrackById(int id) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -268,6 +397,13 @@ public class TrackDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Form track list.
+     *
+     * @param set the set
+     * @return the list
+     * @throws DAOException the DAO exception
+     */
     List<Track> formTrackList(ResultSet set) throws DAOException {
         List<Track> trackList = new ArrayList<>();
         try {

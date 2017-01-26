@@ -15,10 +15,22 @@ import java.util.List;
  * Created by 123 on 19.01.2017.
  */
 public class TrackInfoCommand extends AbstractCommand {
+
+    /** The track id. */
     private final String TRACK_ID = "track_id";
+
+    /** The track attribute. */
     private final String TRACK_ATTRIBUTE = "track";
+
+    /** The comments attribute. */
     private final String COMMENTS_ATTRIBUTE = "comments";
 
+    /**
+     * Execute.
+     *
+     * @param sessionRequestContent the session request content
+     * @return the string
+     */
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;

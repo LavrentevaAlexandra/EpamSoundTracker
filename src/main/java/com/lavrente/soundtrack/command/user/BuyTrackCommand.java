@@ -14,6 +14,8 @@ import com.lavrente.soundtrack.servlet.SessionRequestContent;
  */
 public class BuyTrackCommand extends AbstractCommand {
     private final String TRACK_ID_ATTR = "track_id";
+
+    /** The price attr. */
     private final String PRICE_ATTR = "price";
 
     @Override

@@ -15,20 +15,41 @@ import java.util.List;
  * Created by 123 on 11.01.2017.
  */
 public class OrderDAO extends AbstractDAO {
+
+    /** The date pattern. */
     private final String DATE_PATTERN="yyyy-MM-dd HH:mm:ss";
+
+    /** The Constant SQL_ADD_ORDER. */
     private static final String SQL_ADD_ORDER = "INSERT INTO `order`(price,`date` ,user_id, audio_track_id) VALUES(?,?,?,?);";
+
+    /** The Constant SQL_SELECT_USER_ORDERS. */
     private static final String SQL_SELECT_USER_ORDERS = "SELECT audio_track.id, audio_track.name, genre.genre , audio_track.artist_name, audio_track.price\n" +
             "FROM `order`\n" +
             "JOIN audio_track ON audio_track.id=`order`.audio_track_id\n" +
             "LEFT JOIN genre ON audio_track.genre_id=genre.id\n" +
             "WHERE `order`.user_id=? AND audio_track.deleted=0\n" +
             "ORDER BY audio_track.name";
+
+    /** The Constant SQL_SELECT_EXISTS. */
     private static final String  SQL_SELECT_EXISTS="SELECT EXISTS(SELECT id FROM `order` WHERE user_id = ? AND audio_track_id=?)";
 
+    /**
+     * Instantiates a new order DAO.
+     *
+     * @param connection the connection
+     */
     public OrderDAO(ProxyConnection connection) {
         super(connection);
     }
 
+    /**
+     * Adds the order.
+     *
+     * @param trackId the track id
+     * @param price the price
+     * @param userId the user id
+     * @throws DAOException the DAO exception
+     */
     public void addOrder(int trackId, double price, int userId) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -48,6 +69,14 @@ public class OrderDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Checks if is ordered.
+     *
+     * @param userId the user id
+     * @param trackId the track id
+     * @return true, if is ordered
+     * @throws DAOException the DAO exception
+     */
     public boolean isOrdered(int userId, int trackId) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -63,6 +92,13 @@ public class OrderDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Find orders.
+     *
+     * @param userId the user id
+     * @return the list
+     * @throws DAOException the DAO exception
+     */
     public List<Track> findOrders(int userId) throws DAOException {
         PreparedStatement statement = null;
         try {

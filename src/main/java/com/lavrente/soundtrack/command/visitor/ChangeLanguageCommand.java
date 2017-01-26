@@ -8,8 +8,16 @@ import com.lavrente.soundtrack.servlet.SessionRequestContent;
  * Created by 123 on 29.11.2016.
  */
 public class ChangeLanguageCommand extends AbstractCommand {
+
+    /** The Constant LANGUAGE_ATTRIBUTE. */
     private static final String LANGUAGE_ATTRIBUTE = "lang";
 
+    /**
+     * Execute.
+     *
+     * @param sessionRequestContent the session request content
+     * @return the string
+     */
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;

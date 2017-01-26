@@ -12,6 +12,8 @@ import java.util.List;
  * Created by 123 on 31.12.2016.
  */
 public class IndexCommand extends AbstractCommand {
+
+    /** The Constant DEFAULT_LOCALE. */
     private static final String DEFAULT_LOCALE = "ru_RU";
     private static final String GENRES_ATTR = "genres";
 
@@ -20,7 +22,7 @@ public class IndexCommand extends AbstractCommand {
         GenreLogic genreLogic=new GenreLogic();
         List<String> genreList=new ArrayList<>();
         try {
-             genreList= genreLogic.findGenres();
+            genreList= genreLogic.findGenres();
         }catch (LogicException e){
             LOG.error("Exception during genres search",e);
         }

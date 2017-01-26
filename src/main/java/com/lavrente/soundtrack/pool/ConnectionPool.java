@@ -14,14 +14,29 @@ import java.util.concurrent.locks.ReentrantLock;
  * Created by 123 on 02.01.2017.
  */
 public class ConnectionPool {
+
+    /** The Constant LOG. */
     private static final Logger LOG = LogManager.getLogger();
+
+    /** The connection queue. */
     private ArrayBlockingQueue<ProxyConnection> connectionQueue;
+
+    /** The instance created. */
     private static AtomicBoolean instanceCreated = new AtomicBoolean(false);
+
+    /** The lock. */
     private static ReentrantLock lock = new ReentrantLock();
+
+    /** The instance. */
     private static ConnectionPool instance;
+
+    /** The db. */
     private static InitDB db;
 
 
+    /**
+     * Instantiates a new connection pool.
+     */
     private ConnectionPool() {
         db=new InitDB();
         this.connectionQueue = new ArrayBlockingQueue<>(db.POOL_SIZE);
@@ -48,6 +63,9 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Creates the connection.
+     */
     private void createConnection(){
         try {
             Connection connection = DriverManager.getConnection(db.DATABASE_URL, db.DATABASE_LOGIN, db.DATABASE_PASS);
@@ -58,6 +76,11 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Gets the single instance of ConnectionPool.
+     *
+     * @return single instance of ConnectionPool
+     */
     public static ConnectionPool getInstance() {
         if (!instanceCreated.get()) {
             lock.lock();
@@ -73,16 +96,24 @@ public class ConnectionPool {
         return instance;
     }
 
+    /**
+     * Gets the connection.
+     *
+     * @return the connection
+     */
     public ProxyConnection getConnection() {
         ProxyConnection connection = null;
         try {
             connection = connectionQueue.take();
         } catch (InterruptedException e) {
-            LOG.error(e);
+            LOG.error("Exception during getting connection",e);
         }
         return connection;
     }
 
+    /**
+     * Terminate pool.
+     */
     public void terminatePool() {
         try {
             for (int i = 0; i < db.POOL_SIZE; i++) {
@@ -93,6 +124,11 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Return connection.
+     *
+     * @param connection the connection
+     */
     void returnConnection(ProxyConnection connection) {
         try {
             connectionQueue.put(connection);
@@ -101,6 +137,11 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Size.
+     *
+     * @return the int
+     */
     private int size(){
         return connectionQueue.size();
     }

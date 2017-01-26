@@ -20,15 +20,36 @@ import java.io.IOException;
 @WebFilter(urlPatterns = {"/jsp/admin/*"},
         initParams = {@WebInitParam(name = "INDEX_PATH", value = "/index.jsp")})
 public class AdminSecurityFilter implements Filter {
+
+    /** The path parameter. */
     private final String PATH_PARAMETER = "INDEX_PATH";
+
+    /** The user attribute. */
     private final String USER_ATTRIBUTE = "user";
+
+    /** The index path. */
     private String indexPath;
 
+    /**
+     * Inits the.
+     *
+     * @param fConfig the f config
+     * @throws ServletException the servlet exception
+     */
     @Override
     public void init(FilterConfig fConfig) throws ServletException {
         indexPath = fConfig.getInitParameter(PATH_PARAMETER);
     }
 
+    /**
+     * Do filter.
+     *
+     * @param request the request
+     * @param response the response
+     * @param chain the chain
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws ServletException the servlet exception
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
@@ -41,6 +62,9 @@ public class AdminSecurityFilter implements Filter {
         chain.doFilter(request, response);
     }
 
+    /**
+     * Destroy.
+     */
     @Override
     public void destroy() {
     }

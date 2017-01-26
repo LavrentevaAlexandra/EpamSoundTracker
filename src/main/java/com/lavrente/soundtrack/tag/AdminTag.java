@@ -11,6 +11,12 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class AdminTag extends TagSupport {
     private static final String USER_ATTR="user";
 
+    /**
+     * Do start tag.
+     *
+     * @return the int
+     * @throws JspException the jsp exception
+     */
     @Override
     public int doStartTag() throws JspException {
         User user=(User)pageContext.getSession().getAttribute(USER_ATTR);

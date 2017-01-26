@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.MissingResourceException;
 import java.util.Properties;
 
 /**
@@ -19,18 +20,21 @@ public class InitDB {
     final  int POOL_SIZE;
 
 
+    /**
+     * Instantiates a new inits the DB.
+     */
     InitDB() {
         Properties properties=new Properties();
         String propFileName="database.properties";
-        InputStream inputStream=getClass().getClassLoader().getResourceAsStream(propFileName);
         try {
+            InputStream inputStream=getClass().getClassLoader().getResourceAsStream(propFileName);
             if(inputStream!=null){
                 properties.load(inputStream);
             }else {
                 LOG.fatal("Properties was not found");
                 throw new RuntimeException("Properties was not found");
             }
-        } catch (IOException e) {
+        } catch (IOException | MissingResourceException e) {
             LOG.fatal("Exception during database initialization", e);
             throw new RuntimeException("Exception during database initialization", e);
         }

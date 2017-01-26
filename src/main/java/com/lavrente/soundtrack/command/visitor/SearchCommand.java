@@ -13,11 +13,25 @@ import java.util.List;
  * Created by 123 on 25.01.2017.
  */
 public class SearchCommand extends AbstractCommand {
+
+    /** The find parameter. */
     private final String FIND_PARAMETER = "find";
+
+    /** The search attr. */
     private final String SEARCH_ATTR = "search";
+
+    /** The track list attr. */
     private final String TRACK_LIST_ATTR="track_list";
+
+    /** The is deleted. */
     private final String IS_DELETED = "is_deleted";
 
+    /**
+     * Execute.
+     *
+     * @param sessionRequestContent the session request content
+     * @return the string
+     */
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;

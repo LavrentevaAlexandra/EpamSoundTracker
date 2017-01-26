@@ -12,11 +12,23 @@ import com.lavrente.soundtrack.servlet.SessionRequestContent;
  * Created by 123 on 07.01.2017.
  */
 public class ChangePasswordCommand extends AbstractCommand {
+
+    /** The Constant PARAM_PASSWORD. */
     private static final String PARAM_PASSWORD = "password";
+
+    /** The Constant PARAM_CONF_PASS. */
     private static final String PARAM_CONF_PASS = "password2";
+
+    /** The Constant PARAM_NEW_PASS. */
     private static final String PARAM_NEW_PASS = "new_pass";
 
 
+    /**
+     * Execute.
+     *
+     * @param sessionRequestContent the session request content
+     * @return the string
+     */
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;

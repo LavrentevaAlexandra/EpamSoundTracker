@@ -17,6 +17,12 @@ public class MainCommand extends AbstractCommand {
     private final String TRACK_LIST_ATTR = "track_list";
     private final String IS_DELETED = "is_deleted";
 
+    /**
+     * Execute.
+     *
+     * @param sessionRequestContent the session request content
+     * @return the string
+     */
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         TrackLogic trackLogic=new TrackLogic();

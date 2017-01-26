@@ -16,6 +16,12 @@ public class SetBonusCommand extends AbstractCommand {
     private final String BONUS_ATTR = "bonus";
 
 
+    /**
+     * Execute.
+     *
+     * @param sessionRequestContent the session request content
+     * @return the string
+     */
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;

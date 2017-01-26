@@ -8,8 +8,13 @@ import com.lavrente.soundtrack.servlet.SessionRequestContent;
  */
 
 public class EmptyCommand extends AbstractCommand {
+
+    /** The Constant DEFAULT_LOCALE. */
     private static final String DEFAULT_LOCALE = "ru_RU";
 
+    /* (non-Javadoc)
+     * @see src.main.java.com.lavrente.soundtrack.command.AbstractCommand#execute(SessionRequestContent)
+     */
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page = ConfigurationManager.getProperty(ConfigurationManager.HOME_PATH);

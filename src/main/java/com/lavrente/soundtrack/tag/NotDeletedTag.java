@@ -9,6 +9,12 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class NotDeletedTag extends TagSupport {
     private final String IS_DELETED = "is_deleted";
 
+    /**
+     * Do start tag.
+     *
+     * @return the int
+     * @throws JspException the jsp exception
+     */
     @Override
     public int doStartTag() throws JspException {
         Object isDeleted =pageContext.getSession().getAttribute(IS_DELETED);

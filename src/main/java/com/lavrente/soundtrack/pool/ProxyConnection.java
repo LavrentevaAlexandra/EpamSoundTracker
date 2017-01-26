@@ -11,6 +11,11 @@ import java.util.concurrent.Executor;
 public class ProxyConnection implements Connection {
     private Connection connection;
 
+    /**
+     * Instantiates a new proxy connection.
+     *
+     * @param connection the connection
+     */
     ProxyConnection(Connection connection) {
         this.connection = connection;
     }

@@ -11,6 +11,12 @@ public class CommandCreator {
     private static final Logger LOG = LogManager.getLogger();
     private static final String COMMAND = "command";
 
+    /**
+     * Define command.
+     *
+     * @param sessionRequestContent the session request content
+     * @return the abstract command
+     */
     public AbstractCommand defineCommand(SessionRequestContent sessionRequestContent) {
         AbstractCommand current = new EmptyCommand();
 

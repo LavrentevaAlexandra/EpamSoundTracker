@@ -17,6 +17,14 @@ import java.util.List;
  */
 public class OrderLogic{
 
+    /**
+     * Adds the order.
+     *
+     * @param trackId the track id
+     * @param price the price
+     * @param user the user
+     * @throws LogicException the logic exception
+     */
     public void addOrder(int trackId, double price, User user) throws LogicException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         OrderDAO orderDAO = new OrderDAO(connection);
@@ -41,6 +49,14 @@ public class OrderLogic{
         }
     }
 
+    /**
+     * Checks if is ordered.
+     *
+     * @param userId the user id
+     * @param trackId the track id
+     * @return true, if is ordered
+     * @throws LogicException the logic exception
+     */
     public boolean isOrdered(int userId, int trackId) throws LogicException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         OrderDAO orderDAO = new OrderDAO(connection);
@@ -53,6 +69,13 @@ public class OrderLogic{
         }
     }
 
+    /**
+     * Find my tracks.
+     *
+     * @param userId the user id
+     * @return the list
+     * @throws LogicException the logic exception
+     */
     public List<Track> findMyTracks(int userId) throws LogicException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         OrderDAO orderDAO = new OrderDAO(connection);

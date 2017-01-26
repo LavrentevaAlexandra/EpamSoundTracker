@@ -13,6 +13,8 @@ import com.lavrente.soundtrack.servlet.SessionRequestContent;
  */
 public class AddFundsCommand extends AbstractCommand {
     private static final String PARAM_CARD = "card";
+
+    /** The Constant PARAM_CASH. */
     private static final String PARAM_CASH = "cash";
 
 

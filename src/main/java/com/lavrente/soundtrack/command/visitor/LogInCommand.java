@@ -13,10 +13,22 @@ import com.lavrente.soundtrack.servlet.SessionRequestContent;
  * Created by 123 on 28.12.2016.
  */
 public class LogInCommand extends AbstractCommand {
+
+    /** The Constant PARAM_LOGIN. */
     private static final String PARAM_LOGIN = "login";
+
+    /** The Constant PARAM_PASSWORD. */
     private static final String PARAM_PASSWORD = "password";
+
+    /** The Constant TRUE. */
     private static final String TRUE="true";
 
+    /**
+     * Execute.
+     *
+     * @param sessionRequestContent the session request content
+     * @return the string
+     */
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;

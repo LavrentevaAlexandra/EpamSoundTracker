@@ -14,6 +14,12 @@ import com.lavrente.soundtrack.servlet.SessionRequestContent;
 public class DeleteTrackCommand extends AbstractCommand {
     private final String TRACK_ID_PARAMETER = "track_id";
 
+    /**
+     * Execute.
+     *
+     * @param sessionRequestContent the session request content
+     * @return the string
+     */
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;

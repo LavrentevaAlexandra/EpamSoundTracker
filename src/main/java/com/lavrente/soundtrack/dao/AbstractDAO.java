@@ -15,6 +15,11 @@ public abstract class AbstractDAO <T extends Entity> {
     private static final Logger LOG = LogManager.getLogger();
     protected ProxyConnection connection;
 
+    /**
+     * Instantiates a new abstract DAO.
+     *
+     * @param connection the connection
+     */
     public AbstractDAO(ProxyConnection connection) {
         this.connection = connection;
     }

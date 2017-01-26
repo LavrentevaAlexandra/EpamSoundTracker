@@ -18,27 +18,67 @@ import java.util.List;
 @SuppressWarnings("Duplicates")
 public class UserDAO extends AbstractDAO<User> {
 
+    /** The Constant SQL_ADD_USER. */
     private static final String SQL_ADD_USER = "INSERT INTO user(login,password,card_number, email) VALUES(?,?,?,?)";
+
+    /** The Constant SQL_ADD_COMMENT. */
     private static final String SQL_ADD_COMMENT = "INSERT INTO comment(user_id,audio_track_id,date,text) VALUES(?,?,?,?)";
+
+    /** The Constant SQL_CHANGE_CARD. */
     private static final String SQL_CHANGE_CARD = "UPDATE user SET card_number=? WHERE id=?";
+
+    /** The Constant SQL_CHANGE_CASH. */
     private static final String SQL_CHANGE_CASH = "UPDATE user SET cash_account=? WHERE id=?";
+
+    /** The Constant SQL_CHANGE_EMAIL. */
     private static final String SQL_CHANGE_EMAIL = "UPDATE user SET email=? WHERE id=?";
+
+    /** The Constant SQL_CHANGE_LOGIN. */
     private static final String SQL_CHANGE_LOGIN = "UPDATE user SET login=? WHERE id=?";
+
+    /** The Constant SQL_CHANGE_PASS. */
     private static final String SQL_CHANGE_PASS = "UPDATE user SET password=? WHERE id=?";
+
+    /** The Constant SQL_SELECT_ALL_CLIENTS. */
     private static final String SQL_SELECT_ALL_CLIENTS = "SELECT user.id, user.login, user.discount, COUNT(user.login) as count\n"+
             " FROM audio_track_order.`order` Left join `user` ON `order`.user_id=`user`.id\n"+
             " GROUP BY user.login ORDER BY user.login";
+
+    /** The Constant SQL_SELECT_CASH. */
     private static final String SQL_SELECT_CASH = "SELECT cash_account FROM user WHERE id=?";
+
+    /** The Constant SQL_SELECT_PASSWORD_BY_LOGIN. */
     private static final String SQL_SELECT_PASSWORD_BY_LOGIN = "SELECT password FROM user WHERE login=?";
+
+    /** The Constant SQL_SELECT_USER_BY_ID. */
     private static final String SQL_SELECT_USER_BY_ID = "SELECT * FROM user WHERE id=?";
+
+    /** The Constant SQL_SELECT_USER_BY_LOGIN. */
     private static final String SQL_SELECT_USER_BY_LOGIN = "SELECT * FROM user WHERE login=?";
+
+    /** The Constant SQL_SELECT_USER_BY_EMAIL. */
     private static final String SQL_SELECT_USER_BY_EMAIL = "SELECT * FROM user WHERE email=?";
+
+    /** The Constant SQL_SET_BONUS. */
     private static final String SQL_SET_BONUS = "UPDATE user SET discount=? WHERE id=?";
 
+    /**
+     * Instantiates a new user DAO.
+     *
+     * @param connection the connection
+     */
     public UserDAO(ProxyConnection connection) {
         super(connection);
     }
 
+    /**
+     * Adds the comment.
+     *
+     * @param userId the user id
+     * @param text the text
+     * @param trackId the track id
+     * @throws DAOException the DAO exception
+     */
     public void addComment(int userId, String text, int trackId) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -56,6 +96,15 @@ public class UserDAO extends AbstractDAO<User> {
         }
     }
 
+    /**
+     * Adds the user.
+     *
+     * @param login the login
+     * @param password the password
+     * @param cardNumber the card number
+     * @param email the email
+     * @throws DAOException the DAO exception
+     */
     public void addUser(String login, String password, String cardNumber, String email) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -72,6 +121,13 @@ public class UserDAO extends AbstractDAO<User> {
         }
     }
 
+    /**
+     * Change card number.
+     *
+     * @param userId the user id
+     * @param newCard the new card
+     * @throws DAOException the DAO exception
+     */
     public void changeCardNumber(int userId, String newCard) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -86,6 +142,13 @@ public class UserDAO extends AbstractDAO<User> {
         }
     }
 
+    /**
+     * Change cash.
+     *
+     * @param userId the user id
+     * @param cash the cash
+     * @throws DAOException the DAO exception
+     */
     public void changeCash(int userId, Double cash) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -100,6 +163,13 @@ public class UserDAO extends AbstractDAO<User> {
         }
     }
 
+    /**
+     * Change email.
+     *
+     * @param userId the user id
+     * @param newEmail the new email
+     * @throws DAOException the DAO exception
+     */
     public void changeEmail(int userId, String newEmail) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -114,6 +184,13 @@ public class UserDAO extends AbstractDAO<User> {
         }
     }
 
+    /**
+     * Change login.
+     *
+     * @param userId the user id
+     * @param newLogin the new login
+     * @throws DAOException the DAO exception
+     */
     public void changeLogin(int userId, String newLogin) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -128,6 +205,13 @@ public class UserDAO extends AbstractDAO<User> {
         }
     }
 
+    /**
+     * Change password.
+     *
+     * @param userId the user id
+     * @param newPass the new pass
+     * @throws DAOException the DAO exception
+     */
     public void changePassword(int userId, String newPass) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -142,6 +226,13 @@ public class UserDAO extends AbstractDAO<User> {
         }
     }
 
+    /**
+     * Creates the client list.
+     *
+     * @param set the set
+     * @return the list
+     * @throws DAOException the DAO exception
+     */
     private List<User> createClientList(ResultSet set) throws DAOException {
         List<User> clientList=new ArrayList<>();
         try {
@@ -158,6 +249,13 @@ public class UserDAO extends AbstractDAO<User> {
         }
     }
 
+    /**
+     * Creates the user.
+     *
+     * @param set the set
+     * @return the user
+     * @throws DAOException the DAO exception
+     */
     private User createUser(ResultSet set) throws DAOException {
         try {
             if (set.next()) {
@@ -178,6 +276,12 @@ public class UserDAO extends AbstractDAO<User> {
         }
     }
 
+    /**
+     * Find clients.
+     *
+     * @return the list
+     * @throws DAOException the DAO exception
+     */
     public List<User> findClients()throws DAOException{
         List<User> userList;
         PreparedStatement statement = null;
@@ -193,6 +297,13 @@ public class UserDAO extends AbstractDAO<User> {
         return userList;
     }
 
+    /**
+     * Find cash.
+     *
+     * @param userId the user id
+     * @return the double
+     * @throws DAOException the DAO exception
+     */
     public double findCash(int userId) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -211,6 +322,13 @@ public class UserDAO extends AbstractDAO<User> {
         }
     }
 
+    /**
+     * Find password.
+     *
+     * @param login the login
+     * @return the string
+     * @throws DAOException the DAO exception
+     */
     public String findPassword(String login) throws DAOException {
         String password = null;
         PreparedStatement statement = null;
@@ -229,6 +347,13 @@ public class UserDAO extends AbstractDAO<User> {
         return password;
     }
 
+    /**
+     * Find user.
+     *
+     * @param login the login
+     * @return the user
+     * @throws DAOException the DAO exception
+     */
     public User findUser(String login) throws DAOException {
         User user;
         PreparedStatement statement = null;
@@ -245,6 +370,13 @@ public class UserDAO extends AbstractDAO<User> {
         return user;
     }
 
+    /**
+     * Find user by email.
+     *
+     * @param email the email
+     * @return the user
+     * @throws DAOException the DAO exception
+     */
     public User findUserByEmail(String email) throws DAOException {
         User user;
         PreparedStatement statement = null;
@@ -261,6 +393,13 @@ public class UserDAO extends AbstractDAO<User> {
         return user;
     }
 
+    /**
+     * Find user by id.
+     *
+     * @param id the id
+     * @return the user
+     * @throws DAOException the DAO exception
+     */
     public User findUserById(int id) throws DAOException {
         User user;
         PreparedStatement statement = null;
@@ -277,6 +416,13 @@ public class UserDAO extends AbstractDAO<User> {
         return user;
     }
 
+    /**
+     * Sets the bonus.
+     *
+     * @param userId the user id
+     * @param bonus the bonus
+     * @throws DAOException the DAO exception
+     */
     public void setBonus(int userId, int bonus) throws DAOException {
         PreparedStatement statement = null;
         try {

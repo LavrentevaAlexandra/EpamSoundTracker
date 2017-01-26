@@ -17,6 +17,12 @@ public class SearchUsersCommand extends AbstractCommand {
     private final String USER_LIST_ATTR = "users";
 
 
+    /**
+     * Execute.
+     *
+     * @param sessionRequestContent the session request content
+     * @return the string
+     */
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;

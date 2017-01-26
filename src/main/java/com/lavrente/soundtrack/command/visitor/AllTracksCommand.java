@@ -13,10 +13,22 @@ import java.util.List;
  * Created by 123 on 25.01.2017.
  */
 public class AllTracksCommand extends AbstractCommand{
+
+    /** The track list attr. */
     private final String TRACK_LIST_ATTR = "track_list";
+
+    /** The is deleted. */
     private final String IS_DELETED = "is_deleted";
+
+    /** The all attr. */
     private final String ALL_ATTR="all";
 
+    /**
+     * Execute.
+     *
+     * @param sessionRequestContent the session request content
+     * @return the string
+     */
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;

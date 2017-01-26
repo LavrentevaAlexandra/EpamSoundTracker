@@ -11,14 +11,34 @@ import com.lavrente.soundtrack.servlet.SessionRequestContent;
  * Created by 123 on 05.01.2017.
  */
 public class SingUpCommand extends AbstractCommand {
+
+    /** The Constant PARAM_LOGIN. */
     private static final String PARAM_LOGIN = "login";
+
+    /** The Constant PARAM_PASSWORD. */
     private static final String PARAM_PASSWORD = "password";
+
+    /** The Constant PARAM_CONF_PASS. */
     private static final String PARAM_CONF_PASS = "password2";
+
+    /** The Constant PARAM_EMAIL. */
     private static final String PARAM_EMAIL = "email";
+
+    /** The Constant PARAM_CARD_NUMBER. */
     private static final String PARAM_CARD_NUMBER = "card";
+
+    /** The Constant ROLE_ATTRIBUTE. */
     private static final String ROLE_ATTRIBUTE = "role";
+
+    /** The Constant IS_LOGIN. */
     private static final String IS_LOGIN = "is_login";
 
+    /**
+     * Execute.
+     *
+     * @param sessionRequestContent the session request content
+     * @return the string
+     */
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;

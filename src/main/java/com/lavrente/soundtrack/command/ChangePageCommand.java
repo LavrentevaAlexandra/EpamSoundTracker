@@ -6,13 +6,20 @@ import com.lavrente.soundtrack.servlet.SessionRequestContent;
 import java.util.Objects;
 
 /**
- * Created by 123 on 26.01.2017.
+ * The Class ChangePageCommand.
  */
 public class ChangePageCommand extends AbstractCommand {
+
+    /** The page param. */
     private final String PAGE_PARAM = "page";
+
+    /** The num of pages. */
     private final String NUM_OF_PAGES = "number_of_pages";
 
 
+    /* (non-Javadoc)
+     * @see src.main.java.com.lavrente.soundtrack.command.AbstractCommand#execute(SessionRequestContent)
+     */
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         Object pageObj = sessionRequestContent.getRequestParameter(PAGE_PARAM);
@@ -30,3 +37,4 @@ public class ChangePageCommand extends AbstractCommand {
         return ConfigurationManager.getProperty(sessionRequestContent.getSessionAttribute(CUR_PAGE_ATTR).toString());
     }
 }
+

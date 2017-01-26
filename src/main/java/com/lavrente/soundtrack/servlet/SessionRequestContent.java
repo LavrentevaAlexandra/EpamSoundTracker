@@ -10,11 +10,22 @@ import java.util.Map;
  * Created by 123 on 30.12.2016.
  */
 public class SessionRequestContent {
+
+    /** The request attributes. */
     private HashMap<String, Object> requestAttributes;
+
+    /** The request parameters. */
     private Map<String, String[]> requestParameters;
+
+    /** The session attributes. */
     private HashMap<String, Object> sessionAttributes;
 
-     public void extractValues(HttpServletRequest request) {
+    /**
+     * Extract values.
+     *
+     * @param request the request
+     */
+    public void extractValues(HttpServletRequest request) {
         requestParameters = request.getParameterMap();
         requestAttributes = new HashMap<>();
         Enumeration<String> attr = request.getAttributeNames();
@@ -31,6 +42,11 @@ public class SessionRequestContent {
         }
     }
 
+    /**
+     * Insert attributes.
+     *
+     * @param request the request
+     */
     public void insertAttributes(HttpServletRequest request) {
         for (Map.Entry<String, Object> entry : requestAttributes.entrySet()) {
             request.setAttribute(entry.getKey(), entry.getValue());
@@ -40,6 +56,12 @@ public class SessionRequestContent {
         }
     }
 
+    /**
+     * Gets the request parameter.
+     *
+     * @param key the key
+     * @return the request parameter
+     */
     public String getRequestParameter( String key) {
         if(!requestParameters.isEmpty()){
             String[] parameters=requestParameters.get(key);
@@ -49,22 +71,51 @@ public class SessionRequestContent {
         }
     }
 
+    /**
+     * Sets the request parameters.
+     *
+     * @param requestParameters the request parameters
+     */
     public void setRequestParameters(Map<String, String[]> requestParameters) {
         this.requestParameters = requestParameters;
     }
 
+    /**
+     * Gets the request attribute.
+     *
+     * @param key the key
+     * @return the request attribute
+     */
     public Object getRequestAttribute(String key) {
-         return requestAttributes.get(key);
+        return requestAttributes.get(key);
     }
 
+    /**
+     * Sets the request attribute.
+     *
+     * @param key the key
+     * @param value the value
+     */
     public void setRequestAttribute(String key, Object value) {
         requestAttributes.put(key, value);
     }
 
+    /**
+     * Gets the session attribute.
+     *
+     * @param key the key
+     * @return the session attribute
+     */
     public Object getSessionAttribute(String key) {
         return sessionAttributes.get(key);
     }
 
+    /**
+     * Sets the session attribute.
+     *
+     * @param key the key
+     * @param value the value
+     */
     public void setSessionAttribute(String key, Object value) {
         sessionAttributes.put(key, value);
     }

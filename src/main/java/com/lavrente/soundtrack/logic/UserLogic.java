@@ -20,6 +20,15 @@ import java.util.List;
 public class UserLogic implements Messenger {
     private final String SUCCESS = "success";
 
+    /**
+     * Adds the comment.
+     *
+     * @param user the user
+     * @param text the text
+     * @param trackId the track id
+     * @return the string
+     * @throws LogicException the logic exception
+     */
     public String addComment(User user, String text, int trackId) throws LogicException {
         Validator validator = new Validator();
         if (validator.isCommentValid(text)) {

@@ -14,6 +14,18 @@ public class User extends Entity{
     private String email;
     private int orderCount;
 
+    /**
+     * Instantiates a new user.
+     *
+     * @param id the id
+     * @param login the login
+     * @param password the password
+     * @param cash the cash
+     * @param role the role
+     * @param discount the discount
+     * @param cardNumber the card number
+     * @param email the email
+     */
     public User(int id, String login, String password, double cash, int role, int discount, String cardNumber, String email) {
         this.id = id;
         this.login = login;

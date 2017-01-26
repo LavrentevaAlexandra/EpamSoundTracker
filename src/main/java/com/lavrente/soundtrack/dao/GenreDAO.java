@@ -14,14 +14,32 @@ import java.util.List;
  */
 @SuppressWarnings("Duplicates")
 public class GenreDAO extends AbstractDAO {
+
+    /** The Constant SQL_INSERT_GENRE. */
     private static final String SQL_INSERT_GENRE = "INSERT INTO genre (`genre`) VALUES (?);";
+
+    /** The Constant SQL_SELECT_GENRE_ID. */
     private static final String SQL_SELECT_GENRE_ID = "SELECT id FROM genre WHERE genre=?";
+
+    /** The Constant SQL_SELECT_GENRES. */
     private static final String SQL_SELECT_GENRES = "SELECT `genre` FROM genre";
 
+    /**
+     * Instantiates a new genre DAO.
+     *
+     * @param connection the connection
+     */
     public GenreDAO(ProxyConnection connection) {
         super(connection);
     }
 
+    /**
+     * Adds the genre.
+     *
+     * @param genre the genre
+     * @return the int
+     * @throws DAOException the DAO exception
+     */
     private int addGenre(String genre) throws DAOException{
         PreparedStatement statement=null;
         try {
@@ -36,6 +54,13 @@ public class GenreDAO extends AbstractDAO {
         }
     }
 
+    /**
+     * Find genre id.
+     *
+     * @param genre the genre
+     * @return the int
+     * @throws DAOException the DAO exception
+     */
     public int findGenreId(String genre) throws DAOException{
         int id;
         PreparedStatement statement=null;
@@ -56,6 +81,12 @@ public class GenreDAO extends AbstractDAO {
         return id;
     }
 
+    /**
+     * Find genres.
+     *
+     * @return the list
+     * @throws DAOException the DAO exception
+     */
     public List<String> findGenres() throws DAOException{
         List<String> genreList=new ArrayList<>();
         PreparedStatement statement=null;

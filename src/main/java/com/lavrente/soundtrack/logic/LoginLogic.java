@@ -15,6 +15,14 @@ import org.apache.commons.codec.digest.DigestUtils;
  */
 public class LoginLogic {
 
+    /**
+     * Check login.
+     *
+     * @param login the login
+     * @param password the password
+     * @return true, if successful
+     * @throws LogicException the logic exception
+     */
     public boolean checkLogin(String login, String password) throws LogicException {
         Validator validator = new Validator();
         if (!validator.isLoginValid(login) || !validator.isPasswordValid(password)) {

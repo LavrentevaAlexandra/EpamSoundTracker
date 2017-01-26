@@ -10,6 +10,15 @@ public class Track extends Entity {
     private double price;
     private String genre;
 
+    /**
+     * Instantiates a new track.
+     *
+     * @param id the id
+     * @param name the name
+     * @param artist the artist
+     * @param price the price
+     * @param genre the genre
+     */
     public Track(int id, String name, String artist, double price, String genre) {
         this.id = id;
         this.name = name;

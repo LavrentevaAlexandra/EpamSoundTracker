@@ -14,6 +14,13 @@ public class Comment extends Entity{
     private String text;
 
 
+    /**
+     * Instantiates a new comment.
+     *
+     * @param userId the user id
+     * @param audioTrackId the audio track id
+     * @param text the text
+     */
     public Comment( int userId,int audioTrackId, String text) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now=LocalDateTime.now();

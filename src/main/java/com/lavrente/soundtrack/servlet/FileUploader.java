@@ -17,6 +17,13 @@ public class FileUploader {
     private static final String SAVE_DIR = "uploadTracks";
     private static final String PATH="path";
 
+    /**
+     * Upload file.
+     *
+     * @param request the request
+     * @param sessionRequestContent the session request content
+     * @return true, if successful
+     */
     public boolean uploadFile(HttpServletRequest request, SessionRequestContent sessionRequestContent) {
         try {
             String appPath = request.getServletContext().getRealPath("");

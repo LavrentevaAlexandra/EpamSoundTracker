@@ -12,6 +12,14 @@ import java.util.List;
  * Created by 123 on 12.01.2017.
  */
 public class GenreLogic {
+
+    /**
+     * Find genre id.
+     *
+     * @param genre the genre
+     * @return the int
+     * @throws LogicException the logic exception
+     */
     public int findGenreId(String genre) throws LogicException{
         int id;
         ProxyConnection connection= ConnectionPool.getInstance().getConnection();
@@ -24,6 +32,12 @@ public class GenreLogic {
         return id;
     }
 
+    /**
+     * Find genres.
+     *
+     * @return the list
+     * @throws LogicException the logic exception
+     */
     public List<String> findGenres() throws LogicException{
         ProxyConnection connection= ConnectionPool.getInstance().getConnection();
         GenreDAO genreDAO=new GenreDAO(connection);

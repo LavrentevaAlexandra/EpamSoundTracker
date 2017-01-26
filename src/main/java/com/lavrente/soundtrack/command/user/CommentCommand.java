@@ -18,11 +18,25 @@ import java.util.List;
  */
 @SuppressWarnings("Duplicates")
 public class CommentCommand extends AbstractCommand {
+
+    /** The track id param. */
     private final String TRACK_ID_PARAM = "track_id";
+
+    /** The comment param. */
     private final String COMMENT_PARAM = "comment_area";
+
+    /** The track attribute. */
     private final String TRACK_ATTRIBUTE = "track";
+
+    /** The comments attribute. */
     private final String COMMENTS_ATTRIBUTE = "comments";
 
+    /**
+     * Execute.
+     *
+     * @param sessionRequestContent the session request content
+     * @return the string
+     */
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;

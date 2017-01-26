@@ -14,13 +14,31 @@ import java.io.File;
  * Created by 123 on 11.01.2017.
  */
 public class AddTrackCommand extends AbstractCommand {
+
+    /** The Constant RESULT_ATTR. */
     private static final String RESULT_ATTR = "result";
+
+    /** The real path attribute. */
     private final String REAL_PATH_ATTRIBUTE = "path";
+
+    /** The name param. */
     private final String NAME_PARAM = "name";
+
+    /** The artist param. */
     private final String ARTIST_PARAM = "artist";
+
+    /** The genre param. */
     private final String GENRE_PARAM = "genre";
+
+    /** The price param. */
     private final String PRICE_PARAM = "price";
 
+    /**
+     * Execute.
+     *
+     * @param sessionRequestContent the session request content
+     * @return the string
+     */
     @Override
     public String execute(SessionRequestContent sessionRequestContent) {
         String page;
