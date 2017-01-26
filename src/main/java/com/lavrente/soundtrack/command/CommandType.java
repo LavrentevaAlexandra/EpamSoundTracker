@@ -30,7 +30,12 @@ public enum CommandType {
     },
     CHANGE{
         {
-            this.command = new ChangeCommand();
+            this.command = new ChangePageCommand();
+        }
+    },
+    CHANGE_PAGE{
+        {
+            this.command = new ChangePageCommand();
         }
     },
     CHANGE_PASS{

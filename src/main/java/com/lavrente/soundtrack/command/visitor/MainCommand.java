@@ -26,6 +26,7 @@ public class MainCommand extends AbstractCommand {
         }catch (LogicException e){
             LOG.error("Exception during last ordered tracks search",e);
         }
+        sessionRequestContent.setSessionAttribute(NUM_PAGE, 0);
         sessionRequestContent.setSessionAttribute(TRACK_LIST_ATTR, trackList);
         sessionRequestContent.setSessionAttribute(IS_DELETED, false);
         return ConfigurationManager.getProperty(ConfigurationManager.MAIN_PATH);

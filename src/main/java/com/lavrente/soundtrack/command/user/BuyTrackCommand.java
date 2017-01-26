@@ -37,7 +37,7 @@ public class BuyTrackCommand extends AbstractCommand {
 
                     } else {
                         sessionRequestContent.setRequestAttribute(ERROR, messageManager.getProperty(MessageManager.ORDER_ERROR));
-                        page = ConfigurationManager.getProperty((String) sessionRequestContent.getSessionAttribute(CUR_PAGE_ATTR));
+                        page = ConfigurationManager.getProperty(sessionRequestContent.getSessionAttribute(CUR_PAGE_ATTR).toString());
                     }
                 } else {
                     sessionRequestContent.setRequestAttribute(SUCCESS, messageManager.getProperty(MessageManager.ODER_DOWNLOAD));

@@ -15,8 +15,6 @@ import java.io.File;
  */
 public class AddTrackCommand extends AbstractCommand {
     private static final String RESULT_ATTR = "result";
-    private final String DATA_FOLDER = "uploadTracks";
-    private final String PATH_ATTRIBUTE = "path";
     private final String REAL_PATH_ATTRIBUTE = "path";
     private final String NAME_PARAM = "name";
     private final String ARTIST_PARAM = "artist";

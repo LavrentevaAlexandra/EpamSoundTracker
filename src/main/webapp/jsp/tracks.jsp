@@ -23,6 +23,7 @@
             <h2><fmt:message key="track.empty"/></h2>
         </c:when>
         <c:otherwise>
+            <c:set var="number_of_pages" value="${fn:length(track_list)/5 +1}" scope="request"/>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -33,7 +34,7 @@
                 </tr>
                 </thead>
                 <tbody id="myTable">
-                <c:forEach var="track" items="${track_list}">
+                <c:forEach var="track" items="${track_list}" begin="${num_page * 5}" end="${num_page * 5 + 4}">
                     <tr>
                         <td>${track.artist}</td>
                         <td>—</td>
@@ -88,9 +89,14 @@
                 </c:forEach>
                 </tbody>
             </table>
+            <c:forEach begin="1" end="${number_of_pages}" var="i">
+                <td>
+                    <button class="btn btn-default"
+                            onclick='location.href="${pageContext.request.contextPath}/controller?command=change_page&page=${i-1}"'>${i}</button>
+                </td>
+            </c:forEach>
         </c:otherwise>
     </c:choose>
 </div>
-
 </body>
 </html>

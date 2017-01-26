@@ -32,7 +32,7 @@
                 </c:forEach>
             </ul>
         </li>
-        <li><a href="#"><fmt:message key="sidebar.about"/> </a></li>
+        <li><a href="${pageContext.request.contextPath}/jsp/about.jsp"><fmt:message key="sidebar.about"/> </a></li>
         <li>
             <hr>
         </li>
