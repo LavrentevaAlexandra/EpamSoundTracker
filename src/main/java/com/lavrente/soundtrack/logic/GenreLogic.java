@@ -27,7 +27,10 @@ public class GenreLogic {
         try{
             id=genreDAO.findGenreId(genre);
         }catch (DAOException e){
+
             throw new LogicException("Exception during genre id search", e);
+        }finally{
+            genreDAO.closeConnection(connection);
         }
         return id;
     }
@@ -45,6 +48,8 @@ public class GenreLogic {
             return genreDAO.findGenres();
         }catch (DAOException e){
             throw new LogicException("Exception during genre id search", e);
+        }finally{
+            genreDAO.closeConnection(connection);
         }
     }
 }

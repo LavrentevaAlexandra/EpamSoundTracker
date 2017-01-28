@@ -201,6 +201,8 @@ public class UserLogic implements Messenger {
             user = userDAO.findUser(login);
         } catch (DAOException e) {
             throw new LogicException("Error during user search", e);
+        }finally {
+            userDAO.closeConnection(connection);
         }
         return user;
     }
@@ -257,6 +259,8 @@ public class UserLogic implements Messenger {
             user = userDAO.findUserById(id);
         } catch (DAOException e) {
             throw new LogicException("Exception during user search", e);
+        }finally {
+            userDAO.closeConnection(connection);
         }
         return user;
     }

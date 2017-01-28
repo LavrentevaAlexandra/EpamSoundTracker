@@ -27,7 +27,7 @@ public class ChangePageCommand extends AbstractCommand {
         int newPageNum;
         if (pageObj != null) {
             newPageNum = Integer.valueOf(pageObj.toString());
-            if (allPagesObj == null || newPageNum > Integer.valueOf(pageObj.toString())){
+            if (allPagesObj == null || newPageNum > Integer.valueOf(allPagesObj.toString())){
                 newPageNum = 0;
             }
         } else {

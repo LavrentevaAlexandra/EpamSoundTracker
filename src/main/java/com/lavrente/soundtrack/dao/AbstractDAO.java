@@ -40,7 +40,7 @@ public abstract class AbstractDAO <T extends Entity> {
         try {
             connection.close();
         } catch (SQLException e) {
-            LOG.error("Error during return to connection pull", e);
+            LOG.error("Error during connection to pull return", e);
         }
     }
 }

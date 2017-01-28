@@ -46,6 +46,8 @@ public class OrderLogic{
             }
         } catch (SQLException e) {
             throw new LogicException("Exception during order addition", e);
+        }finally {
+            orderDAO.closeConnection(connection);
         }
     }
 
